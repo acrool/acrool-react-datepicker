@@ -9,7 +9,7 @@
 
 .bear-react-datepicker__root {
     background-color: #fff;
-    width: calc(36px * 7 + 24px);
+    width: calc(30px * 7 + 24px);
     margin: 0 auto;
     box-shadow:
             0 3px 6px -4px rgba(0, 0, 0, 0.12),
@@ -110,9 +110,9 @@
 .bear-react-datepicker__week,
 .bear-react-datepicker__day,
 .bear-react-datepicker__pre-day{
-    flex: 0 0 36px;
+    flex: 0 0 30px;
     color: rgba(0, 0, 0, 0.65);
-    width: 36px;
+    width: 30px;
     height: 30px;
     display: flex;
     align-items: center;
