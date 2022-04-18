@@ -14,32 +14,11 @@ yarn add bear-react-datepicker
 ```
 
 ## Usage
-add in your index.html
-
-```tsx
-<div id="modal-root"></div>
-```
-
 
 add in your index.tsx
 ```tst
 import "bear-react-datepicker/dist/index.css";
 
-```
-
-add in your App.tsx
-
-```tsx
-import {ToasterPortal} from "bear-react-datepicker";
-
-const App = () => {
-    return (
-        <div>
-            <BaseUsed/>
-            <ToasterPortal timeout={3000}/>
-        </div>
-    );
-};
 ```
 
 then in your page
@@ -51,41 +30,8 @@ const BaseUsed = () => {
 
     return (
         <div>
-            <button type="button" onClick={() => toast({message: 'useToaster message'})}>
-                useToaster message
-            </button>
-
-            <button type="button" onClick={() => toast({status: EStatus.success, message: 'useToaster success + message'})}>
-                useToaster status + message
-            </button>
-
-
-            <button type="button" onClick={() => toast.success({message: 'useToaster --- toaster.success'})}>
-                useToaster --- toaster.success
-            </button>
-
-
-            <button type="button" onClick={() => toast({status: EStatus.warning, message: 'useToaster warning + message'})}>
-                useToaster warning + message
-            </button>
-            
-            <button type="button" color="danger" onClick={() => toast({status: EStatus.error, message: 'useToaster error + message'})}>
-                useToaster error + message
-            </button>
-
-            <button type="button" color="danger" onClick={() => toast.error({message: 'useToaster --- toaster.error'})}>
-                useToaster --- toaster.error
-            </button>
-
-
-            <button type="button" color="info" onClick={() => toast({status: EStatus.info, message: 'useToaster info + message'})}>
-                useToaster info + message
-            </button>
-
-
-            <button type="button" onClick={() => toast({status: EStatus.success, message: 'window.toaster status + message'})}>
-                window.toaster status + message
-            </button>
+            <Datepicker onChange={setMyDate} value={myDate}/>
+            <Datepicker onChange={setMyDate} value={myDate} locale="zh-CN"/>
 
 
         </div>

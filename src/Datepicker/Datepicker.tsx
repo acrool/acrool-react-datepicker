@@ -1,12 +1,9 @@
-import React, {useState, useCallback, useMemo} from 'react';
-// import styled, {css} from 'styled-components/macro';
+import React, {useState, useCallback, useMemo, useRef} from 'react';
 import dayjs,{Dayjs} from 'dayjs';
 import {elClassName} from '../config';
-// import {translateI18n, useLocale} from 'bear-react-locale';
 import cx from 'classnames';
 import {ArrowIcon} from '../Icon';
 import locales from '../locales';
-import {type} from 'os';
 import '../styles.css';
 // Components
 
@@ -33,6 +30,21 @@ interface IProps {
 }
 
 
+const translateI18n = (id: string, options?: {defaultMessage?: string, locale?: string}) => {
+    const selectLocale = typeof options?.locale !== 'undefined' ? options.locale : 'en-US';
+    const localeMap = locales[selectLocale] ? locales[selectLocale]: locales['en-US'];
+
+    if(typeof localeMap !== 'undefined' && typeof localeMap[id] !== 'undefined'){
+        return localeMap[id];
+    }
+
+    if(typeof options?.defaultMessage !== 'undefined'){
+        return options?.defaultMessage;
+    }
+
+    return id;
+}
+
 /**
  * Datepicker
  * 日期選擇器
@@ -45,42 +57,28 @@ const Datepicker = ({
     locale = 'en-US',
 }: IProps) => {
 
-    const today = useMemo(() => dayjs(), []);
+    const dayRef = useRef<Dayjs>(dayjs());
+    const today = dayRef.current;
     const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(value ? dayjs(value) : today);
 
-    const translateI18n = (id: string, options?: {defaultMessage: string}) => {
-        const localeMap = locales[locale];
-        if(typeof localeMap !== 'undefined' && typeof localeMap[id] !== 'undefined'){
-            return localeMap[id];
-        }
 
-        if(typeof options?.defaultMessage !== 'undefined'){
-            return options?.defaultMessage;
-        }
-
-        return id;
-    }
-
-    const getLocaleWeekDay = () => {
+    /**
+     * 產生週星期文字
+     */
+    const localeWeekDay = useMemo(() => {
         return config.weekDay.map((weekDate: number) => {
-            return translateI18n(`com.datepicker.weekDay.${weekDate}`, {defaultMessage: String(weekDate)});
+            return translateI18n(`com.datepicker.weekDay.${weekDate}`, {defaultMessage: String(weekDate), locale: locale});
         });
-    };
+    }, [locale]);
 
-    const getLocaleMonth = () => {
+    /**
+     * 產生月文字
+     */
+    const localeMonth = useMemo(() => {
         return config.month.map((month: number) => {
-            return {text: translateI18n(`com.datepicker.month.${month}`), value: month - 1};
+            return {text: translateI18n(`com.datepicker.month.${month}`, {locale: locale}), value: month - 1};
         });
-    };
-
-    const localeWeekDay = useMemo(() => getLocaleWeekDay(), []);
-    const localeMonth = useMemo(() => getLocaleMonth(), []);
-
-
-    console.log('locale', locale);
-
-
-
+    }, [locale]);
 
 
     /**
@@ -107,7 +105,7 @@ const Datepicker = ({
     const handleConformYear = useCallback(() => {
         const currentYear = panelYearMonth.get('year');
 
-        const localeText = translateI18n('com.datepicker.pleaseInputYear', {defaultMessage: 'Please enter the first year'});
+        const localeText = translateI18n('com.datepicker.pleaseInputYear', {defaultMessage: 'Please enter the first year', locale: locale});
         // @ts-ignore
         const newYear = parseInt(prompt(localeText, panelYearMonth.get('year')));
         if (newYear && newYear !== currentYear) {
@@ -183,7 +181,7 @@ const Datepicker = ({
                     <div className={elClassName.yearMonth}>
                         <span className={elClassName.year} onClick={handleConformYear}>
                             {panelYearMonth.year()}
-                            {translateI18n('com.datepicker.unit.year', {defaultMessage: ''})}
+                            {translateI18n('com.datepicker.unit.year', {defaultMessage: '', locale: locale})}
                         </span>
                         <div className={elClassName.monthGroup}>
                             <span className={elClassName.month}>
@@ -361,7 +359,7 @@ const Datepicker = ({
     const renderTodayButton = useCallback(() => (
         <div className={elClassName.labelCheckCardCreate}>
             <button className={elClassName.todayButton} type="button" onClick={handleSelectedToday}>
-                <span>{translateI18n('com.datepicker.setToday', {defaultMessage: 'Set to today'})}</span>
+                <span>{translateI18n('com.datepicker.setToday', {defaultMessage: 'Set to today', locale: locale})}</span>
             </button>
         </div>
 
