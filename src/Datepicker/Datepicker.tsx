@@ -194,7 +194,7 @@ const Datepicker = ({
                                 value={panelYearMonth.month()}
                             >
                                 {localeMonth.map(row => {
-                                    return <option value={row.value}>{row.text}</option>;
+                                    return <option key={row.value} value={row.value}>{row.text}</option>;
                                 })}
                             </select>
                         </div>
