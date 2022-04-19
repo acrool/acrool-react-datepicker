@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.9](https://github.com/imagine10255/bear-react-datepicker/compare/v1.0.8...v1.0.9) (2022-04-19)
+
+
+### Features
+
+* modify year use select and maxYear, minYear ([b4828a4](https://github.com/imagine10255/bear-react-datepicker/commit/b4828a4de0252fea2ff75d2cfc8fa6ca130c049e))
+
 ### [1.0.8](https://github.com/imagine10255/bear-react-datepicker/compare/v1.0.7...v1.0.8) (2022-04-19)
 
 
