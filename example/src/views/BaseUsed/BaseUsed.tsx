@@ -6,14 +6,14 @@ import {Button} from 'bear-components/atoms';
 
 
 const BaseUsed = () => {
-    const [myDate, setMyDate] = useState('2020-12-14');
+    const [myDate, setMyDate] = useState('');
 
 
     return (
         <div>
             <input type="text" value={myDate}/>
             <Datepicker onChange={setMyDate} value={myDate}/>
-            <Datepicker onChange={setMyDate} value={myDate} locale="zh-CN"/>
+            <Datepicker onChange={setMyDate} value={myDate} isVisibleSetToday locale="zh-CN"/>
 
 
 

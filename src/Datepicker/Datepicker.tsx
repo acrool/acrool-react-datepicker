@@ -27,6 +27,8 @@ interface IProps {
     onChange: (newDate: string) => void;
     isVisibleSetToday?: boolean;
     locale?: string;
+    minYear?: number;
+    maxYear?: number;
 }
 
 
@@ -55,12 +57,15 @@ const Datepicker = ({
     onChange,
     isVisibleSetToday = false,
     locale = 'en-US',
+    minYear = 1911,
+    maxYear,
 }: IProps) => {
 
     const dayRef = useRef<Dayjs>(dayjs());
     const today = dayRef.current;
     const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(value ? dayjs(value) : today);
 
+    const initMaxYear = typeof maxYear !== 'undefined' ? maxYear : Number(today.add(1, 'year').year());
 
     /**
      * 產生週星期文字
@@ -82,6 +87,20 @@ const Datepicker = ({
 
 
     /**
+     * 產生年文字
+     */
+    const localeYear = useMemo(() => {
+        const length = initMaxYear - minYear + 1;
+        const yearList = new Array(length).fill(initMaxYear);
+        const yearText = translateI18n('com.datepicker.unit.year', {defaultMessage: '', locale: locale});
+        return yearList.map((year, index) => {
+            const calcYear = year - (index);
+            return {text: `${calcYear}${yearText}`, value: calcYear};
+        });
+    }, [locale]);
+
+
+    /**
      * 處理選擇日期
      * @param year
      * @param month
@@ -98,22 +117,6 @@ const Datepicker = ({
         setPanelYearMonth(newPanelDate);
     }, [panelYearMonth]);
 
-
-    /**
-     * 處理彈出提問年份
-     */
-    const handleConformYear = useCallback(() => {
-        const currentYear = panelYearMonth.get('year');
-
-        const localeText = translateI18n('com.datepicker.pleaseInputYear', {defaultMessage: 'Please enter the first year', locale: locale});
-        // @ts-ignore
-        const newYear = parseInt(prompt(localeText, panelYearMonth.get('year')));
-        if (newYear && newYear !== currentYear) {
-            handleChangePanel(newYear, );
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [panelYearMonth]);
 
     /**
      * 處理選擇日期
@@ -161,6 +164,7 @@ const Datepicker = ({
         const panelPreYearMonth = panelYearMonth.subtract(1, 'month');
         const panelNextYearMonth = panelYearMonth.add(1, 'month');
 
+        const activeYear = localeYear.find(row => String(row.value) === String(panelYearMonth.year()));
         const activeMonth = localeMonth.find(row => row.value === panelYearMonth.month());
 
         // 產生年月標題
@@ -179,10 +183,21 @@ const Datepicker = ({
                     </button>
 
                     <div className={elClassName.yearMonth}>
-                        <span className={elClassName.year} onClick={handleConformYear}>
-                            {panelYearMonth.year()}
-                            {translateI18n('com.datepicker.unit.year', {defaultMessage: '', locale: locale})}
-                        </span>
+                        <div className={elClassName.yearGroup}>
+                            <span className={elClassName.year}>
+                               {activeYear?.text}
+                            </span>
+
+                            <select
+                                className={elClassName.yearSelect}
+                                onChange={e => handleChangePanel(panelYearMonth.set('year', Number(e.target.value)).year())}
+                                value={panelYearMonth.year()}
+                            >
+                                {localeYear.map(row => {
+                                    return <option key={row.value} value={row.value}>{row.text}</option>;
+                                })}
+                            </select>
+                        </div>
                         <div className={elClassName.monthGroup}>
                             <span className={elClassName.month}>
                                {activeMonth?.text}
