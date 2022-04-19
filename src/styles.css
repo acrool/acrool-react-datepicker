@@ -148,7 +148,7 @@
     cursor: pointer;
 }
 
-.bear-react-datepicker__day.isToday{
+.bear-react-datepicker__day.is-today{
     color: var(--primary-color, #00a3e0);
 }
 
