@@ -28,6 +28,36 @@ const locales: ILocale = {
         'com.datepicker.unit.year': ' ',
         'com.datepicker.pleaseInputYear': 'Please enter the first year',
         'com.datepicker.setToday': 'Set to today',
+
+        'com.timepicker.setNow': 'Set Now',
+        'com.timepicker.ok': 'OK',
+    },
+    'zh-TW': {
+        'com.datepicker.month.1': '1月',
+        'com.datepicker.month.2': '2月',
+        'com.datepicker.month.3': '3月',
+        'com.datepicker.month.4': '4月',
+        'com.datepicker.month.5': '5月',
+        'com.datepicker.month.6': '6月',
+        'com.datepicker.month.7': '7月',
+        'com.datepicker.month.8': '8月',
+        'com.datepicker.month.9': '9月',
+        'com.datepicker.month.10': '10月',
+        'com.datepicker.month.11': '11月',
+        'com.datepicker.month.12': '12月',
+        'com.datepicker.weekDay.1': '一',
+        'com.datepicker.weekDay.2': '二',
+        'com.datepicker.weekDay.3': '三',
+        'com.datepicker.weekDay.4': '四',
+        'com.datepicker.weekDay.5': '五',
+        'com.datepicker.weekDay.6': '六',
+        'com.datepicker.weekDay.7': '日',
+        'com.datepicker.unit.year': '年',
+        'com.datepicker.pleaseInputYear': '請輸入西元年',
+        'com.datepicker.setToday': '設定為今天',
+
+        'com.timepicker.setNow': '現在',
+        'com.timepicker.ok': '確定',
     },
     'zh-CN': {
         'com.datepicker.month.1': '1月',
@@ -52,8 +82,28 @@ const locales: ILocale = {
         'com.datepicker.unit.year': '年',
         'com.datepicker.pleaseInputYear': '请输入西元年',
         'com.datepicker.setToday': '设定为今天',
+
+        'com.timepicker.setNow': '此刻',
+        'com.timepicker.ok': '确定',
     }
 };
 
 
-export default locales;
+
+
+const translateI18n = (id: string, options?: {defaultMessage?: string, locale?: string}) => {
+    const selectLocale = typeof options?.locale !== 'undefined' ? options.locale : 'en-US';
+    const localeMap = locales[selectLocale] ? locales[selectLocale]: locales['en-US'];
+
+    if(typeof localeMap !== 'undefined' && typeof localeMap[id] !== 'undefined'){
+        return localeMap[id];
+    }
+
+    if(typeof options?.defaultMessage !== 'undefined'){
+        return options?.defaultMessage;
+    }
+
+    return id;
+}
+
+export default translateI18n;

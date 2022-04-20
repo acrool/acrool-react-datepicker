@@ -1,8 +1,4 @@
-
-
-
-export const config = {
-    modalId: 'root-modal',
+const config = {
     elCLassPrefix: 'bear-react-datepicker',
 };
 
@@ -10,7 +6,7 @@ export const config = {
 /**
  * css class setting
  */
-export const elClassName = {
+export default {
     root: `${config.elCLassPrefix}__root`,
     yearMonthRow: `${config.elCLassPrefix}__year-month-row`,
     yearMonth: `${config.elCLassPrefix}__year-month`,

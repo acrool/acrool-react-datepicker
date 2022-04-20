@@ -1,11 +1,10 @@
 import React, {useState, useCallback, useMemo, useRef} from 'react';
 import dayjs,{Dayjs} from 'dayjs';
-import {elClassName} from '../config';
+import elClassName from './config';
 import cx from 'classnames';
 import {ArrowIcon} from '../Icon';
-import locales from '../locales';
-import '../styles.css';
-// Components
+import translateI18n from '../locales';
+import './styles.css';
 
 const config = {
     weekDay: [1, 2, 3, 4, 5, 6, 7],
@@ -19,7 +18,7 @@ const config = {
  * @param sourceDate
  * @returns {dayjs.Dayjs}
  */
-const getConvertDayjs = (sourceDate: any) => dayjs(sourceDate);
+const getConvertDayjs = (sourceDate?: string) => dayjs(sourceDate);
 
 interface IProps {
     value?: string;
@@ -32,20 +31,6 @@ interface IProps {
 }
 
 
-const translateI18n = (id: string, options?: {defaultMessage?: string, locale?: string}) => {
-    const selectLocale = typeof options?.locale !== 'undefined' ? options.locale : 'en-US';
-    const localeMap = locales[selectLocale] ? locales[selectLocale]: locales['en-US'];
-
-    if(typeof localeMap !== 'undefined' && typeof localeMap[id] !== 'undefined'){
-        return localeMap[id];
-    }
-
-    if(typeof options?.defaultMessage !== 'undefined'){
-        return options?.defaultMessage;
-    }
-
-    return id;
-}
 
 /**
  * Datepicker
