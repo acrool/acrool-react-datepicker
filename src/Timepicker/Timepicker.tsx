@@ -153,7 +153,7 @@ const Timepicker = ({
     return (
         <div className={elClassNames.root}>
             <div className={elClassNames.header}>
-                <span className={elClassNames.headerText}>時間</span>
+                <span className={elClassNames.headerText}>{translateI18n('com.timepicker.time', {locale: locale})}</span>
             </div>
             <div className={elClassNames.pickContainer}>
                 {/* 時 */}
