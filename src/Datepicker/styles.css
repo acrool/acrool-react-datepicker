@@ -5,12 +5,13 @@
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     line-height: normal;
+    user-select: none;
 }
 
 .bear-react-datepicker__root {
     background-color: #fff;
     width: calc(30px * 7 + 24px);
-    margin: 0 auto;
+    margin: 0;
     box-shadow:
             0 3px 6px -4px rgba(0, 0, 0, 0.12),
             0 6px 16px 0 rgba(0, 0, 0, 0.08),

@@ -2,6 +2,11 @@ import { isEmpty } from 'bear-jsutils/equal';
 import {paddingLeft} from 'bear-jsutils/string';
 import dayjs from 'dayjs';
 
+export const defaultFormat = {
+    date: 'YYYY-MM-DD',
+    time: 'HH:mm:ss',
+};
+
 
 export const getHour = (hour: string) => {
     if(isEmpty(hour)){
@@ -9,7 +14,7 @@ export const getHour = (hour: string) => {
     }
     const hourNum = Number(hour);
     if(hourNum > 23 && hourNum < 0){
-      return '00';
+        return '00';
     }
     return paddingLeft(hour, 2);
 }
@@ -19,7 +24,7 @@ export const getMinuteSecond = (MinuteSecond: string) => {
     }
     const hourNum = Number(MinuteSecond);
     if(hourNum > 60 && hourNum < 0){
-      return '00';
+        return '00';
     }
     return paddingLeft(MinuteSecond, 2);
 }
@@ -41,7 +46,7 @@ export function getTimeList(): {
     hourList: Array<string>,
     minuteList: Array<string>,
     secondList: Array<string>,
-    } {
+} {
     const hourList = [];
     const minuteList = [];
     const secondList = [];
@@ -60,3 +65,9 @@ export function getTimeList(): {
 
     return {hourList, minuteList, secondList};
 }
+
+
+export const getDatetime = (newValue?: string) => {
+    return dayjs(isEmpty(newValue) ? undefined: newValue);
+}
+

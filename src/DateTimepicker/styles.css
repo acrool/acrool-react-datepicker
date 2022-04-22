@@ -1,0 +1,13 @@
+.bear-react-datetimepicker__root {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    line-height: normal;
+    display: flex;
+    flex-direction: row;
+}
+
+.bear-react-datetimepicker__root {
+    display: flex;
+    flex-direction: row;
+}
+

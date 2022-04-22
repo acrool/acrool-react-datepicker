@@ -29,6 +29,7 @@ const locales: ILocale = {
         'com.datepicker.pleaseInputYear': 'Please enter the first year',
         'com.datepicker.setToday': 'Set to today',
 
+        'com.timepicker.time': 'Time',
         'com.timepicker.setNow': 'Set Now',
         'com.timepicker.ok': 'OK',
     },
@@ -56,6 +57,7 @@ const locales: ILocale = {
         'com.datepicker.pleaseInputYear': '請輸入西元年',
         'com.datepicker.setToday': '設定為今天',
 
+        'com.timepicker.time': '時間',
         'com.timepicker.setNow': '現在',
         'com.timepicker.ok': '確定',
     },
@@ -83,6 +85,7 @@ const locales: ILocale = {
         'com.datepicker.pleaseInputYear': '请输入西元年',
         'com.datepicker.setToday': '设定为今天',
 
+        'com.timepicker.time': '时间',
         'com.timepicker.setNow': '此刻',
         'com.timepicker.ok': '确定',
     }

@@ -1,23 +1,28 @@
 import React, {useState} from 'react';
-import {Datepicker} from 'bear-react-datepicker';
-import {Timepicker} from 'bear-react-datepicker';
+import {Datepicker, Timepicker, DateTimepicker} from 'bear-react-datepicker';
 import {Button} from 'bear-components/atoms';
 
 
 
 
 const BaseUsed = () => {
+    const [myDateTime, setMyDateTime] = useState('');
     const [myDate, setMyDate] = useState('');
     const [myTime, setMyTime] = useState('');
 
 
     return (
         <div>
-            <input type="text" value={myDate}/>
+            <input type="text" value={myDate} onChange={(event) => setMyTime(event.target.value)}/>
+            <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-CN"/>
+
+            <hr/>
             <input type="text" value={myTime} onChange={(event) => setMyTime(event.target.value)}/>
-            {/*<Datepicker onChange={setMyDate} value={myDate}/>*/}
-            <Datepicker onChange={setMyDate} value={myDate} isVisibleSetToday locale="zh-CN"/>
-            <Timepicker onChange={setMyTime} value={myTime} />
+            <Timepicker value={myTime} onChange={setMyTime} onClickOk={() => {}}/>
+
+            <hr/>
+            <input type="text" value={myDateTime} onChange={(event) => setMyDateTime(event.target.value)}/>
+            <DateTimepicker value={myDateTime} onChange={setMyDateTime}  />
 
 
 

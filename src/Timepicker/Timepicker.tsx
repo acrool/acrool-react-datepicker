@@ -1,31 +1,47 @@
 import React, {useState, useRef, useEffect, useCallback, RefObject} from 'react';
 import dayjs from 'dayjs';
-import elClassName from './config';
+import elClassNames from './el-class-names';
 import {isEmpty} from 'bear-jsutils/equal';
 import cx from 'classnames';
-import {getTimeList, getTimeFormat} from './utils';
+import {getTimeList, getTimeFormat} from '../utils';
 import translateI18n from '../locales';
 
 import './styles.css';
 
 
-type updateTimeType = string;
 interface IProps {
     value?: string;
-    onChange?: (updateTime: updateTimeType) => void;
-    onClickOk?: (updateTime: updateTimeType) => void;
+    onChange?: (value: string) => void;
+    onClickOk?: () => void;
     locale?: string,
 }
 
 const {hourList, minuteList, secondList} = getTimeList();
 
 const unitHeight = 32;
+const halfHeight = (32 * 6) / 2;
+
+interface ITimeObj  {
+    hour: string,
+    minute: string,
+    second: string,
+}
+
+
+/**
+ * 時間物件轉自串
+ * @param timeObj
+ */
+const getTimeString = (timeObj: ITimeObj): string => {
+    return `${timeObj.hour}:${timeObj.minute}:${timeObj.second}`;
+}
 
 /**
  * 時間選擇器
  * @param onChange 選擇視窗當項目異動時
  * @param onClickOk 選擇視窗按下OK時
  * @param value Input Value
+ * @param locale
  */
 const Timepicker = ({
     onChange,
@@ -38,11 +54,9 @@ const Timepicker = ({
     const secondBoxRef = useRef<HTMLDivElement>(null);
     const initTime = getTimeFormat(value);
 
-    const [time, setTime] = useState<{
-        hour: string,
-        minute: string,
-        second: string,
-    }>(initTime);
+    const [time, setTime] = useState<ITimeObj>(initTime);
+    const timeString = getTimeString(time);
+
 
     /**
      * 當外部值移動時
@@ -54,49 +68,47 @@ const Timepicker = ({
 
 
     /**
-     * 當時間狀態移動時, 移動到現在的，時、分、秒
+     * 當時間狀態移動時, 移動到現在的，時
      */
     useEffect(() => {
         if(hourBoxRef.current){
-            hourBoxRef.current?.scrollTo({behavior: 'smooth', top: Number(isEmpty(time.hour) ? 0 : time.hour) * unitHeight});
+            hourBoxRef.current?.scrollTo({behavior: 'smooth', top: isEmpty(time.hour) ? 0 : (Number(time.hour) * unitHeight) - (halfHeight)});
         }
-        if(minuteBoxRef.current){
-            minuteBoxRef.current?.scrollTo({behavior: 'smooth', top: Number(isEmpty(time.minute) ? 0 : time.minute) * unitHeight});
-        }
-        if(secondBoxRef.current){
-            secondBoxRef.current?.scrollTo({behavior: 'smooth', top: Number(isEmpty(time.second) ? 0 : time.second) * unitHeight});
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [time]);
-
+    }, [time.hour]);
 
     /**
-     * 選取秒的時候直接關閉
+     * 當時間狀態移動時, 移動到現在的，分
      */
     useEffect(() => {
-        handleClickOk();
+        if(minuteBoxRef.current){
+            minuteBoxRef.current?.scrollTo({behavior: 'smooth', top: isEmpty(time.minute) ? 0 : (Number(time.minute) * unitHeight) - (halfHeight)});
+        }
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [time.minute]);
+
+    /**
+     * 當時間狀態移動時, 移動到現在的，秒
+     */
+    useEffect(() => {
+        if(secondBoxRef.current){
+            secondBoxRef.current?.scrollTo({behavior: 'smooth', top: isEmpty(time.second) ? 0 : (Number(time.second) * unitHeight) - (halfHeight)});
+        }
+
     }, [time.second]);
-
 
 
     /**
      * 處理點擊OK
      */
     const handleClickOk = useCallback(() => {
-        const timeStr = `${time.hour}:${time.minute}:${time.second}`;
-
         if(onChange){
-            onChange(timeStr);
+            onChange(getTimeString(time));
         }
         if(onClickOk){
-            onClickOk(timeStr);
+            onClickOk();
         }
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [time]);
+    }, [timeString, onChange, onClickOk]);
 
     /**
      * 處理按下現在時間
@@ -110,11 +122,9 @@ const Timepicker = ({
             minute: reToday.format('mm'),
             second: reToday.format('ss'),
         });
-        // handleClickOk();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
 
     /**
      * 產生時|分|秒 區塊
@@ -123,48 +133,54 @@ const Timepicker = ({
         return unitList.map(unit => {
             const isActive = time[unitCode] === unit;
             return (
-                <span className={cx(elClassName.fakeOption, {'is-active': isActive})}
+                <span className={cx(elClassNames.fakeOption, {'is-active': isActive})}
                     key={`unit-${unitCode}-${unit}`}
-                    onClick={() => setTime({
-                        ...time,
-                        [unitCode]: unit
-                    })}
+                    onClick={() => {
+                        const newTime = {...time, [unitCode]: unit};
+                        setTime(newTime);
+                        if(unitCode === 'second' && onChange){
+                            onChange(getTimeString(newTime));
+                        }
+                    }}
                 >
                     {unit}
                 </span>
             );
         });
-    }, [time]);
+    }, [timeString, onChange]);
 
 
     return (
-        <div className={elClassName.root}>
-            <div className={elClassName.pickContainer}>
+        <div className={elClassNames.root}>
+            <div className={elClassNames.header}>
+                <span className={elClassNames.headerText}>時間</span>
+            </div>
+            <div className={elClassNames.pickContainer}>
                 {/* 時 */}
-                <div className={elClassName.fakeSelectContainer}>
-                    <div className={elClassName.selectBox} ref={hourBoxRef}>
+                <div className={elClassNames.fakeSelectContainer}>
+                    <div className={elClassNames.selectBox} ref={hourBoxRef}>
                         {renderOption('hour', hourList)}
                     </div>
                 </div>
 
                 {/* 分 */}
-                <div className={elClassName.fakeSelectContainer}>
-                    <div className={elClassName.selectBox} ref={minuteBoxRef}>
+                <div className={elClassNames.fakeSelectContainer}>
+                    <div className={elClassNames.selectBox} ref={minuteBoxRef}>
                         {renderOption('minute', minuteList)}
                     </div>
                 </div>
 
                 {/* 秒 */}
-                <div className={elClassName.fakeSelectContainer}>
-                    <div className={elClassName.selectBox} ref={secondBoxRef}>
+                <div className={elClassNames.fakeSelectContainer}>
+                    <div className={elClassNames.selectBox} ref={secondBoxRef}>
                         {renderOption('second', secondList)}
                     </div>
                 </div>
             </div>
 
-            <div className={elClassName.buttonContainer}>
-                <button className={elClassName.nowButton} type="button" onClick={handleNowTime}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
-                <button className={elClassName.confirmButton} type="button" onClick={handleClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
+            <div className={elClassNames.buttonContainer}>
+                <button className={elClassNames.nowButton} type="button" onClick={handleNowTime}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
+                <button className={elClassNames.confirmButton} type="button" onClick={handleClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
             </div>
         </div>
     );

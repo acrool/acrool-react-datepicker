@@ -5,18 +5,38 @@
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     line-height: normal;
+    user-select: none;
 }
 
 .bear-react-timepicker__root {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     width: 168px;
-    margin: 5px;
+    margin: 0;
     box-shadow:
             0 3px 6px -4px rgba(0, 0, 0, 0.12),
             0 6px 16px 0 rgba(0, 0, 0, 0.08),
             0 9px 28px 8px rgba(0, 0, 0, 0.05);
 }
 
+
+.bear-react-timepicker__header {
+    height: 28px;
+    width: 100%;
+    border-bottom: solid 1px #f0f0f0;
+}
+.bear-react-timepicker__header-text {
+    text-align: center;
+    color: #1f1f1f;
+    font-size: 14px;
+    height: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
 
 .bear-react-timepicker__pick-container {
     display: flex;
@@ -28,7 +48,7 @@
 }
 
 .bear-react-timepicker__select-box {
-    height: 192px;
+    height: calc(32px * 6);
     overflow-x: hidden;
     overflow-y: scroll;
     position: relative;
@@ -75,6 +95,7 @@
     border-top: 1px solid #f0f0f0;
     padding: 4px 12px;
     font-size: 14px;
+    flex: 1;
 }
 .bear-react-timepicker__confirm-button {
     color: #fff;

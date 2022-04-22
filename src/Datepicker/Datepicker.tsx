@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useMemo, useRef} from 'react';
 import dayjs,{Dayjs} from 'dayjs';
-import elClassName from './config';
+import elClassNames from './el-class-names';
 import cx from 'classnames';
 import {ArrowIcon} from '../Icon';
 import translateI18n from '../locales';
@@ -12,14 +12,6 @@ const config = {
 };
 
 
-
-/**
- * 取得 value的 Dayjs 物件
- * @param sourceDate
- * @returns {dayjs.Dayjs}
- */
-const getConvertDayjs = (sourceDate?: string) => dayjs(sourceDate);
-
 interface IProps {
     value?: string;
     format?: string;
@@ -29,8 +21,6 @@ interface IProps {
     minYear?: number;
     maxYear?: number;
 }
-
-
 
 /**
  * Datepicker
@@ -154,10 +144,10 @@ const Datepicker = ({
 
         // 產生年月標題
         return (
-            <div className={elClassName.yearMonthRow}>
+            <div className={elClassNames.yearMonthRow}>
 
-                <div className={elClassName.changeControl}>
-                    <button className={cx(elClassName.monthButton, 'pre-month')}
+                <div className={elClassNames.changeControl}>
+                    <button className={cx(elClassNames.monthButton, 'pre-month')}
                         type="button"
                         onClick={() => handleChangePanel(
                             panelPreYearMonth.year(),
@@ -167,14 +157,14 @@ const Datepicker = ({
                         <ArrowIcon/>
                     </button>
 
-                    <div className={elClassName.yearMonth}>
-                        <div className={elClassName.yearGroup}>
-                            <span className={elClassName.year}>
+                    <div className={elClassNames.yearMonth}>
+                        <div className={elClassNames.yearGroup}>
+                            <span className={elClassNames.year}>
                                {activeYear?.text}
                             </span>
 
                             <select
-                                className={elClassName.yearSelect}
+                                className={elClassNames.yearSelect}
                                 onChange={e => handleChangePanel(panelYearMonth.set('year', Number(e.target.value)).year())}
                                 value={panelYearMonth.year()}
                             >
@@ -183,13 +173,13 @@ const Datepicker = ({
                                 })}
                             </select>
                         </div>
-                        <div className={elClassName.monthGroup}>
-                            <span className={elClassName.month}>
+                        <div className={elClassNames.monthGroup}>
+                            <span className={elClassNames.month}>
                                {activeMonth?.text}
                             </span>
 
                             <select
-                                className={elClassName.monthSelect}
+                                className={elClassNames.monthSelect}
                                 onChange={e => handleChangePanel(undefined, panelYearMonth.set('month', Number(e.target.value)).month())}
                                 value={panelYearMonth.month()}
                             >
@@ -201,7 +191,7 @@ const Datepicker = ({
 
                     </div>
 
-                    <button className={cx(elClassName.monthButton, 'next-month')}
+                    <button className={cx(elClassNames.monthButton, 'next-month')}
                         type="button"
                         onClick={() => handleChangePanel(
                             panelNextYearMonth.year(),
@@ -222,9 +212,9 @@ const Datepicker = ({
      * 產生週標題
      */
     const renderWeek = useCallback(() => (
-        <div className={elClassName.weekRow}>
+        <div className={elClassNames.weekRow}>
             {/* eslint-disable-next-line react/no-array-index-key */}
-            {localeWeekDay.map((week, index) => <div className={elClassName.week} key={`localeWeekDay-${index}-${week}`}>{week}</div>)}
+            {localeWeekDay.map((week, index) => <div className={elClassNames.week} key={`localeWeekDay-${index}-${week}`}>{week}</div>)}
         </div>
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -235,7 +225,7 @@ const Datepicker = ({
      * @returns {Array}
      */
     const renderPreMonthDay = useCallback(() => {
-        const currentDate = getConvertDayjs(value);
+        const currentDate = dayjs(value);
 
         // 取得指定年月的第一天是星期幾 (0, 1-6)
         const currentMonFirstWeek = panelYearMonth.set('date', 1).day();
@@ -256,7 +246,7 @@ const Datepicker = ({
             const day = preMonthFirstDay + d + 1;
             preMonFirstDayList[d] = (
                 <div
-                    className={cx(elClassName.preDay, {'is-active': currentDate.isSame(preMonth.set('date', day), 'date')})}
+                    className={cx(elClassNames.preDay, {'is-active': currentDate.isSame(preMonth.set('date', day), 'date')})}
                     key={`preMonthDay-${d}`}
                     onClick={() => handleSelectedDate(preMonth.year(), preMonth.month(), day)}
                 >
@@ -277,7 +267,7 @@ const Datepicker = ({
      * @returns {Array}
      */
     const renderNextMonthDay = useCallback(() => {
-        const currentDate = getConvertDayjs(value);
+        const currentDate = dayjs(value);
 
         // 取得指定年月的第一天是星期幾 (0, 1-6)
         const currentMonFirstWeek = panelYearMonth.set('date', 1).day();
@@ -299,7 +289,7 @@ const Datepicker = ({
             const day = d + 1;
             nextMonEndDayList[d] = (
                 <div
-                    className={cx(elClassName.preDay, {'is-active': currentDate.isSame(nextMonth.set('date', day))})}
+                    className={cx(elClassNames.preDay, {'is-active': currentDate.isSame(nextMonth.set('date', day))})}
                     key={`nextMonthDay-${d}`}
                     onClick={() => handleSelectedDate(nextMonth.year(), nextMonth.month(), day)}
                 >
@@ -319,7 +309,7 @@ const Datepicker = ({
      * 產生當月日期表
      */
     const renderCurrentMonthDay = useCallback(() => {
-        const currentDate = getConvertDayjs(value);
+        const currentDate = dayjs(value);
 
         // 取 Panel年月 的最後一天
         const currentMonthLastDay = panelYearMonth.endOf('month').get('date');
@@ -331,7 +321,7 @@ const Datepicker = ({
             const eachDate = panelYearMonth.set('date', dayNumber);
             currentDayList[d] = (
                 <div
-                    className={cx(elClassName.day,
+                    className={cx(elClassNames.day,
                         {'is-active': currentDate.isSame(eachDate, 'date')},
                         {'is-today': today.isSame(eachDate, 'date')},
                     )}
@@ -346,7 +336,7 @@ const Datepicker = ({
         }
 
         return (
-            <div className={elClassName.dayRow}>
+            <div className={elClassNames.dayRow}>
                 {renderWeek()}
                 {renderPreMonthDay()}
                 {currentDayList}
@@ -357,8 +347,8 @@ const Datepicker = ({
     }, [panelYearMonth, value]);
 
     const renderTodayButton = useCallback(() => (
-        <div className={elClassName.labelCheckCardCreate}>
-            <button className={elClassName.todayButton} type="button" onClick={handleSelectedToday}>
+        <div className={elClassNames.labelCheckCardCreate}>
+            <button className={elClassNames.todayButton} type="button" onClick={handleSelectedToday}>
                 <span>{translateI18n('com.datepicker.setToday', {defaultMessage: 'Set to today', locale: locale})}</span>
             </button>
         </div>
@@ -367,7 +357,7 @@ const Datepicker = ({
     ), []);
 
     return (
-        <div className={elClassName.root}>
+        <div className={elClassNames.root}>
             {renderYearMonth()}
             {renderCurrentMonthDay()}
 
