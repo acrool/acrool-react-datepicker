@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.10](https://github.com/imagine10255/bear-react-datepicker/compare/v1.0.9...v1.0.10) (2022-04-22)
+
+
+### Features
+
+* add datetimepacker ([08c4058](https://github.com/imagine10255/bear-react-datepicker/commit/08c4058b757b2cefb635ccf929ed0fd6ac755605))
+* 新增 時間選擇器 ([f845a68](https://github.com/imagine10255/bear-react-datepicker/commit/f845a68364eabc9f479889089ad215e674501703))
+
 ### [1.0.9](https://github.com/imagine10255/bear-react-datepicker/compare/v1.0.8...v1.0.9) (2022-04-19)
 
 
