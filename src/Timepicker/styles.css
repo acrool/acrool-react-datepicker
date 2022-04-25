@@ -78,6 +78,7 @@
     width: 56px;
     height: 32px;
     display: flex;
+    font-size: 16px;
     align-items: center;
     justify-content: center;
     background-color: transparent;
