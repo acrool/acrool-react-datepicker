@@ -20,6 +20,7 @@ export const StoreContext = React.createContext<IContext>({
 /**
  * Hook
  * @param isExpend
+ * @param toggleExpend
  */
 export const useSidebar = (isExpend?: boolean) => useContext(StoreContext);
 
@@ -34,7 +35,7 @@ export const SidebarProvider = ({
 }: FCChildrenProps) => {
     const [isExpend, setIsExpend] = useState<boolean>(false);
 
-    const toggleExpend = useCallback((targetIsExpend) => {
+    const toggleExpend = useCallback((targetIsExpend?: boolean) => {
         setIsExpend(prev => {
             if(typeof targetIsExpend !== 'undefined'){
                 return targetIsExpend;
