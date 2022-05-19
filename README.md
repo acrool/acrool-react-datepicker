@@ -35,7 +35,7 @@ import "bear-react-datepicker/dist/index.css";
 
 then in your page
 ```tsx
-import {EStatus, toast} from 'bear-react-datepicker';
+import {Datepicker, Timepicker, DateTimepicker} from 'bear-react-datepicker';
 
 
 const BaseUsed = () => {

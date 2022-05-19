@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Datepicker, Timepicker, DateTimepicker} from 'bear-react-datepicker';
-import {Button} from 'bear-components/atoms';
 
 
 
