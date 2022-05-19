@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/imagine10255/bear-react-datepicker/compare/v1.0.12...v2.0.0) (2022-05-19)
+
+
+### Features
+
+* 更改 範例 升級react18 ([e38568a](https://github.com/imagine10255/bear-react-datepicker/commit/e38568a10d8513e8e97136bebd041f0d4885f907))
+
 ### [1.0.12](https://github.com/imagine10255/bear-react-datepicker/compare/v1.0.11...v1.0.12) (2022-04-25)
 
 
