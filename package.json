@@ -29,7 +29,7 @@
     "build": "run-s build:claer && microbundle-crl --no-compress --no-css-modules --format modern,cjs",
     "build:claer": "rm -rf ./dist",
     "dev": "cd example && yarn install && yarn run start",
-    "start": "microbundle-crl watch --no-compress --no-css-modules --format modern,cjs",
+    "start": "run-s build:claer && microbundle-crl watch --no-compress --no-css-modules --format modern,cjs",
     "prepublishOnly": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
@@ -39,13 +39,13 @@
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build",
     "gitlog": "git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblueby %an %Cgreen(%cr)%Creset'",
-    "lint:fix": "eslint ./src --fix && cd example && yarn lint:fix",
+    "lint:fix": "eslint ./src --fix",
     "cz": "git cz",
     "release": "standard-version --release-as",
     "release:major": "standard-version -r major",
     "release:minor": "standard-version -r minor",
     "release:patch": "standard-version -r patch",
-    "release:beta": "standard-version --prerelease beta"
+    "release:alpha": "standard-version --prerelease alpha"
   },
   "resolutions": {
     "typescript": "4.7.4"
