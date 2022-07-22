@@ -13,21 +13,22 @@ const BaseUsed = () => {
     return (
         <div>
             <input type="text" value={myDate} onChange={(event) => setMyTime(event.target.value)}/>
-            <br/>
-            <br/>
-            <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-CN"/>
+            <div className="d-flex flex-row my-2">
+                <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-CN" className="mr-3"/>
+                <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-CN" isDark/>
+            </div>
 
-            <hr/>
             <input type="text" value={myTime} onChange={(event) => setMyTime(event.target.value)}/>
-            <br/>
-            <br/>
-            <Timepicker value={myTime} onChange={setMyTime} onClickOk={() => {}}/>
+            <div className="d-flex flex-row my-2">
+                <Timepicker value={myTime} onChange={setMyTime} onClickOk={() => {}} className="mr-3"/>
+                <Timepicker value={myTime} onChange={setMyTime} onClickOk={() => {}} isDark/>
+            </div>
 
-            <hr/>
             <input type="text" value={myDateTime} onChange={(event) => setMyDateTime(event.target.value)}/>
-            <br/>
-            <br/>
-            <DateTimepicker value={myDateTime} onChange={setMyDateTime}  />
+            <div className="d-flex flex-row my-2">
+                <DateTimepicker value={myDateTime} onChange={setMyDateTime} className="mr-3"/>
+                <DateTimepicker value={myDateTime} onChange={setMyDateTime} isDark/>
+            </div>
 
 
 

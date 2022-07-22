@@ -1,5 +1,6 @@
 import React, {useState, useCallback, useMemo, useRef} from 'react';
 import dayjs,{Dayjs} from 'dayjs';
+import CSS from 'csstype';
 import elClassNames from './el-class-names';
 import cx from 'classnames';
 import {ArrowIcon} from '../Icon';
@@ -13,6 +14,8 @@ const config = {
 
 
 interface IProps {
+    className?: string;
+    style?: CSS.Properties;
     value?: string;
     format?: string;
     onChange: (newDate: string) => void;
@@ -20,6 +23,7 @@ interface IProps {
     locale?: string;
     minYear?: number;
     maxYear?: number;
+    isDark?: boolean,
 }
 
 /**
@@ -27,6 +31,8 @@ interface IProps {
  * 日期選擇器
  */
 const Datepicker = ({
+    className,
+    style,
     value,
     format = 'YYYY-MM-DD',
     onChange,
@@ -34,6 +40,7 @@ const Datepicker = ({
     locale = 'en-US',
     minYear = 1911,
     maxYear,
+    isDark = false,
 }: IProps) => {
 
     const dayRef = useRef<Dayjs>(dayjs());
@@ -357,7 +364,7 @@ const Datepicker = ({
     ), []);
 
     return (
-        <div className={elClassNames.root}>
+        <div className={cx(elClassNames.root, className, {'dark-theme': isDark})} style={style}>
             {renderYearMonth()}
             {renderCurrentMonthDay()}
 

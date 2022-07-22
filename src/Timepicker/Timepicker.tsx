@@ -1,8 +1,9 @@
 import React, {useState, useRef, useEffect, useCallback, RefObject} from 'react';
 import dayjs from 'dayjs';
+import CSS from 'csstype';
 import elClassNames from './el-class-names';
-import {isEmpty} from 'bear-jsutils/equal';
 import cx from 'classnames';
+import {isEmpty} from 'bear-jsutils/equal';
 import {getTimeList, getTimeFormat} from '../utils';
 import translateI18n from '../locales';
 
@@ -10,10 +11,13 @@ import './styles.css';
 
 
 interface IProps {
+    className?: string;
+    style?: CSS.Properties;
     value?: string;
     onChange?: (value: string) => void;
     onClickOk?: () => void;
     locale?: string,
+    isDark?: boolean,
 }
 
 const {hourList, minuteList, secondList} = getTimeList();
@@ -38,16 +42,22 @@ const getTimeString = (timeObj: ITimeObj): string => {
 
 /**
  * 時間選擇器
+ * @param className
+ * @param style
  * @param onChange 選擇視窗當項目異動時
  * @param onClickOk 選擇視窗按下OK時
  * @param value Input Value
  * @param locale
+ * @param isDark 暗黑模式
  */
 const Timepicker = ({
+    className,
+    style,
     onChange,
     onClickOk,
     value = '00:00:00',
-    locale = 'en-US'
+    locale = 'en-US',
+    isDark = false,
 }: IProps) => {
     const hourBoxRef = useRef<HTMLDivElement>(null);
     const minuteBoxRef = useRef<HTMLDivElement>(null);
@@ -151,7 +161,7 @@ const Timepicker = ({
 
 
     return (
-        <div className={elClassNames.root}>
+        <div className={cx(elClassNames.root, className, {'dark-theme': isDark})} style={style}>
             <div className={elClassNames.header}>
                 <span className={elClassNames.headerText}>{translateI18n('com.timepicker.time', {locale: locale})}</span>
             </div>

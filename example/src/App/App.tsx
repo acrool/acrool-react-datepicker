@@ -30,6 +30,6 @@ export default App;
 
 const GlobalStyle = createGlobalStyle`
   :root {
-    --primary-color: ${props => props.theme.primaryColor};
+    --primary-color: red;
   }
 `;

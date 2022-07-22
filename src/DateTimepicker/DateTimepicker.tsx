@@ -1,5 +1,7 @@
 import React from 'react';
+import CSS from 'csstype';
 import dayjs,{Dayjs} from 'dayjs';
+import cx from 'classnames';
 import { defaultFormat, getDatetime } from '../utils';
 import elClassNames from './el-class-names';
 import Datepicker from '../Datepicker/Datepicker';
@@ -9,6 +11,8 @@ import './styles.css';
 
 
 interface IProps {
+    className?: string;
+    style?: CSS.Properties;
     value?: string;
     dateFormat?: string;
     onChange: (newDate: string) => void;
@@ -16,6 +20,7 @@ interface IProps {
     locale?: string;
     minYear?: number;
     maxYear?: number;
+    isDark?: boolean,
 }
 
 
@@ -25,12 +30,15 @@ interface IProps {
  * 日期選擇器
  */
 const DateTimepicker = ({
+    className,
+    style,
     value,
     dateFormat = defaultFormat.date,
     onChange,
     locale = 'en-US',
     minYear = 1911,
     maxYear,
+    isDark = false,
 }: IProps) => {
     const propsDate = getDatetime(value);
 
@@ -76,9 +84,9 @@ const DateTimepicker = ({
     }
 
     return (
-        <div className={elClassNames.root}>
-            <Datepicker value={getDate(propsDate)} onChange={handleChangeDate} locale={locale} minYear={minYear} maxYear={maxYear} format={dateFormat}/>
-            <Timepicker value={getTime(propsDate)} onChange={handleChangeTime} locale={locale}/>
+        <div className={cx(elClassNames.root, className)} style={style}>
+            <Datepicker value={getDate(propsDate)} onChange={handleChangeDate} locale={locale} minYear={minYear} maxYear={maxYear} format={dateFormat} isDark={isDark}/>
+            <Timepicker value={getTime(propsDate)} onChange={handleChangeTime} locale={locale} isDark={isDark}/>
         </div>
     );
 
