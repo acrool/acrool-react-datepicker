@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.4](https://github.com/imagine10255/bear-react-datepicker/compare/v2.0.3...v2.0.4) (2022-07-22)
+
+
+### Features
+
+* add dart theme ([00158f6](https://github.com/imagine10255/bear-react-datepicker/commit/00158f61138f4d3c10343a105c1e414ebf2802d0))
+* add startDate, endDate disable ([92fcdc6](https://github.com/imagine10255/bear-react-datepicker/commit/92fcdc6b401b9d38e2b39753b2608cc127036919))
+
 ### [2.0.3](https://github.com/imagine10255/bear-react-datepicker/compare/v2.0.3-beta.0...v2.0.3) (2022-06-29)
 
 ### [2.0.3-beta.0](https://github.com/imagine10255/bear-react-datepicker/compare/v2.0.2...v2.0.3-beta.0) (2022-06-29)
