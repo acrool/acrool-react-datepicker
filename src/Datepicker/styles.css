@@ -182,6 +182,12 @@
     color: var(--primary-color);
 }
 
+.bear-react-datepicker__day.is-disable,
+.bear-react-datepicker__pre-day.is-disable{
+    color: var(--day-pre-color);
+    cursor: not-allowed;
+}
+
 .bear-react-datepicker__pre-day{
     color: var(--day-pre-color);
 }

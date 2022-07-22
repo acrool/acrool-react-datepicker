@@ -24,6 +24,8 @@ interface IProps {
     minYear?: number;
     maxYear?: number;
     isDark?: boolean,
+    startDate?: string,
+    endDate?: string,
 }
 
 /**
@@ -41,6 +43,8 @@ const Datepicker = ({
     minYear = 1911,
     maxYear,
     isDark = false,
+    startDate,
+    endDate,
 }: IProps) => {
 
     const dayRef = useRef<Dayjs>(dayjs());
@@ -251,11 +255,19 @@ const Datepicker = ({
         const preMonFirstDayList = new Array(preMonthLastDay);
         for (let d = 0; d < preMonthFirstContainer; d++) {
             const day = preMonthFirstDay + d + 1;
+            const eachDate = preMonth.set('date', day);
+            const isDisable =
+                (startDate && eachDate.isBefore(startDate, 'date')) ||
+                (endDate && eachDate.isAfter(endDate, 'date'));
+
             preMonFirstDayList[d] = (
                 <div
-                    className={cx(elClassNames.preDay, {'is-active': currentDate.isSame(preMonth.set('date', day), 'date')})}
+                    className={cx(elClassNames.preDay, {
+                        'is-active': currentDate.isSame(eachDate, 'date'),
+                        'is-disable': isDisable,
+                    })}
                     key={`preMonthDay-${d}`}
-                    onClick={() => handleSelectedDate(preMonth.year(), preMonth.month(), day)}
+                    onClick={() => !isDisable ? handleSelectedDate(preMonth.year(), preMonth.month(), day) : {}}
                 >
                     <span>
                         {day}
@@ -267,7 +279,7 @@ const Datepicker = ({
         return preMonFirstDayList;
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [panelYearMonth, value]);
+    }, [panelYearMonth, value, startDate, endDate]);
 
     /**
      * 產生下個月的剩餘日期表
@@ -310,7 +322,7 @@ const Datepicker = ({
         return nextMonEndDayList;
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[panelYearMonth, value]);
+    },[panelYearMonth, value, startDate, endDate]);
 
     /**
      * 產生當月日期表
@@ -326,14 +338,19 @@ const Datepicker = ({
         for (let d = 0; d < currentMonthLastDay; d++) {
             const dayNumber = d + 1;
             const eachDate = panelYearMonth.set('date', dayNumber);
+            const isDisable =
+                (startDate && eachDate.isBefore(startDate, 'date')) ||
+                (endDate && eachDate.isAfter(endDate, 'date'));
+
             currentDayList[d] = (
                 <div
                     className={cx(elClassNames.day,
                         {'is-active': currentDate.isSame(eachDate, 'date')},
                         {'is-today': today.isSame(eachDate, 'date')},
+                        {'is-disable': isDisable},
                     )}
                     key={`currentDay-${d}`}
-                    onClick={() => handleSelectedDate(panelYearMonth.year(), panelYearMonth.month(), dayNumber)}
+                    onClick={() => !isDisable ? handleSelectedDate(panelYearMonth.year(), panelYearMonth.month(), dayNumber) : {}}
                 >
                     <span>
                         {dayNumber}
@@ -351,7 +368,7 @@ const Datepicker = ({
             </div>
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [panelYearMonth, value]);
+    }, [panelYearMonth, value, startDate, endDate]);
 
     const renderTodayButton = useCallback(() => (
         <div className={elClassNames.labelCheckCardCreate}>

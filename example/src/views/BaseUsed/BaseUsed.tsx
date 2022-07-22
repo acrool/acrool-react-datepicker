@@ -16,6 +16,7 @@ const BaseUsed = () => {
             <div className="d-flex flex-row my-2">
                 <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-CN" className="mr-3"/>
                 <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-CN" isDark/>
+                <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-CN" isDark startDate="2022-07-22" endDate="2022-07-28"/>
             </div>
 
             <input type="text" value={myTime} onChange={(event) => setMyTime(event.target.value)}/>

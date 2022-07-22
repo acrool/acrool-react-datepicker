@@ -21,6 +21,8 @@ interface IProps {
     minYear?: number;
     maxYear?: number;
     isDark?: boolean,
+    startDate?: string,
+    endDate?: string,
 }
 
 
@@ -39,6 +41,8 @@ const DateTimepicker = ({
     minYear = 1911,
     maxYear,
     isDark = false,
+    startDate,
+    endDate,
 }: IProps) => {
     const propsDate = getDatetime(value);
 
@@ -85,7 +89,7 @@ const DateTimepicker = ({
 
     return (
         <div className={cx(elClassNames.root, className)} style={style}>
-            <Datepicker value={getDate(propsDate)} onChange={handleChangeDate} locale={locale} minYear={minYear} maxYear={maxYear} format={dateFormat} isDark={isDark}/>
+            <Datepicker value={getDate(propsDate)} onChange={handleChangeDate} locale={locale} minYear={minYear} maxYear={maxYear} format={dateFormat} isDark={isDark} startDate={startDate} endDate={endDate}/>
             <Timepicker value={getTime(propsDate)} onChange={handleChangeTime} locale={locale} isDark={isDark}/>
         </div>
     );
