@@ -9,6 +9,7 @@
 }
 
 .bear-react-datepicker__root {
+    border-radius: 3px;
     background-color: #fff;
     width: calc(30px * 7 + 24px);
     margin: 0;
@@ -182,6 +183,7 @@
     align-items: center;
     border-top: solid 1px #f0f0f0;
     cursor: pointer;
+    padding: 2px 0;
 }
 
 .bear-react-datepicker__today-button{

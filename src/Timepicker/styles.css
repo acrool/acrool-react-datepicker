@@ -10,6 +10,7 @@
 
 .bear-react-timepicker__root {
     display: flex;
+    border-radius: 3px;
     flex-direction: column;
     background-color: #fff;
     width: 168px;

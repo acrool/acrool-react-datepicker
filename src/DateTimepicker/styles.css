@@ -4,6 +4,14 @@
     line-height: normal;
     display: flex;
     flex-direction: row;
+
+}
+
+.bear-react-datetimepicker__root > .bear-react-datepicker__root{
+    border-radius: 3px 0 0 3px;
+}
+.bear-react-datetimepicker__root > .bear-react-timepicker__root{
+    border-radius: 0 3px 3px 0;
 }
 
 .bear-react-datetimepicker__root {
