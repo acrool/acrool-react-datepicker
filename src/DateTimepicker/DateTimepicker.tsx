@@ -6,23 +6,17 @@ import { defaultFormat, getDatetime } from '../utils';
 import elClassNames from './el-class-names';
 import Datepicker from '../Datepicker/Datepicker';
 import Timepicker from '../Timepicker/Timepicker';
+import {ICommon} from '../Datepicker/typing';
 
 import './styles.css';
 
 
-interface IProps {
+interface IProps extends ICommon{
     className?: string;
     style?: CSS.Properties;
     value?: string;
     dateFormat?: string;
     onChange: (newDate: string) => void;
-    isVisibleSetToday?: boolean;
-    locale?: string;
-    minYear?: number;
-    maxYear?: number;
-    isDark?: boolean,
-    startDate?: string,
-    endDate?: string,
 }
 
 
@@ -41,10 +35,12 @@ const DateTimepicker = ({
     minYear = 1911,
     maxYear,
     isDark = false,
-    startDate,
-    endDate,
+    minDate,
+    maxDate,
 }: IProps) => {
     const propsDate = getDatetime(value);
+    const dateProps = {dateFormat, minDate, maxDate, minYear, maxYear, locale, isDark}
+    const timeProps = {locale, isDark}
 
     /**
      * 取得時間
@@ -89,8 +85,8 @@ const DateTimepicker = ({
 
     return (
         <div className={cx(elClassNames.root, className)} style={style}>
-            <Datepicker value={getDate(propsDate)} onChange={handleChangeDate} locale={locale} minYear={minYear} maxYear={maxYear} format={dateFormat} isDark={isDark} startDate={startDate} endDate={endDate}/>
-            <Timepicker value={getTime(propsDate)} onChange={handleChangeTime} locale={locale} isDark={isDark}/>
+            <Datepicker value={getDate(propsDate)} onChange={handleChangeDate} {...dateProps}/>
+            <Timepicker value={getTime(propsDate)} onChange={handleChangeTime} {...timeProps}/>
         </div>
     );
 

@@ -1,0 +1,33 @@
+.bear-react-rangeDatepicker__root,
+.bear-react-rangeDatepicker__root *,
+.bear-react-rangeDatepicker__root *::before,
+.bear-react-rangeDatepicker__root *::after{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    line-height: normal;
+    user-select: none;
+}
+
+
+.bear-react-rangeDatepicker__root{
+    display: flex;
+    flex-direction: row;
+    background-color: #272c31;
+    align-items: flex-end;
+    justify-content: center;
+    border-radius: 4px;
+    box-shadow: 3px 8px 9px 1px #00000040;
+}
+
+
+.bear-react-rangeDatepicker__root .bear-react-datepicker__root{
+    box-shadow: none;
+}
+.bear-react-rangeDatepicker__root > div:nth-child(1) .bear-react-datepicker__root{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.bear-react-rangeDatepicker__root > div:nth-child(2) .bear-react-datepicker__root{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
