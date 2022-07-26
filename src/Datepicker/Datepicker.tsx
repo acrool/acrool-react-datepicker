@@ -1,11 +1,11 @@
 import React, {useState, useCallback, useMemo, useRef} from 'react';
 import dayjs,{Dayjs} from 'dayjs';
-import CSS from 'csstype';
 import elClassNames from './el-class-names';
 import cx from 'classnames';
 import {ArrowIcon} from '../Icon';
 import translateI18n from '../locales';
 import './styles.css';
+import {ICommon} from './typing';
 
 const config = {
     weekDay: [1, 2, 3, 4, 5, 6, 7],
@@ -13,19 +13,10 @@ const config = {
 };
 
 
-interface IProps {
-    className?: string;
-    style?: CSS.Properties;
+
+interface IProps extends ICommon{
     value?: string;
-    format?: string;
     onChange: (newDate: string) => void;
-    isVisibleSetToday?: boolean;
-    locale?: string;
-    minYear?: number;
-    maxYear?: number;
-    isDark?: boolean,
-    startDate?: string,
-    endDate?: string,
 }
 
 /**
@@ -43,8 +34,8 @@ const Datepicker = ({
     minYear = 1911,
     maxYear,
     isDark = false,
-    startDate,
-    endDate,
+    minDate,
+    maxDate,
 }: IProps) => {
 
     const dayRef = useRef<Dayjs>(dayjs());
@@ -110,7 +101,7 @@ const Datepicker = ({
      * @param month
      * @param day
      */
-    const handleSelectedDate = useCallback((year?: number, month?: number, day?: number) => {
+    const handleSelectedDate = (year?: number, month?: number, day?: number) => {
         let newDate = panelYearMonth;
         if (year) {
             newDate = newDate.set('year', year);
@@ -128,25 +119,25 @@ const Datepicker = ({
         onChange(formatDate);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [panelYearMonth]);
+    };
 
     /**
      * 設定為今天日期
      */
-    const handleSelectedToday = useCallback(() => {
+    const handleSelectedToday = () => {
         const formatDate = today.format(format);
 
         setPanelYearMonth(today);
         onChange(formatDate);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    };
 
     /**
      * 產生年月
      * @returns {*}
      */
-    const renderYearMonth = useCallback(() => {
+    const renderYearMonth = () => {
         const panelPreYearMonth = panelYearMonth.subtract(1, 'month');
         const panelNextYearMonth = panelYearMonth.add(1, 'month');
 
@@ -217,7 +208,7 @@ const Datepicker = ({
         );
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [panelYearMonth]);
+    };
 
     /**
      * 產生週標題
@@ -257,8 +248,8 @@ const Datepicker = ({
             const day = preMonthFirstDay + d + 1;
             const eachDate = preMonth.set('date', day);
             const isDisable =
-                (startDate && eachDate.isBefore(startDate, 'date')) ||
-                (endDate && eachDate.isAfter(endDate, 'date'));
+                (minDate && eachDate.isBefore(minDate, 'date')) ||
+                (maxDate && eachDate.isAfter(maxDate, 'date'));
 
             preMonFirstDayList[d] = (
                 <div
@@ -279,13 +270,13 @@ const Datepicker = ({
         return preMonFirstDayList;
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [panelYearMonth, value, startDate, endDate]);
+    }, [panelYearMonth, value, minDate, maxDate]);
 
     /**
      * 產生下個月的剩餘日期表
      * @returns {Array}
      */
-    const renderNextMonthDay = useCallback(() => {
+    const renderNextMonthDay = () => {
         const currentDate = dayjs(value);
 
         // 取得指定年月的第一天是星期幾 (0, 1-6)
@@ -320,14 +311,12 @@ const Datepicker = ({
         }
 
         return nextMonEndDayList;
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[panelYearMonth, value, startDate, endDate]);
+    };
 
     /**
      * 產生當月日期表
      */
-    const renderCurrentMonthDay = useCallback(() => {
+    const renderCurrentMonthDay = () => {
         const currentDate = dayjs(value);
 
         // 取 Panel年月 的最後一天
@@ -339,8 +328,8 @@ const Datepicker = ({
             const dayNumber = d + 1;
             const eachDate = panelYearMonth.set('date', dayNumber);
             const isDisable =
-                (startDate && eachDate.isBefore(startDate, 'date')) ||
-                (endDate && eachDate.isAfter(endDate, 'date'));
+                (minDate && eachDate.isBefore(minDate, 'date')) ||
+                (maxDate && eachDate.isAfter(maxDate, 'date'));
 
             currentDayList[d] = (
                 <div
@@ -367,18 +356,15 @@ const Datepicker = ({
                 {renderNextMonthDay()}
             </div>
         );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [panelYearMonth, value, startDate, endDate]);
+    };
 
-    const renderTodayButton = useCallback(() => (
+    const renderTodayButton = () => (
         <div className={elClassNames.labelCheckCardCreate}>
             <button className={elClassNames.todayButton} type="button" onClick={handleSelectedToday}>
                 <span>{translateI18n('com.datepicker.setToday', {defaultMessage: 'Set to today', locale: locale})}</span>
             </button>
         </div>
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    ), []);
+    )
 
     return (
         <div className={cx(elClassNames.root, className, {'dark-theme': isDark})} style={style}>

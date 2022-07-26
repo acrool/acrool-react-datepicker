@@ -16,8 +16,8 @@
     --day-active-color: #fff;
     --day-pre-color: rgba(0, 0, 0, 0.25);
 
+    --button-color: rgb(0 0 0 / 60%);
     --button-hover-color: #ababab;
-    --button-color: rgba(0, 0, 0, 0.25);
 
     --month-color: rgba(0, 0, 0, 0.85);
     --border-color: #f0f0f0;
@@ -29,8 +29,8 @@
     --day-active-color: #fff;
     --day-pre-color: rgba(255, 255, 255, 0.25);
 
-    --button-hover-color: #ababab;
-    --button-color: rgba(0, 0, 0, 0.25);
+    --button-color: rgb(255 255 255 / 60%);
+    --button-hover-color: #fff;
 
     --month-color: rgba(255, 255, 255, 0.85);
     --border-color: rgba(255, 255, 255, 0.25);
