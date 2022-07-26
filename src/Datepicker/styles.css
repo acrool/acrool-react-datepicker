@@ -133,6 +133,7 @@
     transition: color .3s;
     fill: var(--button-color);
     opacity: .5;
+    cursor: pointer;
 }
 
 
