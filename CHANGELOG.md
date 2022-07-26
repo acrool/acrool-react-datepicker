@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/imagine10255/bear-react-datepicker/compare/v2.1.0-alpha.1...v2.1.0) (2022-07-26)
+
+
+### Features
+
+* month button add pointer ([be8019c](https://github.com/imagine10255/bear-react-datepicker/commit/be8019c40b85efa76b00b17795ab0f4bdc9042e4))
+
 ## [2.1.0-alpha.1](https://github.com/imagine10255/bear-react-datepicker/compare/v2.1.0-alpha.0...v2.1.0-alpha.1) (2022-07-26)
 
 
