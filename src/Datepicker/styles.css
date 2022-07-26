@@ -15,19 +15,27 @@
     --day-color: rgba(0, 0, 0, 0.65);
     --day-active-color: #fff;
     --day-pre-color: rgba(0, 0, 0, 0.25);
-    --day-pre-hover-color: #ababab;
+
+    --button-hover-color: #ababab;
+    --button-color: rgba(0, 0, 0, 0.25);
+
     --month-color: rgba(0, 0, 0, 0.85);
     --border-color: #f0f0f0;
 }
 
 .bear-react-datepicker__root.dark-theme{
-    --bg-color: rgba(120, 120, 120, 0.24);
+    --bg-color: #3b3e42;
     --day-color: rgba(255, 255, 255, 0.65);
     --day-active-color: #fff;
     --day-pre-color: rgba(255, 255, 255, 0.25);
-    --day-pre-hover-color: #ababab;
+
+    --button-hover-color: #ababab;
+    --button-color: rgba(0, 0, 0, 0.25);
+
     --month-color: rgba(255, 255, 255, 0.85);
     --border-color: rgba(255, 255, 255, 0.25);
+
+    box-shadow: 3px 8px 9px 1px #00000040;
 }
 
 .bear-react-datepicker__root {
@@ -118,12 +126,13 @@
 
 
 .bear-react-datepicker__month-button:hover > svg{
-    fill: var(--day-pre-color);
+    fill: var(--button-hover-color);
 }
 
 .bear-react-datepicker__month-button > svg{
     transition: color .3s;
-    fill: var(--day-pre-hover-color);
+    fill: var(--button-color);
+    opacity: .5;
 }
 
 
@@ -174,8 +183,9 @@
 
 .bear-react-datepicker__day:hover,
 .bear-react-datepicker__pre-day:hover{
-    color: var(--day-pre-hover-color);
+    color: var(--primary-color);
     cursor: pointer;
+
 }
 
 .bear-react-datepicker__day.is-today{
