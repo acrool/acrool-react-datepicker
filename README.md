@@ -2,15 +2,15 @@
 
 > Datepicker library based for Reactjs
 
-<img src="./docs/datepicker.jpg" width="300"/>
-
-<img src="./docs/timepicker.jpg" width="300"/>
-<img src="./docs/datetimepicker.jpg" width="300"/>
-
 [![NPM](https://img.shields.io/npm/v/bear-react-datepicker.svg)](https://www.npmjs.com/package/bear-react-datepicker)
 [![npm](https://img.shields.io/npm/dm/bear-react-datepicker.svg)](https://www.npmjs.com/package/bear-react-datepicker)
 
 
+<img src="./docs/datepicker.jpg" width="500"/>
+
+<img src="./docs/timepicker.jpg" width="400"/>
+<img src="./docs/datetimepicker.jpg" width="700"/>
+<img src="./docs/rangedatepicker.jpg" width="700"/>
 
 ## Support Version Map
 
