@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.2](https://github.com/imagine10255/bear-react-datepicker/compare/v2.1.1...v2.1.2) (2022-08-09)
+
+
+### Bug Fixes
+
+* fix rangeDatepicker style bg ([80f4f5d](https://github.com/imagine10255/bear-react-datepicker/commit/80f4f5d39cc1244f74a28d790c07fd8f1c92d5ca))
+
 ### [2.1.1](https://github.com/imagine10255/bear-react-datepicker/compare/v2.1.0...v2.1.1) (2022-08-09)
 
 
