@@ -18,13 +18,50 @@
 
 }
 
+
 .bear-react-timepicker__root.dark-theme {
-    --bg-color: rgba(120, 120, 120, 0.24);
+    --bg-color: #3b3e42;
     --text-color: rgba(255, 255, 255, 0.65);
     --bg-active-color: #727373;
     --bg-hover-color: #5e5e5e;
     --border-color: rgba(255, 255, 255, 0.25);
 }
+
+
+
+
+/* ========= reset start ============*/
+.bear-react-timepicker__root button {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    background: none;
+    border: none;
+    overflow: visible;
+    text-transform: none;
+}
+.bear-react-timepicker__root button:focus {
+    outline: none;
+}
+
+.bear-react-timepicker__root button,
+.bear-react-timepicker__root [type="button"]{
+    -webkit-appearance: button;
+}
+.bear-react-timepicker__root button:not(:disabled),
+.bear-react-timepicker__root [type="button"]:not(:disabled){
+    cursor: pointer;
+}
+.bear-react-timepicker__root button::-moz-focus-inner,
+.bear-react-timepicker__root [type="button"]::-moz-focus-inner{
+    padding: 0;
+    border-style: none;
+}
+.bear-react-timepicker__root svg {overflow: hidden;vertical-align: middle;}
+/* ========= reset end ============*/
+
+
 
 
 .bear-react-timepicker__root {

@@ -52,6 +52,38 @@
 
 
 
+/* ========= reset start ============*/
+.bear-react-datepicker__root button {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    background: none;
+    border: none;
+    overflow: visible;
+    text-transform: none;
+}
+.bear-react-datepicker__root button:focus {
+    outline: none;
+}
+
+.bear-react-datepicker__root button,
+.bear-react-datepicker__root [type="button"]{
+    -webkit-appearance: button;
+}
+.bear-react-datepicker__root button:not(:disabled),
+.bear-react-datepicker__root [type="button"]:not(:disabled){
+    cursor: pointer;
+}
+.bear-react-datepicker__root button::-moz-focus-inner,
+.bear-react-datepicker__root [type="button"]::-moz-focus-inner{
+    padding: 0;
+    border-style: none;
+}
+.bear-react-datepicker__root svg {overflow: hidden;vertical-align: middle;}
+/* ========= reset end ============*/
+
+
 
 .bear-react-datepicker__year-month-row {
     display: flex;
