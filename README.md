@@ -14,10 +14,10 @@
 
 ## Support Version Map
 
-React | React Scripts | Bear React Grid | 
-------|:--------------|----------------:|
-18    | 5.0.1         |           2.0.0 |
-17    | 4.0.3         |          1.0.12 |
+React | React Scripts | Bear React Datepicker | 
+------|:--------------|----------------------:|
+18    | 5.0.1         |                 2.0.0 |
+17    | 4.0.3         |                1.0.12 |
 
 ## Install
 
