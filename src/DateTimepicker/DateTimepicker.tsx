@@ -17,6 +17,7 @@ interface IProps extends ICommon{
     value?: string;
     dateFormat?: string;
     onChange: (newDate: string) => void;
+    onClickOk: () => void;
 }
 
 
@@ -31,6 +32,7 @@ const DateTimepicker = ({
     value,
     dateFormat = defaultFormat.date,
     onChange,
+    onClickOk,
     locale = 'en-US',
     minYear = 1911,
     maxYear,
@@ -40,7 +42,7 @@ const DateTimepicker = ({
 }: IProps) => {
     const propsDate = getDatetime(value);
     const dateProps = {dateFormat, minDate, maxDate, minYear, maxYear, locale, isDark}
-    const timeProps = {locale, isDark}
+    const timeProps = {locale, isDark, onClickOk}
 
     /**
      * 取得時間
