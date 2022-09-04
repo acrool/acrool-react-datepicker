@@ -148,7 +148,7 @@ const Timepicker = ({
                     onClick={() => {
                         const newTime = {...time, [unitCode]: unit};
                         setTime(newTime);
-                        if(unitCode === 'second' && onChange){
+                        if(onChange){
                             onChange(getTimeString(newTime));
                         }
                     }}
