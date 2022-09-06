@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 const BaseUsed = () => {
     const [myDateTime, setMyDateTime] = useState('');
     const [myDate, setMyDate] = useState('');
-    const [myTime, setMyTime] = useState<string|undefined>('12:00:05');
+    const [myTime, setMyTime] = useState<string|undefined>();
     const [myRangeDate, setMyRangeDate] = useState<IRangeDateValue>({startDate: undefined, endDate: undefined});
 
     return (

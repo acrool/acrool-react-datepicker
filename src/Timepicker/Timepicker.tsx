@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback, startTransition} from 'react';
+import React, {useState, useRef, useCallback, startTransition, useEffect} from 'react';
 import dayjs from 'dayjs';
 import CSS from 'csstype';
 import elClassNames from './el-class-names';
@@ -64,6 +64,12 @@ const Timepicker = ({
 
     const [time, setTime] = useState<ITimeObj>(getTimeFormat(value));
     const timeString = getTimeString(time);
+
+
+    useEffect(() => {
+        handleMoveUnit(time, false);
+
+    }, [])
 
 
     /**
