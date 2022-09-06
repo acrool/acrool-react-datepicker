@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0-alpha.3](https://github.com/imagine10255/bear-react-datepicker/compare/v2.2.0-alpha.2...v2.2.0-alpha.3) (2022-09-06)
+
+
+### Bug Fixes
+
+* fix default value move top ([f0dac65](https://github.com/imagine10255/bear-react-datepicker/commit/f0dac650b8e7163faea51dccc72d19c2b9fd4e99))
+
 ## [2.2.0-alpha.2](https://github.com/imagine10255/bear-react-datepicker/compare/v2.2.0-alpha.1...v2.2.0-alpha.2) (2022-09-06)
 
 
