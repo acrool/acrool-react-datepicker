@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0-alpha.2](https://github.com/imagine10255/bear-react-datepicker/compare/v2.2.0-alpha.1...v2.2.0-alpha.2) (2022-09-06)
+
+
+### Bug Fixes
+
+* fix date convert error ([e79ab7f](https://github.com/imagine10255/bear-react-datepicker/commit/e79ab7f25d7bb15beeff584f26ea315334b738b3))
+
 ## [2.2.0-alpha.1](https://github.com/imagine10255/bear-react-datepicker/compare/v2.2.0-alpha.0...v2.2.0-alpha.1) (2022-09-04)
 
 
