@@ -109,7 +109,6 @@
     overflow-x: hidden;
     overflow-y: scroll;
     position: relative;
-    border-left: 1px solid var(--border-color);
 
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;

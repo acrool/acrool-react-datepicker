@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 const BaseUsed = () => {
     const [myDateTime, setMyDateTime] = useState('');
     const [myDate, setMyDate] = useState('');
-    const [myTime, setMyTime] = useState('');
+    const [myTime, setMyTime] = useState<string|undefined>('12:00:05');
     const [myRangeDate, setMyRangeDate] = useState<IRangeDateValue>({startDate: undefined, endDate: undefined});
 
     return (
@@ -22,7 +22,7 @@ const BaseUsed = () => {
             <input type="text" style={{width: 220}} value={`${myRangeDate.startDate ?? ''}~${myRangeDate.endDate ?? ''}`} onChange={(event) => {
                 const dateStr = event.target.value;
                 const dateObj = dateStr.split('~');
-                setMyRangeDate({startDate: dateObj[0], endDate: dateObj[1]})
+                setMyRangeDate({startDate: dateObj[0], endDate: dateObj[1]});
             }}/>
             <div className="d-flex flex-row my-2">
                 <RangeDatepicker value={myRangeDate} onChange={setMyRangeDate} isVisibleSetToday locale="zh-CN" format="YYYY/MM/DD"  className="mr-3"/>
@@ -38,8 +38,8 @@ const BaseUsed = () => {
 
             <input type="text" value={myDateTime} onChange={(event) => setMyDateTime(event.target.value)}/>
             <div className="d-flex flex-row my-2">
-                <DateTimepicker value={myDateTime} onChange={setMyDateTime} className="mr-3"/>
-                <DateTimepicker value={myDateTime} onChange={setMyDateTime} isDark/>
+                <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={() => {}} className="mr-3"/>
+                <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={() => {}} isDark/>
             </div>
 
 

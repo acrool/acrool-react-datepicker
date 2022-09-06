@@ -31,11 +31,11 @@ export const getMinuteSecond = (MinuteSecond: string) => {
 
 
 export const getTimeFormat = (time: string) => {
-    const dayObj = time.split(':');
+    const dayObj = dayjs(`1989-01-01 ${time}`)
     return {
-        hour: getHour(dayObj[0]),
-        minute: getMinuteSecond(dayObj[1]),
-        second: getMinuteSecond(dayObj[2]),
+        hour: dayObj.hour(),
+        minute: dayObj.minute(),
+        second: dayObj.second(),
     };
 };
 
@@ -43,25 +43,17 @@ export const getTimeFormat = (time: string) => {
  * 產生 時分秒陣列
  */
 export function getTimeList(): {
-    hourList: Array<string>,
-    minuteList: Array<string>,
-    secondList: Array<string>,
+    hourList: Array<number>,
+    minuteList: Array<number>,
+    secondList: Array<number>,
 } {
-    const hourList = [];
-    const minuteList = [];
-    const secondList = [];
+    let hourList = new Array(24).fill(0);
+    let minuteList = new Array(60).fill(0);
+    let secondList = new Array(60).fill(0);
 
-    for (let h = 0; h < 24; h += 1) {
-        hourList.push(paddingLeft(h, 2));
-    }
-
-    for (let m = 0; m < 60; m += 1) {
-        minuteList.push(paddingLeft(m, 2));
-    }
-
-    for (let s = 0; s < 60; s += 1) {
-        secondList.push(paddingLeft(s, 2));
-    }
+    hourList = hourList.map((num, index) => num + index);
+    minuteList = minuteList.map((num, index) => num + index);
+    secondList = secondList.map((num, index) => num + index);
 
     return {hourList, minuteList, secondList};
 }

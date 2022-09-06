@@ -1,9 +1,9 @@
-import React, {useState, useRef, useEffect, useCallback, RefObject} from 'react';
+import React, {useState, useRef, useCallback, startTransition} from 'react';
 import dayjs from 'dayjs';
 import CSS from 'csstype';
 import elClassNames from './el-class-names';
 import cx from 'classnames';
-import {isEmpty} from 'bear-jsutils/equal';
+import { paddingLeft } from 'bear-jsutils/string';
 import {getTimeList, getTimeFormat} from '../utils';
 import translateI18n from '../locales';
 
@@ -23,12 +23,11 @@ interface IProps {
 const {hourList, minuteList, secondList} = getTimeList();
 
 const unitHeight = 32;
-const halfHeight = (32 * 6) / 2;
 
 interface ITimeObj  {
-    hour: string,
-    minute: string,
-    second: string,
+    hour: number,
+    minute: number,
+    second: number,
 }
 
 
@@ -37,7 +36,7 @@ interface ITimeObj  {
  * @param timeObj
  */
 const getTimeString = (timeObj: ITimeObj): string => {
-    return `${timeObj.hour}:${timeObj.minute}:${timeObj.second}`;
+    return `${paddingLeft(timeObj.hour, 2)}:${paddingLeft(timeObj.minute, 2)}:${paddingLeft(timeObj.second, 2)}`;
 }
 
 /**
@@ -62,63 +61,46 @@ const Timepicker = ({
     const hourBoxRef = useRef<HTMLDivElement>(null);
     const minuteBoxRef = useRef<HTMLDivElement>(null);
     const secondBoxRef = useRef<HTMLDivElement>(null);
-    const initTime = getTimeFormat(value);
 
-    const [time, setTime] = useState<ITimeObj>(initTime);
+    const [time, setTime] = useState<ITimeObj>(getTimeFormat(value));
     const timeString = getTimeString(time);
 
 
     /**
-     * 當外部值移動時
+     * 處理異動時動作
+     * @param data
+     * @param isBehaviorSmooth
      */
-    useEffect(() => {
-        const timeStr = getTimeFormat(value);
-        setTime(timeStr);
-    }, [value]);
+    const handleOnChange = (data: ITimeObj, isBehaviorSmooth = true) => {
+        handleMoveUnit(data, isBehaviorSmooth);
+
+        startTransition(() => {
+            setTime(data);
+
+            if(onChange){
+                onChange(getTimeString(data));
+            }
+        });
+    }
 
 
     /**
-     * 當時間狀態移動時, 移動到現在的，時
+     * 處理移動時間
      */
-    useEffect(() => {
-        if(hourBoxRef.current){
-            hourBoxRef.current?.scrollTo({behavior: 'smooth', top: isEmpty(time.hour) ? 0 : (Number(time.hour) * unitHeight) - (halfHeight)});
-        }
-    }, [time.hour]);
-
-    /**
-     * 當時間狀態移動時, 移動到現在的，分
-     */
-    useEffect(() => {
-        if(minuteBoxRef.current){
-            minuteBoxRef.current?.scrollTo({behavior: 'smooth', top: isEmpty(time.minute) ? 0 : (Number(time.minute) * unitHeight) - (halfHeight)});
+    const handleMoveUnit = (data: {hour: number, minute: number, second: number}, isBehaviorSmooth = true) => {
+        const behavior = isBehaviorSmooth ? 'smooth':'auto';
+        if(data.hour && hourBoxRef.current){
+            hourBoxRef.current?.scrollTo({behavior, top: data.hour * unitHeight});
         }
 
-    }, [time.minute]);
-
-    /**
-     * 當時間狀態移動時, 移動到現在的，秒
-     */
-    useEffect(() => {
-        if(secondBoxRef.current){
-            secondBoxRef.current?.scrollTo({behavior: 'smooth', top: isEmpty(time.second) ? 0 : (Number(time.second) * unitHeight) - (halfHeight)});
+        if(data.minute && minuteBoxRef.current){
+            minuteBoxRef.current?.scrollTo({behavior, top: data.minute * unitHeight});
         }
 
-    }, [time.second]);
-
-
-    /**
-     * 處理點擊OK
-     */
-    const handleClickOk = useCallback(() => {
-        if(onChange){
-            onChange(getTimeString(time));
+        if(data.second && secondBoxRef.current){
+            secondBoxRef.current?.scrollTo({behavior, top: data.second * unitHeight});
         }
-        if(onClickOk){
-            onClickOk();
-        }
-
-    }, [timeString, onChange, onClickOk]);
+    }
 
     /**
      * 處理按下現在時間
@@ -126,12 +108,14 @@ const Timepicker = ({
     const handleNowTime = useCallback(() => {
         const reToday = dayjs();
 
+        const data = {
+            hour: reToday.hour(),
+            minute: reToday.minute(),
+            second: reToday.second(),
+        };
+
         // 設定 時、分、秒
-        setTime({
-            hour: reToday.format('HH'),
-            minute: reToday.format('mm'),
-            second: reToday.format('ss'),
-        });
+        handleOnChange(data, true);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -139,7 +123,7 @@ const Timepicker = ({
     /**
      * 產生時|分|秒 區塊
      */
-    const renderOption = useCallback((unitCode: 'hour'|'minute'|'second', unitList: Array<string>) => {
+    const renderOption = useCallback((unitCode: 'hour'|'minute'|'second', unitList: Array<number>) => {
         return unitList.map(unit => {
             const isActive = time[unitCode] === unit;
             return (
@@ -147,13 +131,10 @@ const Timepicker = ({
                     key={`unit-${unitCode}-${unit}`}
                     onClick={() => {
                         const newTime = {...time, [unitCode]: unit};
-                        setTime(newTime);
-                        if(onChange){
-                            onChange(getTimeString(newTime));
-                        }
+                        handleOnChange(newTime, true);
                     }}
                 >
-                    {unit}
+                    {paddingLeft(unit, 2)}
                 </span>
             );
         });
@@ -190,7 +171,7 @@ const Timepicker = ({
 
             <div className={elClassNames.buttonContainer}>
                 <button className={elClassNames.nowButton} type="button" onClick={handleNowTime}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
-                <button className={elClassNames.confirmButton} type="button" onClick={handleClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
+                <button className={elClassNames.confirmButton} type="button" onClick={onClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
             </div>
         </div>
     );
