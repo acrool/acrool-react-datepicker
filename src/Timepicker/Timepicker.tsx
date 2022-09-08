@@ -15,7 +15,7 @@ interface IProps {
     style?: CSS.Properties;
     value?: string;
     onChange?: (value: string) => void;
-    onClickOk?: () => void;
+    onClickOk?: (value: string) => void;
     locale?: string,
     isDark?: boolean,
 }
@@ -89,6 +89,13 @@ const Timepicker = ({
         });
     }
 
+
+    /**
+     * 處理點擊OK按鈕
+     */
+    const handleOnClickOk = () => {
+        if(onClickOk) onClickOk(timeString);
+    }
 
     /**
      * 處理移動時間
@@ -177,7 +184,7 @@ const Timepicker = ({
 
             <div className={elClassNames.buttonContainer}>
                 <button className={elClassNames.nowButton} type="button" onClick={handleNowTime}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
-                <button className={elClassNames.confirmButton} type="button" onClick={onClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
+                <button className={elClassNames.confirmButton} type="button" onClick={handleOnClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
             </div>
         </div>
     );

@@ -32,14 +32,14 @@ const BaseUsed = () => {
 
             <input type="text" value={myTime} onChange={(event) => setMyTime(event.target.value)}/>
             <div className="d-flex flex-row my-2">
-                <Timepicker value={myTime} onChange={setMyTime} onClickOk={() => {}} className="mr-3"/>
-                <Timepicker value={myTime} onChange={setMyTime} onClickOk={() => {}} isDark/>
+                <Timepicker value={myTime} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)} className="mr-3"/>
+                <Timepicker value={myTime} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)} isDark/>
             </div>
 
             <input type="text" value={myDateTime} onChange={(event) => setMyDateTime(event.target.value)}/>
             <div className="d-flex flex-row my-2">
-                <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={() => {}} className="mr-3"/>
-                <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={() => {}} isDark/>
+                <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={(timeStr) => console.log('val', timeStr)} className="mr-3"/>
+                <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={(timeStr) => console.log('val', timeStr)} isDark/>
             </div>
 
 

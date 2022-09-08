@@ -17,7 +17,7 @@ interface IProps extends ICommon{
     value?: string;
     dateFormat?: string;
     onChange: (newDate: string) => void;
-    onClickOk: () => void;
+    onClickOk: (newDate: string) => void;
 }
 
 
@@ -77,6 +77,15 @@ const DateTimepicker = ({
     }
 
     /**
+     * 處理點擊OK按鈕
+     */
+    const handleOnClickOk = (newValue: string) => {
+        const oldDate = getDate(propsDate);
+        if(onClickOk) onClickOk(`${oldDate} ${newValue}`);
+    }
+
+
+    /**
      * 處理時間異動
      * @param newValue
      */
@@ -87,8 +96,8 @@ const DateTimepicker = ({
 
     return (
         <div className={cx(elClassNames.root, className)} style={style}>
-            <Datepicker value={getDate(propsDate)} onChange={handleChangeDate} {...dateProps}/>
-            <Timepicker value={getTime(propsDate)} onChange={handleChangeTime} {...timeProps}/>
+            <Datepicker {...dateProps} value={getDate(propsDate)} onChange={handleChangeDate} />
+            <Timepicker {...timeProps} value={getTime(propsDate)} onChange={handleChangeTime} onClickOk={handleOnClickOk}/>
         </div>
     );
 
