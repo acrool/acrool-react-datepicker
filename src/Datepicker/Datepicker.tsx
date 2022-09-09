@@ -150,16 +150,9 @@ const Datepicker = ({
             <div className={elClassNames.yearMonthRow}>
 
                 <div className={elClassNames.changeControl}>
-                    <button className={cx(elClassNames.monthButton, 'pre-month')}
-                        type="button"
-                        onClick={() => handleChangePanel(
-                            panelPreYearMonth.year(),
-                            panelPreYearMonth.month(),
-                        )}
-                    >
-                        <ArrowIcon/>
-                    </button>
 
+
+                    {/*年月的按鈕*/}
                     <div className={elClassNames.yearMonth}>
                         <div className={elClassNames.yearGroup}>
                             <span className={elClassNames.year}>
@@ -194,6 +187,19 @@ const Datepicker = ({
 
                     </div>
 
+
+                    {/*上個月的按鈕*/}
+                    <button className={cx(elClassNames.monthButton, 'pre-month')}
+                            type="button"
+                            onClick={() => handleChangePanel(
+                                panelPreYearMonth.year(),
+                                panelPreYearMonth.month(),
+                            )}
+                    >
+                        <ArrowIcon/>
+                    </button>
+
+                    {/*下個月的按鈕*/}
                     <button className={cx(elClassNames.monthButton, 'next-month')}
                         type="button"
                         onClick={() => handleChangePanel(

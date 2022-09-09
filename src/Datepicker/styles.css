@@ -93,7 +93,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    border-bottom: solid 1px var(--border-color);
+    /*border-bottom: solid 1px var(--border-color);*/
     line-height: 38px;
 }
 
@@ -101,15 +101,18 @@
     color: var(--month-color);
     display: flex;
     align-items: center;
+    flex: 1;
+    padding-left: 14px;
 }
 
-
-.bear-react-datepicker__year {
+.bear-react-datepicker__year{
+    margin-right: 4px;
+}
+.bear-react-datepicker__year, .bear-react-datepicker__month {
     color: inherit;
-    font-size: 14px;
+    font-size: 20px;
     flex: 0 0 auto;
     cursor: pointer;
-    margin-right: 5px;
 }
 
 
@@ -118,12 +121,6 @@
     position: relative;
 }
 
-
-.bear-react-datepicker__month {
-    color: inherit;
-    font-size: 14px;
-    flex: 0 0 auto;
-}
 
 
 .bear-react-datepicker__month-select,
@@ -140,9 +137,10 @@
 .bear-react-datepicker__change-control {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    padding: 4px 1px;
+    padding-top: 8px;
 }
 
 .bear-react-datepicker__month-button {
@@ -177,7 +175,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    padding: 8px 12px;
+    padding: 0 12px;
 }
 
 
