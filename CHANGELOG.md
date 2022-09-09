@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0-alpha.4](https://github.com/imagine10255/bear-react-datepicker/compare/v2.2.0-alpha.3...v2.2.0-alpha.4) (2022-09-09)
+
+
+### Features
+
+* add week row bg mask color ([04fc84a](https://github.com/imagine10255/bear-react-datepicker/commit/04fc84a5b0702ded418bdd88e28575976ba40075))
+* modify year month style ([7a80dab](https://github.com/imagine10255/bear-react-datepicker/commit/7a80dabc76ea7b3dea5a7acf011f9b6ca021c1fb))
+
+
+### Bug Fixes
+
+* fix timePicker onClick value ([a452e15](https://github.com/imagine10255/bear-react-datepicker/commit/a452e157ea54e64dac8f0de58825bda2c1de5474))
+
 ## [2.2.0-alpha.3](https://github.com/imagine10255/bear-react-datepicker/compare/v2.2.0-alpha.2...v2.2.0-alpha.3) (2022-09-06)
 
 
