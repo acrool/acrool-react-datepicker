@@ -36,6 +36,7 @@ const Datepicker = ({
     isDark = false,
     minDate,
     maxDate,
+    tagDate = []
 }: IProps) => {
 
     const dayRef = useRef<Dayjs>(dayjs());
@@ -243,40 +244,37 @@ const Datepicker = ({
         const preMonthFirstDay = preMonthLastDay - preMonthFirstContainer;
 
         // 產生 Panel年月 上個月的剩餘日期表
-        const preMonFirstDayList = new Array(preMonthLastDay);
+        const preMonFirstDayList = new Array(preMonthFirstContainer);
         for (let d = 0; d < preMonthFirstContainer; d++) {
-            const day = preMonthFirstDay + d + 1;
-            const eachDate = preMonth.set('date', day);
+            const dayNumber = preMonthFirstDay + d + 1;
+            const eachDate = preMonth.set('date', dayNumber);
             const isDisable =
                 (minDate && eachDate.isBefore(minDate, 'date')) ||
                 (maxDate && eachDate.isAfter(maxDate, 'date'));
 
-            preMonFirstDayList[d] = (
-                <div
-                    className={cx(elClassNames.preDay, {
-                        'is-active': currentDate.isSame(eachDate, 'date'),
-                        'is-disable': isDisable,
-                    })}
-                    key={`preMonthDay-${d}`}
-                    onClick={() => !isDisable ? handleSelectedDate(preMonth.year(), preMonth.month(), day) : {}}
-                >
-                    <span>
-                        {day}
-                    </span>
-                </div>
-            );
+            console.log('preMonth.set(\'date\', dayNumber)', currentDate.format('YYYY-MM-DD'), preMonth.set('date', dayNumber).format('YYYY-MM-DD'), currentDate.isSame(preMonth.set('date', dayNumber)));
+            preMonFirstDayList[d] = {
+                isActive: currentDate.isSame(preMonth.set('date', dayNumber), 'date'),
+                isToday: today.isSame(eachDate, 'date'),
+                isTag: tagDate?.includes(eachDate.format('YYYY-MM-DD')),
+                isDisable,
+                className: elClassNames.preDay,
+                date: eachDate,
+                dayNumber: dayNumber,
+                onClick: () => !isDisable ? handleSelectedDate(preMonth.year(), preMonth.month(), dayNumber) : {}
+            }
         }
 
         return preMonFirstDayList;
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [panelYearMonth, value, minDate, maxDate]);
+    }, [panelYearMonth, value, minDate, maxDate, tagDate]);
 
     /**
      * 產生下個月的剩餘日期表
      * @returns {Array}
      */
-    const renderNextMonthDay = () => {
+    const renderNextMonthDay = useCallback(() => {
         const currentDate = dayjs(value);
 
         // 取得指定年月的第一天是星期幾 (0, 1-6)
@@ -296,22 +294,26 @@ const Datepicker = ({
         // 產生上個月的剩餘日期表
         const nextMonEndDayList = new Array(nextMonthEndContainer);
         for (let d = 0; d < nextMonthEndContainer; d++) {
-            const day = d + 1;
-            nextMonEndDayList[d] = (
-                <div
-                    className={cx(elClassNames.preDay, {'is-active': currentDate.isSame(nextMonth.set('date', day))})}
-                    key={`nextMonthDay-${d}`}
-                    onClick={() => handleSelectedDate(nextMonth.year(), nextMonth.month(), day)}
-                >
-                    <span>
-                        {day}
-                    </span>
-                </div>
-            );
+            const dayNumber = d + 1;
+            const eachDate = nextMonth.set('date', dayNumber);
+            const isDisable =
+                (minDate && eachDate.isBefore(minDate, 'date')) ||
+                (maxDate && eachDate.isAfter(maxDate, 'date'));
+
+            nextMonEndDayList[d] = {
+                isActive: currentDate.isSame(nextMonth.set('date', dayNumber), 'date'),
+                isToday: today.isSame(eachDate, 'date'),
+                isTag: tagDate?.includes(eachDate.format('YYYY-MM-DD')),
+                isDisable,
+                className: elClassNames.preDay,
+                date: eachDate,
+                dayNumber: dayNumber,
+                onClick: () => !isDisable ? handleSelectedDate(nextMonth.year(), nextMonth.month(), dayNumber): {}
+            }
         }
 
         return nextMonEndDayList;
-    };
+    }, [panelYearMonth, value, minDate, maxDate, tagDate]);
 
     /**
      * 產生當月日期表
@@ -331,29 +333,49 @@ const Datepicker = ({
                 (minDate && eachDate.isBefore(minDate, 'date')) ||
                 (maxDate && eachDate.isAfter(maxDate, 'date'));
 
-            currentDayList[d] = (
-                <div
-                    className={cx(elClassNames.day,
-                        {'is-active': currentDate.isSame(eachDate, 'date')},
-                        {'is-today': today.isSame(eachDate, 'date')},
-                        {'is-disable': isDisable},
-                    )}
-                    key={`currentDay-${d}`}
-                    onClick={() => !isDisable ? handleSelectedDate(panelYearMonth.year(), panelYearMonth.month(), dayNumber) : {}}
-                >
-                    <span>
-                        {dayNumber}
-                    </span>
-                </div>
-            );
+            currentDayList[d] = {
+                isActive: currentDate.isSame(eachDate, 'date'),
+                isToday: today.isSame(eachDate, 'date'),
+                isTag: tagDate?.includes(eachDate.format('YYYY-MM-DD')),
+                isDisable,
+                className: elClassNames.day,
+                date: eachDate,
+                dayNumber: dayNumber,
+                onClick: () => !isDisable ? handleSelectedDate(panelYearMonth.year(), panelYearMonth.month(), dayNumber) : {}
+            }
         }
+
+
+        const preMonthDay = renderPreMonthDay();
+        const nextMonthDay = renderNextMonthDay();
+        const monthDateList = [...preMonthDay, ...currentDayList, ...nextMonthDay]
+
+        const actIndex = monthDateList.findIndex((row) => row.isActive);
+        const weekIndex = Math.floor(actIndex / 7);
 
         return (
             <div className={elClassNames.dayRow}>
                 {renderWeek()}
-                {renderPreMonthDay()}
-                {currentDayList}
-                {renderNextMonthDay()}
+                <div className={elClassNames.dayContent}>
+                    {weekIndex >= 0 && <div className={elClassNames.weekMask} style={{top: weekIndex * 30}}/>}
+
+                    {monthDateList.map(row => {
+                        return  <div
+                            key={`currentDay-${row.date}`}
+                            className={row.className}
+                            data-active={row.isActive}
+                            data-today={row.isToday}
+                            data-tag={row.isTag}
+                            data-disable={row.isDisable}
+
+                            onClick={row.onClick}
+                        >
+                            <span>
+                                {row.dayNumber}
+                            </span>
+                        </div>;
+                    })}
+                </div>
             </div>
         );
     };

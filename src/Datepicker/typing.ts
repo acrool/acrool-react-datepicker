@@ -11,4 +11,5 @@ export interface ICommon {
     format?: string;
     minDate?: string,
     maxDate?: string,
+    tagDate?: string[],
 }
