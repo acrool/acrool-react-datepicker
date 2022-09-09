@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useMemo, useRef} from 'react';
+import React, {useState, useCallback, useMemo, useRef, useEffect} from 'react';
 import dayjs,{Dayjs} from 'dayjs';
 import elClassNames from './el-class-names';
 import cx from 'classnames';
@@ -17,6 +17,7 @@ const config = {
 interface IProps extends ICommon{
     value?: string;
     onChange: (newDate: string) => void;
+    onChangeYearMonthPanel?: (yearMonth: { year: number, month: number }) => void;
 }
 
 /**
@@ -29,6 +30,7 @@ const Datepicker = ({
     value,
     format = 'YYYY-MM-DD',
     onChange,
+    onChangeYearMonthPanel,
     isVisibleSetToday = false,
     locale = 'en-US',
     minYear = 1911,
@@ -43,7 +45,11 @@ const Datepicker = ({
     const today = dayRef.current;
     const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(value ? dayjs(value) : today);
 
+
     const initMaxYear = typeof maxYear !== 'undefined' ? maxYear : Number(today.add(1, 'year').year());
+
+
+
 
     /**
      * 產生週星期文字
@@ -90,6 +96,11 @@ const Datepicker = ({
         }
         if (typeof month !== 'undefined') {
             newPanelDate = newPanelDate.set('month', month);
+        }
+
+        // 發出事件
+        if(onChangeYearMonthPanel){
+            onChangeYearMonthPanel({year: newPanelDate.year(), month: newPanelDate.month() + 1});
         }
 
         setPanelYearMonth(newPanelDate);
@@ -258,7 +269,6 @@ const Datepicker = ({
                 (minDate && eachDate.isBefore(minDate, 'date')) ||
                 (maxDate && eachDate.isAfter(maxDate, 'date'));
 
-            console.log('preMonth.set(\'date\', dayNumber)', currentDate.format('YYYY-MM-DD'), preMonth.set('date', dayNumber).format('YYYY-MM-DD'), currentDate.isSame(preMonth.set('date', dayNumber)));
             preMonFirstDayList[d] = {
                 isActive: currentDate.isSame(preMonth.set('date', dayNumber), 'date'),
                 isToday: today.isSame(eachDate, 'date'),
