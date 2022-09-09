@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0-alpha.5](https://github.com/imagine10255/bear-react-datepicker/compare/v2.2.0-alpha.4...v2.2.0-alpha.5) (2022-09-09)
+
+
+### Features
+
+* add onChangeYearMonthPanel event ([1e63e85](https://github.com/imagine10255/bear-react-datepicker/commit/1e63e858a4a5eaec2ef8e67ea73b6b83ad46d712))
+
 ## [2.2.0-alpha.4](https://github.com/imagine10255/bear-react-datepicker/compare/v2.2.0-alpha.3...v2.2.0-alpha.4) (2022-09-09)
 
 
