@@ -36,7 +36,7 @@ interface ITimeObj  {
  * @param timeObj
  */
 const getTimeString = (timeObj: ITimeObj): string => {
-    return `${paddingLeft(timeObj.hour, 2)}:${paddingLeft(timeObj.minute, 2)}:${paddingLeft(timeObj.second, 2)}`;
+    return `${paddingLeft(timeObj?.hour ?? '00', 2)}:${paddingLeft(timeObj?.minute ?? '00', 2)}:${paddingLeft(timeObj?.second ?? '00', 2)}`;
 }
 
 /**
