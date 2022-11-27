@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/imagine10255/bear-react-datepicker/compare/v2.2.0-alpha.6...v2.2.0) (2022-11-27)
+
+
+### Features
+
+* modify datepicker time setting secEnable ([b86b8bd](https://github.com/imagine10255/bear-react-datepicker/commit/b86b8bd1ea1dbdbf6504eafbf5d8ec35151d601f))
+
 ## [2.2.0-alpha.6](https://github.com/imagine10255/bear-react-datepicker/compare/v2.2.0-alpha.5...v2.2.0-alpha.6) (2022-10-31)
 
 
