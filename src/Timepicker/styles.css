@@ -162,7 +162,7 @@
     font-size: 14px;
     flex: 1;
 }
-.bear-react-timepicker__confirm-button {
+button.bear-react-timepicker__confirm-button {
     color: #fff;
     border: none;
     font-size: inherit;
@@ -171,7 +171,7 @@
     background-color: var(--primary-color);
 
 }
-.bear-react-timepicker__now-button {
+button.bear-react-timepicker__now-button {
     background-color: transparent;
     border: none;
     font-size: inherit;
