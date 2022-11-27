@@ -131,7 +131,7 @@ const Timepicker = ({
         const data = {
             hour: reToday.hour(),
             minute: reToday.minute(),
-            second: reToday.second(),
+            second: isEnableSec ? reToday.second() : undefined,
         };
 
         // 設定 時、分、秒
