@@ -30,7 +30,7 @@ const locales: ILocale = {
         'com.datepicker.setToday': 'Set to today',
 
         'com.timepicker.time': 'Time',
-        'com.timepicker.setNow': 'Set Now',
+        'com.timepicker.setNow': 'Now',
         'com.timepicker.ok': 'OK',
     },
     'zh-TW': {

@@ -18,6 +18,7 @@ interface IProps extends ICommon{
     dateFormat?: string;
     onChange: (newDate: string) => void;
     onClickOk: (newDate: string) => void;
+    isEnableSec?: boolean,
 }
 
 
@@ -39,10 +40,11 @@ const DateTimepicker = ({
     isDark = false,
     minDate,
     maxDate,
+    isEnableSec = true,
 }: IProps) => {
     const propsDate = getDatetime(value);
-    const dateProps = {dateFormat, minDate, maxDate, minYear, maxYear, locale, isDark}
-    const timeProps = {locale, isDark, onClickOk}
+    const dateProps = {dateFormat, minDate, maxDate, minYear, maxYear, locale, isDark};
+    const timeProps = {locale, isDark, onClickOk, isEnableSec};
 
     /**
      * 取得時間
@@ -50,9 +52,9 @@ const DateTimepicker = ({
      */
     const getTime = (dayObj: Dayjs) => {
         if(propsDate.isValid()){
-            return dayObj.format(defaultFormat.time);
+            return dayObj.format(isEnableSec ? defaultFormat.time : defaultFormat.timeNoSec);
         }
-        return dayjs().format(defaultFormat.time);
+        return dayjs().format(isEnableSec ? defaultFormat.time : defaultFormat.timeNoSec);
     }
 
     /**

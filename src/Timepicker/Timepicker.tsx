@@ -17,26 +17,31 @@ interface IProps {
     onChange?: (value: string) => void;
     onClickOk?: (value: string) => void;
     locale?: string,
-    isDark?: boolean,
+    isDark?: boolean
+    isEnableSec?: boolean,
 }
 
 const {hourList, minuteList, secondList} = getTimeList();
 
 const unitHeight = 32;
 
-interface ITimeObj  {
+interface ITimeObj {
     hour: number,
     minute: number,
-    second: number,
+    second?: number,
 }
 
 
 /**
  * 時間物件轉自串
  * @param timeObj
+ * @param isEnableSec
  */
-const getTimeString = (timeObj: ITimeObj): string => {
-    return `${paddingLeft(timeObj?.hour ?? '00', 2)}:${paddingLeft(timeObj?.minute ?? '00', 2)}:${paddingLeft(timeObj?.second ?? '00', 2)}`;
+const getTimeString = (timeObj: ITimeObj, isEnableSec?: boolean): string => {
+    if(isEnableSec){
+        return `${paddingLeft(timeObj?.hour ?? '00', 2)}:${paddingLeft(timeObj?.minute ?? '00', 2)}:${paddingLeft(timeObj?.second ?? '00', 2)}`;
+    }
+    return `${paddingLeft(timeObj?.hour ?? '00', 2)}:${paddingLeft(timeObj?.minute ?? '00', 2)}`;
 }
 
 /**
@@ -48,22 +53,24 @@ const getTimeString = (timeObj: ITimeObj): string => {
  * @param value Input Value
  * @param locale
  * @param isDark 暗黑模式
+ * @param isEnableSec
  */
 const Timepicker = ({
     className,
     style,
     onChange,
     onClickOk,
-    value = '00:00:00',
+    value,
     locale = 'en-US',
     isDark = false,
+    isEnableSec = true,
 }: IProps) => {
     const hourBoxRef = useRef<HTMLDivElement>(null);
     const minuteBoxRef = useRef<HTMLDivElement>(null);
     const secondBoxRef = useRef<HTMLDivElement>(null);
 
     const [time, setTime] = useState<ITimeObj>(getTimeFormat(value));
-    const timeString = getTimeString(time);
+    const timeString = getTimeString(time, isEnableSec);
 
 
     useEffect(() => {
@@ -84,7 +91,7 @@ const Timepicker = ({
             setTime(data);
 
             if(onChange){
-                onChange(getTimeString(data));
+                onChange(getTimeString(data, isEnableSec));
             }
         });
     }
@@ -100,7 +107,7 @@ const Timepicker = ({
     /**
      * 處理移動時間
      */
-    const handleMoveUnit = (data: {hour: number, minute: number, second: number}, isBehaviorSmooth = true) => {
+    const handleMoveUnit = (data: {hour: number, minute: number, second?: number}, isBehaviorSmooth = true) => {
         const behavior = isBehaviorSmooth ? 'smooth':'auto';
         if(data.hour && hourBoxRef.current){
             hourBoxRef.current?.scrollTo({behavior, top: data.hour * unitHeight});
@@ -155,7 +162,7 @@ const Timepicker = ({
 
 
     return (
-        <div className={cx(elClassNames.root, className, {'dark-theme': isDark})} style={style}>
+        <div className={cx(elClassNames.root, className, {'dark-theme': isDark, 'is-enable-sec': isEnableSec})} style={style}>
             <div className={elClassNames.header}>
                 <span className={elClassNames.headerText}>{translateI18n('com.timepicker.time', {locale: locale})}</span>
             </div>
@@ -175,11 +182,13 @@ const Timepicker = ({
                 </div>
 
                 {/* 秒 */}
-                <div className={elClassNames.fakeSelectContainer}>
-                    <div className={elClassNames.selectBox} ref={secondBoxRef}>
-                        {renderOption('second', secondList)}
+                {isEnableSec &&
+                    <div className={elClassNames.fakeSelectContainer}>
+                        <div className={elClassNames.selectBox} ref={secondBoxRef}>
+                            {renderOption('second', secondList)}
+                        </div>
                     </div>
-                </div>
+                }
             </div>
 
             <div className={elClassNames.buttonContainer}>

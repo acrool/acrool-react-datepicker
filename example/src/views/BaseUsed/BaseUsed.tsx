@@ -9,6 +9,7 @@ const BaseUsed = () => {
     const [myDateTime, setMyDateTime] = useState('');
     const [myDate, setMyDate] = useState('');
     const [myTime, setMyTime] = useState<string|undefined>();
+    const [myDateTimeNoSec, setMyDateTimeNoSec] = useState<string|undefined>();
     const [myRangeDate, setMyRangeDate] = useState<IRangeDateValue>({startDate: undefined, endDate: undefined});
 
     return (
@@ -38,8 +39,15 @@ const BaseUsed = () => {
 
             <input type="text" value={myDateTime} onChange={(event) => setMyDateTime(event.target.value)}/>
             <div className="d-flex flex-row my-2">
-                <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={(timeStr) => console.log('val', timeStr)} className="mr-3"/>
-                <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={(timeStr) => console.log('val', timeStr)} isDark/>
+                <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={timeStr => console.log('val', timeStr)} className="mr-3"/>
+                <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={timeStr => console.log('val', timeStr)} isDark/>
+            </div>
+
+
+            <input type="text" value={myDateTimeNoSec} onChange={(event) => setMyDateTime(event.target.value)}/>
+            <div className="d-flex flex-row my-2">
+                <DateTimepicker value={myDateTimeNoSec} onChange={setMyDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isEnableSec={false}/>
+                <DateTimepicker value={myDateTimeNoSec} onChange={setMyDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isDark isEnableSec={false}/>
             </div>
 
 

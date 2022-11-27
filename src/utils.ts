@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 export const defaultFormat = {
     date: 'YYYY-MM-DD',
     time: 'HH:mm:ss',
+    timeNoSec: 'HH:mm',
 };
 
 
@@ -30,8 +31,8 @@ export const getMinuteSecond = (MinuteSecond: string) => {
 }
 
 
-export const getTimeFormat = (time: string) => {
-    const dayObj = dayjs(`1989-01-01 ${time}`)
+export const getTimeFormat = (time?: string) => {
+    const dayObj = dayjs(`1989-01-01 ${time ?? '00:00:00'}`)
     return {
         hour: dayObj.hour(),
         minute: dayObj.minute(),
