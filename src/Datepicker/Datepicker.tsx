@@ -167,7 +167,7 @@ const Datepicker = ({
                     <div className={elClassNames.yearMonth}>
                         <div className={elClassNames.yearGroup}>
                             <span className={elClassNames.year}>
-                               {activeYear?.text}
+                                {activeYear?.text}
                             </span>
 
                             <select
@@ -182,7 +182,7 @@ const Datepicker = ({
                         </div>
                         <div className={elClassNames.monthGroup}>
                             <span className={elClassNames.month}>
-                               {activeMonth?.text}
+                                {activeMonth?.text}
                             </span>
 
                             <select
@@ -201,11 +201,11 @@ const Datepicker = ({
 
                     {/*上個月的按鈕*/}
                     <button className={cx(elClassNames.monthButton, 'pre-month')}
-                            type="button"
-                            onClick={() => handleChangePanel(
-                                panelPreYearMonth.year(),
-                                panelPreYearMonth.month(),
-                            )}
+                        type="button"
+                        onClick={() => handleChangePanel(
+                            panelPreYearMonth.year(),
+                            panelPreYearMonth.month(),
+                        )}
                     >
                         <ArrowIcon/>
                     </button>
@@ -278,7 +278,7 @@ const Datepicker = ({
                 date: eachDate,
                 dayNumber: dayNumber,
                 onClick: () => !isDisable ? handleSelectedDate(preMonth.year(), preMonth.month(), dayNumber) : {}
-            }
+            };
         }
 
         return preMonFirstDayList;
@@ -325,7 +325,7 @@ const Datepicker = ({
                 date: eachDate,
                 dayNumber: dayNumber,
                 onClick: () => !isDisable ? handleSelectedDate(nextMonth.year(), nextMonth.month(), dayNumber): {}
-            }
+            };
         }
 
         return nextMonEndDayList;
@@ -358,13 +358,13 @@ const Datepicker = ({
                 date: eachDate,
                 dayNumber: dayNumber,
                 onClick: () => !isDisable ? handleSelectedDate(panelYearMonth.year(), panelYearMonth.month(), dayNumber) : {}
-            }
+            };
         }
 
 
         const preMonthDay = renderPreMonthDay();
         const nextMonthDay = renderNextMonthDay();
-        const monthDateList = [...preMonthDay, ...currentDayList, ...nextMonthDay]
+        const monthDateList = [...preMonthDay, ...currentDayList, ...nextMonthDay];
 
         const actIndex = monthDateList.findIndex((row) => row.isActive);
         const weekIndex = Math.floor(actIndex / 7);
@@ -402,7 +402,7 @@ const Datepicker = ({
                 <span>{translateI18n('com.datepicker.setToday', {defaultMessage: 'Set to today', locale: locale})}</span>
             </button>
         </div>
-    )
+    );
 
     return (
         <div className={cx(elClassNames.root, className, {'dark-theme': isDark})} style={style}>

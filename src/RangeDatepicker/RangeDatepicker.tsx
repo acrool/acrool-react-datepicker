@@ -31,20 +31,20 @@ const today = dayjs().format('YYYY-MM-DD');
  * @constructor
  */
 const RangeDatepicker = ({
-     className,
-     style,
-     value = {startDate: today, endDate: today},
-     onChange,
-     format,
-     maxYear,
-     minYear,
-     locale,
-     isVisibleSetToday,
-     minDate,
-     maxDate,
-     isDark,
- }: IProps) => {
-    const commonProps = {isDark, format, minYear, maxYear, locale, isVisibleSetToday}
+    className,
+    style,
+    value = {startDate: today, endDate: today},
+    onChange,
+    format,
+    maxYear,
+    minYear,
+    locale,
+    isVisibleSetToday,
+    minDate,
+    maxDate,
+    isDark,
+}: IProps) => {
+    const commonProps = {isDark, format, minYear, maxYear, locale, isVisibleSetToday};
 
     return (
         <div className={cx(elClassNames.root, className)} style={style}>

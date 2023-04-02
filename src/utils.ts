@@ -1,5 +1,3 @@
-import { isEmpty } from 'bear-jsutils/equal';
-import {paddingLeft} from 'bear-jsutils/string';
 import dayjs from 'dayjs';
 
 export const defaultFormat = {
@@ -8,6 +6,36 @@ export const defaultFormat = {
     timeNoSec: 'HH:mm',
 };
 
+
+/**
+ * 判定是否為空
+ * @param value
+ * @returns {boolean}
+ */
+export function isEmpty(value: any): boolean {
+    return (
+        value === undefined
+        || value === null
+        || (typeof value === 'string' && value.trim().length === 0)
+        || (!(value instanceof Date) && typeof value === 'object' && Object.keys(value).length === 0)
+    );
+}
+
+
+/**
+ * 依需求位數補0
+ * ex: 69 -> 0069
+ *
+ * @param val 需要轉換得字串|數字
+ * @param length 補滿長度
+ */
+export function paddingLeft(val: string|number, length: number): string {
+    const replaceStr = String(val);
+    if (replaceStr.length < length) {
+        return paddingLeft(`0${replaceStr}`, length);
+    }
+    return replaceStr;
+}
 
 export const getHour = (hour: string) => {
     if(isEmpty(hour)){
@@ -18,7 +46,7 @@ export const getHour = (hour: string) => {
         return '00';
     }
     return paddingLeft(hour, 2);
-}
+};
 export const getMinuteSecond = (MinuteSecond: string) => {
     if(isEmpty(MinuteSecond)){
         return '00';
@@ -28,11 +56,11 @@ export const getMinuteSecond = (MinuteSecond: string) => {
         return '00';
     }
     return paddingLeft(MinuteSecond, 2);
-}
+};
 
 
 export const getTimeFormat = (time?: string) => {
-    const dayObj = dayjs(`1989-01-01 ${time ?? '00:00:00'}`)
+    const dayObj = dayjs(`1989-01-01 ${time ?? '00:00:00'}`);
     return {
         hour: dayObj.hour(),
         minute: dayObj.minute(),
@@ -47,7 +75,7 @@ export function getTimeList(): {
     hourList: Array<number>,
     minuteList: Array<number>,
     secondList: Array<number>,
-} {
+    } {
     let hourList = new Array(24).fill(0);
     let minuteList = new Array(60).fill(0);
     let secondList = new Array(60).fill(0);
@@ -62,5 +90,5 @@ export function getTimeList(): {
 
 export const getDatetime = (newValue?: string) => {
     return dayjs(isEmpty(newValue) ? undefined: newValue);
-}
+};
 

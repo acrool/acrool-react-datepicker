@@ -2,7 +2,7 @@ import React from 'react';
 import CSS from 'csstype';
 import dayjs,{Dayjs} from 'dayjs';
 import cx from 'classnames';
-import { defaultFormat, getDatetime } from '../utils';
+import {defaultFormat, getDatetime} from '../utils';
 import elClassNames from './el-class-names';
 import Datepicker from '../Datepicker/Datepicker';
 import Timepicker from '../Timepicker/Timepicker';
@@ -55,7 +55,7 @@ const DateTimepicker = ({
             return dayObj.format(isEnableSec ? defaultFormat.time : defaultFormat.timeNoSec);
         }
         return dayjs().format(isEnableSec ? defaultFormat.time : defaultFormat.timeNoSec);
-    }
+    };
 
     /**
      * 取得日期
@@ -66,7 +66,7 @@ const DateTimepicker = ({
             return dayObj.format(dateFormat);
         }
         return dayjs().format(dateFormat);
-    }
+    };
 
 
     /**
@@ -76,7 +76,7 @@ const DateTimepicker = ({
     const handleChangeDate = (newValue: string) => {
         const oldTime = getTime(propsDate);
         onChange(`${newValue} ${oldTime}`);
-    }
+    };
 
     /**
      * 處理點擊OK按鈕
@@ -84,7 +84,7 @@ const DateTimepicker = ({
     const handleOnClickOk = (newValue: string) => {
         const oldDate = getDate(propsDate);
         if(onClickOk) onClickOk(`${oldDate} ${newValue}`);
-    }
+    };
 
 
     /**
@@ -94,7 +94,7 @@ const DateTimepicker = ({
     const handleChangeTime = (newValue: string) => {
         const oldDate = getDate(propsDate);
         onChange(`${oldDate} ${newValue}`);
-    }
+    };
 
     return (
         <div className={cx(elClassNames.root, className)} style={style}>

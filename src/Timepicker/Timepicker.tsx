@@ -3,8 +3,7 @@ import dayjs from 'dayjs';
 import CSS from 'csstype';
 import elClassNames from './el-class-names';
 import cx from 'classnames';
-import { paddingLeft } from 'bear-jsutils/string';
-import {getTimeList, getTimeFormat} from '../utils';
+import {getTimeList, getTimeFormat, paddingLeft} from '../utils';
 import translateI18n from '../locales';
 
 import './styles.css';
@@ -42,7 +41,7 @@ const getTimeString = (timeObj: ITimeObj, isEnableSec?: boolean): string => {
         return `${paddingLeft(timeObj?.hour ?? '00', 2)}:${paddingLeft(timeObj?.minute ?? '00', 2)}:${paddingLeft(timeObj?.second ?? '00', 2)}`;
     }
     return `${paddingLeft(timeObj?.hour ?? '00', 2)}:${paddingLeft(timeObj?.minute ?? '00', 2)}`;
-}
+};
 
 /**
  * 時間選擇器
@@ -76,7 +75,7 @@ const Timepicker = ({
     useEffect(() => {
         handleMoveUnit(time, false);
 
-    }, [])
+    }, []);
 
 
     /**
@@ -94,7 +93,7 @@ const Timepicker = ({
                 onChange(getTimeString(data, isEnableSec));
             }
         });
-    }
+    };
 
 
     /**
@@ -102,7 +101,7 @@ const Timepicker = ({
      */
     const handleOnClickOk = () => {
         if(onClickOk) onClickOk(timeString);
-    }
+    };
 
     /**
      * 處理移動時間
@@ -120,7 +119,7 @@ const Timepicker = ({
         if(data.second && secondBoxRef.current){
             secondBoxRef.current?.scrollTo({behavior, top: data.second * unitHeight});
         }
-    }
+    };
 
     /**
      * 處理按下現在時間

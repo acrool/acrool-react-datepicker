@@ -107,6 +107,6 @@ const translateI18n = (id: string, options?: {defaultMessage?: string, locale?: 
     }
 
     return id;
-}
+};
 
 export default translateI18n;
