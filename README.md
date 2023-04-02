@@ -1,6 +1,6 @@
 # bear-react-datepicker
 
-> Datepicker library based for Reactjs
+> Datepicker list with React Component
 
 [![NPM](https://img.shields.io/npm/v/bear-react-datepicker.svg)](https://www.npmjs.com/package/bear-react-datepicker)
 [![npm](https://img.shields.io/npm/dm/bear-react-datepicker.svg)](https://www.npmjs.com/package/bear-react-datepicker)
@@ -12,12 +12,6 @@
 <img src="https://raw.githubusercontent.com/imagine10255/bear-react-datepicker/main/docs/datetimepicker.jpg" width="700"/>
 <img src="https://raw.githubusercontent.com/imagine10255/bear-react-datepicker/main/docs/rangedatepicker.jpg" width="700"/>
 
-## Support Version Map
-
-React | React Scripts | Bear React Datepicker | 
-------|:--------------|----------------------:|
-18    | 5.0.1         |                 2.0.0 |
-17    | 4.0.3         |                1.0.12 |
 
 ## Install
 

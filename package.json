@@ -1,7 +1,14 @@
 {
   "name": "bear-react-datepicker",
-  "private": false,
   "version": "3.0.1",
+  "description": "Datepicker, Timepicker with React Component",
+  "keywords": [
+    "react",
+    "typescript",
+    "Datepicker",
+    "Timepicker"
+  ],
+  "private": false,
   "type": "module",
   "license": "MIT",
   "module": "./dist/bear-react-datepicker.es.js",
