@@ -5,8 +5,8 @@
   "keywords": [
     "react",
     "typescript",
-    "Datepicker",
-    "Timepicker"
+    "datepicker",
+    "timepicker"
   ],
   "private": false,
   "type": "module",
