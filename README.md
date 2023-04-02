@@ -6,11 +6,11 @@
 [![npm](https://img.shields.io/npm/dm/bear-react-datepicker.svg)](https://www.npmjs.com/package/bear-react-datepicker)
 
 
-<img src="./docs/datepicker.jpg" width="500"/>
+<img src="https://raw.githubusercontent.com/imagine10255/bear-react-datepicker/main/docs/datepicker.jpg" width="500"/>
 
-<img src="./docs/timepicker.jpg" width="400"/>
-<img src="./docs/datetimepicker.jpg" width="700"/>
-<img src="./docs/rangedatepicker.jpg" width="700"/>
+<img src="https://raw.githubusercontent.com/imagine10255/bear-react-datepicker/main/docs/timepicker.jpg" width="400"/>
+<img src="https://raw.githubusercontent.com/imagine10255/bear-react-datepicker/main/docs/datetimepicker.jpg" width="700"/>
+<img src="https://raw.githubusercontent.com/imagine10255/bear-react-datepicker/main/docs/rangedatepicker.jpg" width="700"/>
 
 ## Support Version Map
 
