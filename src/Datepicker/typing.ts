@@ -7,7 +7,6 @@ export interface ICommon {
     minYear?: number;
     maxYear?: number;
     isDark?: boolean;
-    isVisibleSetToday?: boolean;
     format?: string;
     minDate?: string,
     maxDate?: string,

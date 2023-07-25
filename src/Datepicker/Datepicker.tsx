@@ -18,6 +18,7 @@ interface IProps extends ICommon{
     value?: string;
     onChange: (newDate: string) => void;
     onChangeYearMonthPanel?: (yearMonth: { year: number, month: number }) => void;
+    isVisibleSetToday?: boolean;
 }
 
 /**

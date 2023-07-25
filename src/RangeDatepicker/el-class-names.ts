@@ -1,5 +1,5 @@
 const elClassNames = {
-    elCLassPrefix: 'bear-react-rangeDatepicker',
+    elClassPrefix: 'bear-react-rangeDatepicker',
 };
 
 
@@ -7,5 +7,7 @@ const elClassNames = {
  * css class setting
  */
 export default {
-    root: `${elClassNames.elCLassPrefix}__root`,
+    root: `${elClassNames.elClassPrefix}__root`,
+    labelCheckCardCreate: `${elClassNames.elClassPrefix}__label-check-card-create`,
+    todayButton: `${elClassNames.elClassPrefix}__today-button`,
 };

@@ -28,6 +28,11 @@ const locales: ILocale = {
         'com.datepicker.unit.year': ' ',
         'com.datepicker.pleaseInputYear': 'Please enter the first year',
         'com.datepicker.setToday': 'Set to today',
+        'com.datepicker.today': 'Today',
+        'com.datepicker.tomorrow': 'Tomorrow',
+        'com.datepicker.twoDay': 'Two day',
+        'com.datepicker.thisWeek': 'This Week',
+        'com.datepicker.nextWeek': 'Next Week',
 
         'com.timepicker.time': 'Time',
         'com.timepicker.setNow': 'Now',
@@ -56,6 +61,12 @@ const locales: ILocale = {
         'com.datepicker.unit.year': '年',
         'com.datepicker.pleaseInputYear': '請輸入西元年',
         'com.datepicker.setToday': '設定為今天',
+        'com.datepicker.today': '今天',
+        'com.datepicker.twoDay': '兩天',
+        'com.datepicker.tomorrow': '明天',
+        'com.datepicker.thisWeek': '這週',
+        'com.datepicker.nextWeek': '下週',
+
 
         'com.timepicker.time': '時間',
         'com.timepicker.setNow': '現在',
@@ -83,7 +94,13 @@ const locales: ILocale = {
         'com.datepicker.weekDay.7': '週日',
         'com.datepicker.unit.year': '年',
         'com.datepicker.pleaseInputYear': '请输入西元年',
+        'com.datepicker.setToToday': '设定为今天',
         'com.datepicker.setToday': '设定为今天',
+        'com.datepicker.today': '今天',
+        'com.datepicker.tomorrow': '明天',
+        'com.datepicker.twoDay': '两天',
+        'com.datepicker.thisWeek': '这周',
+        'com.datepicker.nextWeek': '下周',
 
         'com.timepicker.time': '时间',
         'com.timepicker.setNow': '此刻',

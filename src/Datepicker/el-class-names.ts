@@ -1,5 +1,5 @@
 const elClassNames = {
-    elCLassPrefix: 'bear-react-datepicker',
+    elClassPrefix: 'bear-react-datepicker',
 };
 
 
@@ -7,24 +7,24 @@ const elClassNames = {
  * css class setting
  */
 export default {
-    root: `${elClassNames.elCLassPrefix}__root`,
-    yearMonthRow: `${elClassNames.elCLassPrefix}__year-month-row`,
-    yearMonth: `${elClassNames.elCLassPrefix}__year-month`,
-    yearGroup: `${elClassNames.elCLassPrefix}__year-group`,
-    year: `${elClassNames.elCLassPrefix}__year`,
-    monthGroup: `${elClassNames.elCLassPrefix}__month-group`,
-    month: `${elClassNames.elCLassPrefix}__month`,
-    monthSelect: `${elClassNames.elCLassPrefix}__month-select`,
-    yearSelect: `${elClassNames.elCLassPrefix}__year-select`,
-    changeControl: `${elClassNames.elCLassPrefix}__change-control`,
-    monthButton: `${elClassNames.elCLassPrefix}__month-button`,
-    dayContent: `${elClassNames.elCLassPrefix}__day-content`,
-    dayRow: `${elClassNames.elCLassPrefix}__day-row`,
-    preDay: `${elClassNames.elCLassPrefix}__pre-day`,
-    day: `${elClassNames.elCLassPrefix}__day`,
-    week: `${elClassNames.elCLassPrefix}__week`,
-    weekRow: `${elClassNames.elCLassPrefix}__week-row`,
-    weekMask: `${elClassNames.elCLassPrefix}__week-mask`,
-    labelCheckCardCreate: `${elClassNames.elCLassPrefix}__label-check-card-create`,
-    todayButton: `${elClassNames.elCLassPrefix}__today-button`,
+    root: `${elClassNames.elClassPrefix}__root`,
+    yearMonthRow: `${elClassNames.elClassPrefix}__year-month-row`,
+    yearMonth: `${elClassNames.elClassPrefix}__year-month`,
+    yearGroup: `${elClassNames.elClassPrefix}__year-group`,
+    year: `${elClassNames.elClassPrefix}__year`,
+    monthGroup: `${elClassNames.elClassPrefix}__month-group`,
+    month: `${elClassNames.elClassPrefix}__month`,
+    monthSelect: `${elClassNames.elClassPrefix}__month-select`,
+    yearSelect: `${elClassNames.elClassPrefix}__year-select`,
+    changeControl: `${elClassNames.elClassPrefix}__change-control`,
+    monthButton: `${elClassNames.elClassPrefix}__month-button`,
+    dayContent: `${elClassNames.elClassPrefix}__day-content`,
+    dayRow: `${elClassNames.elClassPrefix}__day-row`,
+    preDay: `${elClassNames.elClassPrefix}__pre-day`,
+    day: `${elClassNames.elClassPrefix}__day`,
+    week: `${elClassNames.elClassPrefix}__week`,
+    weekRow: `${elClassNames.elClassPrefix}__week-row`,
+    weekMask: `${elClassNames.elClassPrefix}__week-mask`,
+    labelCheckCardCreate: `${elClassNames.elClassPrefix}__label-check-card-create`,
+    todayButton: `${elClassNames.elClassPrefix}__today-button`,
 };

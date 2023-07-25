@@ -1,4 +1,6 @@
 import dayjs from 'dayjs';
+import {useCallback} from 'react';
+import {EDateRange} from './RangeDatepicker/typing';
 
 export const defaultFormat = {
     date: 'YYYY-MM-DD',
@@ -92,3 +94,39 @@ export const getDatetime = (newValue?: string) => {
     return dayjs(isEmpty(newValue) ? undefined: newValue);
 };
 
+
+
+
+export const selectDateRange = (rangeType: EDateRange, format: string) => {
+    
+    const today = dayjs();
+    switch (rangeType){
+    case EDateRange.today:
+        return {
+            startDate: today.format(format),
+            endDate: today.format(format),
+        };
+    case EDateRange.tomorrow:
+        return {
+            startDate: today.add(1, 'day').format(format),
+            endDate: today.add(1, 'day').format(format),
+        };
+    case EDateRange.twoDay:
+        return {
+            startDate: today.format(format),
+            endDate: today.add(1, 'day').format(format),
+        };
+    case EDateRange.thisWeek:
+        return {
+            startDate: today.format(format),
+            endDate: today.add(1, 'week').format(format),
+        };
+    case EDateRange.nextWeek:
+        return {
+            startDate: today.add(1, 'week').format(format),
+            endDate: today.add(2, 'week').format(format),
+        };
+    }
+    return undefined;
+
+};

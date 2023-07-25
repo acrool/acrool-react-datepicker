@@ -1,5 +1,5 @@
 const elClassNames = {
-    elCLassPrefix: 'bear-react-datetimepicker',
+    elClassPrefix: 'bear-react-datetimepicker',
 };
 
 
@@ -7,12 +7,12 @@ const elClassNames = {
  * css class setting
  */
 export default {
-    root: `${elClassNames.elCLassPrefix}__root`,
-    pickContainer: `${elClassNames.elCLassPrefix}__pick-container`,
-    fakeSelectContainer: `${elClassNames.elCLassPrefix}__fake-select-container`,
-    selectBox: `${elClassNames.elCLassPrefix}__select-box`,
-    fakeOption: `${elClassNames.elCLassPrefix}__fake-option`,
-    buttonContainer: `${elClassNames.elCLassPrefix}__button-container`,
-    confirmButton: `${elClassNames.elCLassPrefix}__confirm-button`,
-    nowButton: `${elClassNames.elCLassPrefix}__now-button`,
+    root: `${elClassNames.elClassPrefix}__root`,
+    pickContainer: `${elClassNames.elClassPrefix}__pick-container`,
+    fakeSelectContainer: `${elClassNames.elClassPrefix}__fake-select-container`,
+    selectBox: `${elClassNames.elClassPrefix}__select-box`,
+    fakeOption: `${elClassNames.elClassPrefix}__fake-option`,
+    buttonContainer: `${elClassNames.elClassPrefix}__button-container`,
+    confirmButton: `${elClassNames.elClassPrefix}__confirm-button`,
+    nowButton: `${elClassNames.elClassPrefix}__now-button`,
 };
