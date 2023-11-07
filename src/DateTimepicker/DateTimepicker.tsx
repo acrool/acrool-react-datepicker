@@ -23,11 +23,12 @@ interface IProps extends ICommon{
 }
 
 
-enum EChangeType {
+enum EDateType {
     date,
     time,
     dateTime,
 }
+
 
 
 /**
@@ -49,10 +50,8 @@ const DateTimepicker = ({
     maxDate,
     isEnableSec = true,
 }: IProps) => {
-    const {onSetToday, today, panelYearMonth} = useDatePicker();
+    const {today} = useDatePicker();
 
-    // const {onSetToday, } = useContext(DatePickerContext);
-// console.log('panelYearMonth', onSetToday, panelYearMonth);
     const propsDate = getDatetime(value);
     const dateProps = {dateFormat, minDate, maxDate, minYear, maxYear, locale, isDark};
     const timeProps = {locale, isDark, onClickOk, isEnableSec};
@@ -62,65 +61,51 @@ const DateTimepicker = ({
      * @param dayObj
      */
     const getTime = (dayObj: Dayjs) => {
-        if(propsDate.isValid()){
-            return dayObj.format(isEnableSec ? defaultFormat.time : defaultFormat.timeNoSec);
-        }
-        return dayjs().format(isEnableSec ? defaultFormat.time : defaultFormat.timeNoSec);
+        return (dayObj.isValid() ? dayObj: dayjs())
+            .format(isEnableSec ? defaultFormat.time : defaultFormat.timeNoSec);
     };
 
     /**
-     * 取得日期
+     * 取得時間
      * @param dayObj
      */
     const getDate = (dayObj: Dayjs) => {
-        if(propsDate.isValid()){
-            return dayObj.format(dateFormat);
-        }
-        return dayjs().format(dateFormat);
-    };
-
-
-
-    /**
-     * 處理點擊OK按鈕
-     */
-    const handleOnClickOk = (newValue: string) => {
-        const oldDate = getDate(propsDate);
-        if(onClickOk) onClickOk(`${oldDate} ${newValue}`);
+        return (dayObj.isValid() ? dayObj: dayjs())
+            .format(dateFormat);
     };
 
 
 
     /**
      * 處理日期異動
-     * @param newValue
-     * @param changeType
+     * @param dateType
      */
-    const handleOnChange = (newValue: string, changeType?: EChangeType) => {
-        if(changeType === EChangeType.date){
-            const oldTime = getTime(propsDate);
-            onChange(`${newValue} ${oldTime}`);
-            return;
+    const generateOnChange = (dateType?: EDateType) => {
+        if(dateType === EDateType.date) {
+            return (newValue: string) => {
+                onChange(`${newValue} ${getTime(propsDate)}`);
+            };
         }
 
-        if(changeType === EChangeType.time){
-            const oldDate = getDate(propsDate);
-            onChange(`${oldDate} ${newValue}`);
-            return;
+        if(dateType === EDateType.time){
+            return (newValue: string) => {
+                onChange(`${getDate(propsDate)} ${newValue}`);
+            };
         }
-        console.log('value', value);
-        return onChange(newValue);
 
+        return onChange;
     };
 
     /**
-     * 處理時間異動
-     * @param newValue
+     * 處理點擊OK按鈕
      */
-    const handleChangeTime = (newValue: string) => {
-        const oldDate = getDate(propsDate);
-        onChange(`${oldDate} ${newValue}`);
+    const handleOnClickOk = () => {
+        const dateStr = `${getDate(propsDate)} ${getTime(propsDate)}`;
+        if(onClickOk) onClickOk(dateStr);
     };
+
+
+
 
 
 
@@ -128,16 +113,7 @@ const DateTimepicker = ({
      * 設定為今天日期
      */
     const handleSetNow = () => {
-
-        console.log('today.format(dateFormat)', today.format(defaultFormat.dateTime));
-        handleOnChange(today.format(defaultFormat.dateTime));
-        // const formatDate = today.format(format);
-
-        // onSetToday(today);
-
-        // if(onChange){
-        //     onChange(formatDate);
-        // }
+        generateOnChange()(today.format(defaultFormat.dateTime));
     };
 
 
@@ -146,51 +122,33 @@ const DateTimepicker = ({
      */
     const renderActionsButtons = () => {
         return <div className={elClassNames.timeButtonContainer}>
-            <button className={elClassNames.timeNowButton} type="button" onClick={() => handleSetNow()}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
-            <button className={elClassNames.timeConfirmButton} type="button" onClick={() => {}}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
+            <button className={elClassNames.timeNowButton} type="button" onClick={handleSetNow}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
+            <button className={elClassNames.timeConfirmButton} type="button" onClick={handleOnClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
         </div>;
-
-        // return <DatePickerProviderContext.Consumer>
-        //     {args => {
-        //         return <div className={elClassNames.timeButtonContainer}>
-        //             <button className={elClassNames.timeNowButton} type="button" onClick={() => args.onSetToday()}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
-        //             <button className={elClassNames.timeConfirmButton} type="button" onClick={() => {}}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
-        //         </div>;
-        //     }}
-        // </DatePickerProviderContext.Consumer>;
-
     };
 
 
 
-    return <DatePickerProvider
-        onChange={onChange}
+    return <div className={clsx(
+        elClassNames.root,
+        elClassNames.dateTimeRoot,
+        {'dark-theme': isDark},
+        className
+    )}
+    style={style}
     >
-        <div className={clsx(
-            elClassNames.root,
-            elClassNames.dateTimeRoot,
-            {'dark-theme': isDark},
-            className
-        )}
-        style={style}
-        >
-            <div className={elClassNames.dateTimeGroup}>
-                <Datepicker {...dateProps} value={getDate(propsDate)} onChange={value => handleOnChange(value, EChangeType.date)} />
-                <Timepicker {...timeProps} value={getTime(propsDate)} onChange={value => handleOnChange(value, EChangeType.time)} onClickOk={handleOnClickOk}/>
-            </div>
-
-
-            {renderActionsButtons()}
+        <div className={elClassNames.dateTimeGroup}>
+            <Datepicker {...dateProps} value={getDate(propsDate)} onChange={generateOnChange(EDateType.date)}/>
+            <Timepicker {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)} isEnableSec={false}/>
         </div>
-    </DatePickerProvider>;
+
+        {renderActionsButtons()}
+    </div>;
 };
 
-// export default DateTimepicker;
 
 export default (props: IProps) => {
-    return <DatePickerProvider
-        onChange={props.onChange}
-    >
+    return <DatePickerProvider>
         <DateTimepicker {...props}/>
     </DatePickerProvider>;
 };

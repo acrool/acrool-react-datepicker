@@ -48,7 +48,6 @@ const Timepicker = ({
     isDark = false,
     isEnableSec = true,
 }: IProps) => {
-    console.log('value', value);
     const hourBoxRef = useRef<HTMLDivElement>(null);
     const minuteBoxRef = useRef<HTMLDivElement>(null);
     const secondBoxRef = useRef<HTMLDivElement>(null);
@@ -58,7 +57,7 @@ const Timepicker = ({
 
 
     useEffect(() => {
-        setTime(getTimeFormat(value));
+        handleOnChange(getTimeFormat(value));
     }, [value]);
 
     useEffect(() => {
@@ -140,8 +139,7 @@ const Timepicker = ({
                 <span className={clsx(elClassNames.timeFakeOption, {'is-active': isActive})}
                     key={`unit-${unitCode}-${unit}`}
                     onClick={() => {
-                        const newTime = {...time, [unitCode]: unit};
-                        handleOnChange(newTime, true);
+                        handleOnChange({...time, [unitCode]: unit}, true);
                     }}
                 >
                     {paddingLeft(unit, 2)}
@@ -176,29 +174,32 @@ const Timepicker = ({
     const renderTimePicker = () => {
         return <div className={elClassNames.timePickContainer}>
             {/* 時 */}
-            <div className={elClassNames.timeFakeSelectContainer}>
-                <div className={elClassNames.timeSelectBox} ref={hourBoxRef}>
-                    {renderOption('hour', hourList)}
-                </div>
+            <div className={elClassNames.timeSelectBox} ref={hourBoxRef}>
+                {renderOption('hour', hourList)}
             </div>
 
             {/* 分 */}
-            <div className={elClassNames.timeFakeSelectContainer}>
-                <div className={elClassNames.timeSelectBox} ref={minuteBoxRef}>
-                    {renderOption('minute', minuteList)}
-                </div>
+            <div className={elClassNames.timeSelectBox} ref={minuteBoxRef}>
+                {renderOption('minute', minuteList)}
             </div>
 
             {/* 秒 */}
             {isEnableSec &&
-                <div className={elClassNames.timeFakeSelectContainer}>
-                    <div className={elClassNames.timeSelectBox} ref={secondBoxRef}>
-                        {renderOption('second', secondList)}
-                    </div>
+                <div className={elClassNames.timeSelectBox} ref={secondBoxRef}>
+                    {renderOption('second', secondList)}
                 </div>
             }
         </div>;
     };
+
+
+    const renderButton = () => {
+        return <div className={elClassNames.timeButtonContainer}>
+            <button className={elClassNames.timeNowButton} type="button" onClick={handleNowTime}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
+            <button className={elClassNames.timeConfirmButton} type="button" onClick={handleOnClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
+        </div>;
+    };
+
 
     return (
         <div className={clsx(
@@ -210,12 +211,7 @@ const Timepicker = ({
 
             {renderHeader()}
             {renderTimePicker()}
-
-
-            {/*<div className={elClassNames.timeButtonContainer}>*/}
-            {/*    <button className={elClassNames.timeNowButton} type="button" onClick={handleNowTime}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>*/}
-            {/*    <button className={elClassNames.timeConfirmButton} type="button" onClick={handleOnClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>*/}
-            {/*</div>*/}
+            {isEnableSec && renderButton()}
         </div>
     );
 };

@@ -41,11 +41,10 @@ const Datepicker = ({
     maxDate,
     tagDate = []
 }: IProps) => {
-    const {setPanelYearMonth, panelYearMonth} = useDatePicker();
 
     const dayRef = useRef<Dayjs>(dayjs());
     const today = dayRef.current;
-    // const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(value ? dayjs(value) : today);
+    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(value ? dayjs(value) : today);
 
 
     const initMaxYear = typeof maxYear !== 'undefined' ? maxYear : Number(today.add(1, 'year').year());

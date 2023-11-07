@@ -147,7 +147,6 @@ const DatePickerProvider = ({
     const secondBoxRef = useRef<HTMLDivElement>(null);
 
     const [time, setTime] = useState<ITimeObj>(getTimeFormat(value));
-    const timeString = getTimeString(time, isEnableSec);
 
 
     useEffect(() => {
@@ -156,30 +155,6 @@ const DatePickerProvider = ({
     }, []);
 
 
-    /**
-     * 處理異動時動作
-     * @param data
-     * @param isBehaviorSmooth
-     */
-    const handleOnChange = (data: ITimeObj, isBehaviorSmooth = true) => {
-        handleMoveUnit(data, isBehaviorSmooth);
-
-        startTransition(() => {
-            setTime(data);
-
-            if(onChange){
-                onChange(getTimeString(data, isEnableSec));
-            }
-        });
-    };
-
-
-    /**
-     * 處理點擊OK按鈕
-     */
-    const handleOnClickOk = () => {
-        // if(onClickOk) onClickOk(timeString);
-    };
 
     /**
      * 處理移動時間
@@ -198,44 +173,6 @@ const DatePickerProvider = ({
             secondBoxRef.current?.scrollTo({behavior, top: data.second * unitHeight});
         }
     };
-
-    /**
-     * 處理按下現在時間
-     */
-    const handleNowTime = useCallback(() => {
-        const reToday = dayjs();
-
-        const data = {
-            hour: reToday.hour(),
-            minute: reToday.minute(),
-            second: isEnableSec ? reToday.second() : undefined,
-        };
-
-        // 設定 時、分、秒
-        handleOnChange(data, true);
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    /**
-     * 產生時|分|秒 區塊
-     */
-    const renderOption = useCallback((unitCode: 'hour'|'minute'|'second', unitList: Array<number>) => {
-        return unitList.map(unit => {
-            const isActive = time[unitCode] === unit;
-            return (
-                <span className={clsx(elClassNames.timeFakeOption, {'is-active': isActive})}
-                    key={`unit-${unitCode}-${unit}`}
-                    onClick={() => {
-                        const newTime = {...time, [unitCode]: unit};
-                        handleOnChange(newTime, true);
-                    }}
-                >
-                    {paddingLeft(unit, 2)}
-                </span>
-            );
-        });
-    }, [timeString, onChange]);
 
 
     
