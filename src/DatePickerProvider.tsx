@@ -1,9 +1,21 @@
-import React, {createContext, useCallback, useRef, useState, ReactNode, useContext} from 'react';
+import React, {
+    createContext,
+    useCallback,
+    useRef,
+    useState,
+    ReactNode,
+    useContext,
+    useEffect,
+    startTransition
+} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
-import {defaultFormat, getDatetime} from './utils';
+import {defaultFormat, getDatetime, getTimeFormat, paddingLeft} from './utils';
+import clsx from 'clsx';
+import elClassNames from './el-class-names';
+import {ITimeObj} from './typing';
 
 interface IContextProps {
-    today?: string,
+    today?: Dayjs,
     onSetToday?: () => void
     panelYearMonth?: Dayjs
     setPanelYearMonth?: (value: Dayjs) => void
@@ -31,13 +43,30 @@ export const useDatePicker = () => useContext(DatePickerContext);
 //         return <Provider>{acc}</Provider>;
 //     }, <Component {...props} />);
 
+const unitHeight = 30;
+
+
+
+/**
+ * 時間物件轉自串
+ * @param timeObj
+ * @param isEnableSec
+ */
+export const getTimeString = (timeObj: ITimeObj, isEnableSec?: boolean): string => {
+    if(isEnableSec){
+        return `${paddingLeft(timeObj?.hour ?? '00', 2)}:${paddingLeft(timeObj?.minute ?? '00', 2)}:${paddingLeft(timeObj?.second ?? '00', 2)}`;
+    }
+    return `${paddingLeft(timeObj?.hour ?? '00', 2)}:${paddingLeft(timeObj?.minute ?? '00', 2)}`;
+};
+
 
 
 interface IProps {
     children: ReactNode
     format?: string
     value?: string
-    onChange?: (newDate: string) => void
+    onChange?: (newDate: string) => void,
+    isEnableSec?: boolean
 }
 
 const DatePickerProvider = ({
@@ -45,6 +74,7 @@ const DatePickerProvider = ({
     format = 'YYYY-MM-DD',
     onChange,
     value,
+    isEnableSec = true,
 }: IProps) => {
 
     const dayRef = useRef<Dayjs>(dayjs());
@@ -108,13 +138,112 @@ const DatePickerProvider = ({
             onChange(formatDate);
         }
     };
+
+
+
+
+    const hourBoxRef = useRef<HTMLDivElement>(null);
+    const minuteBoxRef = useRef<HTMLDivElement>(null);
+    const secondBoxRef = useRef<HTMLDivElement>(null);
+
+    const [time, setTime] = useState<ITimeObj>(getTimeFormat(value));
+    const timeString = getTimeString(time, isEnableSec);
+
+
+    useEffect(() => {
+        handleMoveUnit(time, false);
+
+    }, []);
+
+
+    /**
+     * 處理異動時動作
+     * @param data
+     * @param isBehaviorSmooth
+     */
+    const handleOnChange = (data: ITimeObj, isBehaviorSmooth = true) => {
+        handleMoveUnit(data, isBehaviorSmooth);
+
+        startTransition(() => {
+            setTime(data);
+
+            if(onChange){
+                onChange(getTimeString(data, isEnableSec));
+            }
+        });
+    };
+
+
+    /**
+     * 處理點擊OK按鈕
+     */
+    const handleOnClickOk = () => {
+        // if(onClickOk) onClickOk(timeString);
+    };
+
+    /**
+     * 處理移動時間
+     */
+    const handleMoveUnit = (data: {hour: number, minute: number, second?: number}, isBehaviorSmooth = true) => {
+        const behavior = isBehaviorSmooth ? 'smooth':'auto';
+        if(data.hour && hourBoxRef.current){
+            hourBoxRef.current?.scrollTo({behavior, top: data.hour * unitHeight});
+        }
+
+        if(data.minute && minuteBoxRef.current){
+            minuteBoxRef.current?.scrollTo({behavior, top: data.minute * unitHeight});
+        }
+
+        if(data.second && secondBoxRef.current){
+            secondBoxRef.current?.scrollTo({behavior, top: data.second * unitHeight});
+        }
+    };
+
+    /**
+     * 處理按下現在時間
+     */
+    const handleNowTime = useCallback(() => {
+        const reToday = dayjs();
+
+        const data = {
+            hour: reToday.hour(),
+            minute: reToday.minute(),
+            second: isEnableSec ? reToday.second() : undefined,
+        };
+
+        // 設定 時、分、秒
+        handleOnChange(data, true);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    /**
+     * 產生時|分|秒 區塊
+     */
+    const renderOption = useCallback((unitCode: 'hour'|'minute'|'second', unitList: Array<number>) => {
+        return unitList.map(unit => {
+            const isActive = time[unitCode] === unit;
+            return (
+                <span className={clsx(elClassNames.timeFakeOption, {'is-active': isActive})}
+                    key={`unit-${unitCode}-${unit}`}
+                    onClick={() => {
+                        const newTime = {...time, [unitCode]: unit};
+                        handleOnChange(newTime, true);
+                    }}
+                >
+                    {paddingLeft(unit, 2)}
+                </span>
+            );
+        });
+    }, [timeString, onChange]);
+
+
     
-    
-    
+
 
     return (
         <DatePickerContext.Provider value={{
-            today: 'xxx',
+            today,
             onSetToday,
             panelYearMonth,
             setPanelYearMonth: handleSetPanelYearMonth,

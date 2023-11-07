@@ -24,3 +24,9 @@ export interface ICommon {
     maxDate?: string,
     tagDate?: string[],
 }
+
+export interface ITimeObj {
+    hour: number,
+    minute: number,
+    second?: number,
+}

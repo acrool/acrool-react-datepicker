@@ -23,6 +23,12 @@ interface IProps extends ICommon{
 }
 
 
+enum EChangeType {
+    date,
+    time,
+    dateTime,
+}
+
 
 /**
  * DateTimepicker
@@ -32,7 +38,7 @@ const DateTimepicker = ({
     className,
     style,
     value,
-    dateFormat = defaultFormat.date,
+    dateFormat = defaultFormat.date ,
     onChange,
     onClickOk,
     locale = 'en-US',
@@ -74,14 +80,6 @@ const DateTimepicker = ({
     };
 
 
-    /**
-     * 處理日期異動
-     * @param newValue
-     */
-    const handleChangeDate = (newValue: string) => {
-        const oldTime = getTime(propsDate);
-        onChange(`${newValue} ${oldTime}`);
-    };
 
     /**
      * 處理點擊OK按鈕
@@ -91,6 +89,29 @@ const DateTimepicker = ({
         if(onClickOk) onClickOk(`${oldDate} ${newValue}`);
     };
 
+
+
+    /**
+     * 處理日期異動
+     * @param newValue
+     * @param changeType
+     */
+    const handleOnChange = (newValue: string, changeType?: EChangeType) => {
+        if(changeType === EChangeType.date){
+            const oldTime = getTime(propsDate);
+            onChange(`${newValue} ${oldTime}`);
+            return;
+        }
+
+        if(changeType === EChangeType.time){
+            const oldDate = getDate(propsDate);
+            onChange(`${oldDate} ${newValue}`);
+            return;
+        }
+        console.log('value', value);
+        return onChange(newValue);
+
+    };
 
     /**
      * 處理時間異動
@@ -102,12 +123,30 @@ const DateTimepicker = ({
     };
 
 
+
+    /**
+     * 設定為今天日期
+     */
+    const handleSetNow = () => {
+
+        console.log('today.format(dateFormat)', today.format(defaultFormat.dateTime));
+        handleOnChange(today.format(defaultFormat.dateTime));
+        // const formatDate = today.format(format);
+
+        // onSetToday(today);
+
+        // if(onChange){
+        //     onChange(formatDate);
+        // }
+    };
+
+
     /**
      * 渲染按鈕的部分
      */
     const renderActionsButtons = () => {
         return <div className={elClassNames.timeButtonContainer}>
-            <button className={elClassNames.timeNowButton} type="button" onClick={() => onSetToday()}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
+            <button className={elClassNames.timeNowButton} type="button" onClick={() => handleSetNow()}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
             <button className={elClassNames.timeConfirmButton} type="button" onClick={() => {}}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
         </div>;
 
@@ -136,8 +175,8 @@ const DateTimepicker = ({
         style={style}
         >
             <div className={elClassNames.dateTimeGroup}>
-                <Datepicker {...dateProps} value={getDate(propsDate)} onChange={handleChangeDate} />
-                <Timepicker {...timeProps} value={getTime(propsDate)} onChange={handleChangeTime} onClickOk={handleOnClickOk}/>
+                <Datepicker {...dateProps} value={getDate(propsDate)} onChange={value => handleOnChange(value, EChangeType.date)} />
+                <Timepicker {...timeProps} value={getTime(propsDate)} onChange={value => handleOnChange(value, EChangeType.time)} onClickOk={handleOnClickOk}/>
             </div>
 
 
