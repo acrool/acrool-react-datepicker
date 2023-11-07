@@ -1,15 +1,12 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import cx from 'classnames';
-import elClassNames from './el-class-names';
-import './styles.css';
+import elClassNames from '../el-class-names';
 
-// Component
 import Datepicker from '../Datepicker/Datepicker';
-import {ICommon} from '../Datepicker/typing';
-import {IRangeDateValue, EDateRange} from './typing';
+import {IRangeDateValue, EDateRange, ICommon} from '../typing';
 import translateI18n from '../locales';
 import {selectDateRange} from '../utils';
+import clsx from 'clsx';
 
 
 interface IProps extends ICommon{
@@ -62,20 +59,20 @@ const RangeDatepicker = ({
      * 快速選擇面板
      */
     const renderRangeFastPicker = () => {
-        return <div className={elClassNames.labelCheckCardCreate}>
-            <button className={elClassNames.todayButton} type="button" onClick={() => setRangeDate(EDateRange.today)}>
+        return <div className={elClassNames.dateRangeLabelCheckCardCreate}>
+            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.today)}>
                 <span>{translateI18n('com.datepicker.today', {defaultMessage: 'today', locale: locale})}</span>
             </button>
-            <button className={elClassNames.todayButton} type="button" onClick={() => setRangeDate(EDateRange.tomorrow)}>
+            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.tomorrow)}>
                 <span>{translateI18n('com.datepicker.tomorrow', {defaultMessage: 'tomorrow', locale: locale})}</span>
             </button>
-            <button className={elClassNames.todayButton} type="button" onClick={() => setRangeDate(EDateRange.twoDay)}>
+            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.twoDay)}>
                 <span>{translateI18n('com.datepicker.twoDay', {defaultMessage: 'two day', locale: locale})}</span>
             </button>
-            <button className={elClassNames.todayButton} type="button" onClick={() => setRangeDate(EDateRange.thisWeek)}>
+            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.thisWeek)}>
                 <span>{translateI18n('com.datepicker.thisWeek', {defaultMessage: 'this week', locale: locale})}</span>
             </button>
-            <button className={elClassNames.todayButton} type="button" onClick={() => setRangeDate(EDateRange.nextWeek)}>
+            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.nextWeek)}>
                 <span>{translateI18n('com.datepicker.nextWeek', {defaultMessage: 'next week', locale: locale})}</span>
             </button>
         </div>;
@@ -83,40 +80,44 @@ const RangeDatepicker = ({
 
 
     return (
-        <div className={cx(elClassNames.root, className)} style={style}>
-            <div className="d-flex flex-column align-items-center">
-                <Datepicker
-                    {...commonProps}
-                    value={value.startDate}
-                    onChange={(newValue) => {
-                        if(onChange){
-                            onChange({
-                                startDate: newValue,
-                                endDate: value?.endDate ? value.endDate : today
-                            });
-                        }
-                    }}
-                    minDate={minDate}
-                    maxDate={value?.endDate ? value?.endDate : maxDate}
-                />
-            </div>
+        <div
+            data-fastPicker={isVisibleFastPicker ? '': undefined}
+            className={clsx(
+                elClassNames.dateRangeRoot,
+                className,
+                {'dark-theme': isDark}
+            )}
+            style={style}
+        >
+            <Datepicker
+                {...commonProps}
+                value={value.startDate}
+                onChange={(newValue) => {
+                    if(onChange){
+                        onChange({
+                            startDate: newValue,
+                            endDate: value?.endDate ? value.endDate : today
+                        });
+                    }
+                }}
+                minDate={minDate}
+                maxDate={value?.endDate ? value?.endDate : maxDate}
+            />
 
-            <div className="d-flex flex-column align-items-center">
-                <Datepicker
-                    {...commonProps}
-                    value={value.endDate}
-                    onChange={(newValue) => {
-                        if(onChange){
-                            onChange({
-                                startDate: value?.startDate ? value.startDate : today,
-                                endDate: newValue
-                            });
-                        }
-                    }}
-                    minDate={value?.startDate ? value?.startDate: minDate}
-                    maxDate={maxDate}
-                />
-            </div>
+            <Datepicker
+                {...commonProps}
+                value={value.endDate}
+                onChange={(newValue) => {
+                    if(onChange){
+                        onChange({
+                            startDate: value?.startDate ? value.startDate : today,
+                            endDate: newValue
+                        });
+                    }
+                }}
+                minDate={value?.startDate ? value?.startDate: minDate}
+                maxDate={maxDate}
+            />
 
             {isVisibleFastPicker && renderRangeFastPicker()}
 

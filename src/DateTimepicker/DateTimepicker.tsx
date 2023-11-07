@@ -1,14 +1,14 @@
 import React from 'react';
 import CSS from 'csstype';
 import dayjs,{Dayjs} from 'dayjs';
-import cx from 'classnames';
 import {defaultFormat, getDatetime} from '../utils';
-import elClassNames from './el-class-names';
+import elClassNames from '../el-class-names';
 import Datepicker from '../Datepicker/Datepicker';
 import Timepicker from '../Timepicker/Timepicker';
-import {ICommon} from '../Datepicker/typing';
+import {ICommon} from '../typing';
+import translateI18n from '../locales';
 
-import './styles.css';
+import clsx from 'clsx';
 
 
 interface IProps extends ICommon{
@@ -96,10 +96,25 @@ const DateTimepicker = ({
         onChange(`${oldDate} ${newValue}`);
     };
 
+
+
+
     return (
-        <div className={cx(elClassNames.root, className)} style={style}>
-            <Datepicker {...dateProps} value={getDate(propsDate)} onChange={handleChangeDate} />
-            <Timepicker {...timeProps} value={getTime(propsDate)} onChange={handleChangeTime} onClickOk={handleOnClickOk}/>
+        <div className={clsx(elClassNames.dateTimeRoot,
+            {'dark-theme': isDark},
+            className
+        )}
+        style={style}
+        >
+            <div className={elClassNames.dateTimeGroup}>
+                <Datepicker {...dateProps} value={getDate(propsDate)} onChange={handleChangeDate} />
+                <Timepicker {...timeProps} value={getTime(propsDate)} onChange={handleChangeTime} onClickOk={handleOnClickOk}/>
+            </div>
+
+            <div className={elClassNames.timeButtonContainer}>
+                <button className={elClassNames.timeNowButton} type="button" onClick={() => {}}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
+                <button className={elClassNames.timeConfirmButton} type="button" onClick={() => {}}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
+            </div>
         </div>
     );
 

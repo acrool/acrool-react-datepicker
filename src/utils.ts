@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
-import {useCallback} from 'react';
-import {EDateRange} from './RangeDatepicker/typing';
+import {EDateRange} from './typing';
 
 export const defaultFormat = {
     date: 'YYYY-MM-DD',

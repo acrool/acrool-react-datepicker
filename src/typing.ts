@@ -1,5 +1,17 @@
 import CSS from 'csstype';
 
+export type IRangeDateValue = {startDate?: string, endDate?: string}
+
+export enum EDateRange {
+    today = 'today',
+    tomorrow = 'tomorrow',
+    twoDay = 'twoDay',
+    thisWeek = 'thisWeek',
+    nextWeek = 'nextWeek',
+}
+
+
+
 export interface ICommon {
     className?: string;
     style?: CSS.Properties;

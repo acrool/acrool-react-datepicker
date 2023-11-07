@@ -1,12 +1,11 @@
 import React, {useState, useRef, useCallback, startTransition, useEffect} from 'react';
 import dayjs from 'dayjs';
 import CSS from 'csstype';
-import elClassNames from './el-class-names';
-import cx from 'classnames';
+import elClassNames from '../el-class-names';
 import {getTimeList, getTimeFormat, paddingLeft} from '../utils';
 import translateI18n from '../locales';
+import clsx from 'clsx';
 
-import './styles.css';
 
 
 interface IProps {
@@ -22,7 +21,7 @@ interface IProps {
 
 const {hourList, minuteList, secondList} = getTimeList();
 
-const unitHeight = 32;
+const unitHeight = 30;
 
 interface ITimeObj {
     hour: number,
@@ -146,7 +145,7 @@ const Timepicker = ({
         return unitList.map(unit => {
             const isActive = time[unitCode] === unit;
             return (
-                <span className={cx(elClassNames.fakeOption, {'is-active': isActive})}
+                <span className={clsx(elClassNames.timeFakeOption, {'is-active': isActive})}
                     key={`unit-${unitCode}-${unit}`}
                     onClick={() => {
                         const newTime = {...time, [unitCode]: unit};
@@ -161,39 +160,50 @@ const Timepicker = ({
 
 
     return (
-        <div className={cx(elClassNames.root, className, {'dark-theme': isDark, 'is-enable-sec': isEnableSec})} style={style}>
-            <div className={elClassNames.header}>
-                <span className={elClassNames.headerText}>{translateI18n('com.timepicker.time', {locale: locale})}</span>
+        <div className={clsx(
+            elClassNames.timeRoot, className,
+            {'dark-theme': isDark, 'is-enable-sec': isEnableSec})} style={style}
+        >
+            <div className={elClassNames.timeHeader}>
+                <span className={elClassNames.timeHeaderText}>{translateI18n('com.timepicker.time', {locale: locale})}</span>
             </div>
-            <div className={elClassNames.pickContainer}>
+            <div className="bear-react-datepicker__date-week-row">
+                <div className="bear-react-datepicker__date-week">H</div>
+                <div className="bear-react-datepicker__date-week">M</div>
+                {isEnableSec && (
+                    <div className="bear-react-datepicker__date-week">S</div>
+                )}
+            </div>
+
+            <div className={elClassNames.timePickContainer}>
                 {/* 時 */}
-                <div className={elClassNames.fakeSelectContainer}>
-                    <div className={elClassNames.selectBox} ref={hourBoxRef}>
+                <div className={elClassNames.timeFakeSelectContainer}>
+                    <div className={elClassNames.timeSelectBox} ref={hourBoxRef}>
                         {renderOption('hour', hourList)}
                     </div>
                 </div>
 
                 {/* 分 */}
-                <div className={elClassNames.fakeSelectContainer}>
-                    <div className={elClassNames.selectBox} ref={minuteBoxRef}>
+                <div className={elClassNames.timeFakeSelectContainer}>
+                    <div className={elClassNames.timeSelectBox} ref={minuteBoxRef}>
                         {renderOption('minute', minuteList)}
                     </div>
                 </div>
 
                 {/* 秒 */}
                 {isEnableSec &&
-                    <div className={elClassNames.fakeSelectContainer}>
-                        <div className={elClassNames.selectBox} ref={secondBoxRef}>
+                    <div className={elClassNames.timeFakeSelectContainer}>
+                        <div className={elClassNames.timeSelectBox} ref={secondBoxRef}>
                             {renderOption('second', secondList)}
                         </div>
                     </div>
                 }
             </div>
 
-            <div className={elClassNames.buttonContainer}>
-                <button className={elClassNames.nowButton} type="button" onClick={handleNowTime}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
-                <button className={elClassNames.confirmButton} type="button" onClick={handleOnClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
-            </div>
+            {/*<div className={elClassNames.timeButtonContainer}>*/}
+            {/*    <button className={elClassNames.timeNowButton} type="button" onClick={handleNowTime}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>*/}
+            {/*    <button className={elClassNames.timeConfirmButton} type="button" onClick={handleOnClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>*/}
+            {/*</div>*/}
         </div>
     );
 };
