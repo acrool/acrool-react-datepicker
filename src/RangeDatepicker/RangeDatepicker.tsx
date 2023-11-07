@@ -7,6 +7,7 @@ import {IRangeDateValue, EDateRange, ICommon} from '../typing';
 import translateI18n from '../locales';
 import {selectDateRange} from '../utils';
 import clsx from 'clsx';
+import DatePickerProvider from '../DatePickerProvider';
 
 
 interface IProps extends ICommon{
@@ -80,48 +81,51 @@ const RangeDatepicker = ({
 
 
     return (
-        <div
-            data-fastPicker={isVisibleFastPicker ? '': undefined}
-            className={clsx(
-                elClassNames.dateRangeRoot,
-                className,
-                {'dark-theme': isDark}
-            )}
-            style={style}
-        >
-            <Datepicker
-                {...commonProps}
-                value={value.startDate}
-                onChange={(newValue) => {
-                    if(onChange){
-                        onChange({
-                            startDate: newValue,
-                            endDate: value?.endDate ? value.endDate : today
-                        });
-                    }
-                }}
-                minDate={minDate}
-                maxDate={value?.endDate ? value?.endDate : maxDate}
-            />
+        <DatePickerProvider>
+            <div
+                data-fast={isVisibleFastPicker ? '': undefined}
+                className={clsx(
+                    elClassNames.root,
+                    elClassNames.dateRangeRoot,
+                    className,
+                    {'dark-theme': isDark}
+                )}
+                style={style}
+            >
+                <Datepicker
+                    {...commonProps}
+                    value={value.startDate}
+                    onChange={(newValue) => {
+                        if(onChange){
+                            onChange({
+                                startDate: newValue,
+                                endDate: value?.endDate ? value.endDate : today
+                            });
+                        }
+                    }}
+                    minDate={minDate}
+                    maxDate={value?.endDate ? value?.endDate : maxDate}
+                />
 
-            <Datepicker
-                {...commonProps}
-                value={value.endDate}
-                onChange={(newValue) => {
-                    if(onChange){
-                        onChange({
-                            startDate: value?.startDate ? value.startDate : today,
-                            endDate: newValue
-                        });
-                    }
-                }}
-                minDate={value?.startDate ? value?.startDate: minDate}
-                maxDate={maxDate}
-            />
+                <Datepicker
+                    {...commonProps}
+                    value={value.endDate}
+                    onChange={(newValue) => {
+                        if(onChange){
+                            onChange({
+                                startDate: value?.startDate ? value.startDate : today,
+                                endDate: newValue
+                            });
+                        }
+                    }}
+                    minDate={value?.startDate ? value?.startDate: minDate}
+                    maxDate={maxDate}
+                />
 
-            {isVisibleFastPicker && renderRangeFastPicker()}
+                {isVisibleFastPicker && renderRangeFastPicker()}
 
-        </div>
+            </div>
+        </DatePickerProvider>
 
     );
 };

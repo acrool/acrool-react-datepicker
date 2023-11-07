@@ -68,7 +68,6 @@
 .bear-react-datepicker__root {
     border-radius: 3px;
     background-color: var(--bg-color);
-    width: calc(30px * 7 + 24px);
     margin: 0;
     box-shadow:
             0 3px 6px -4px rgba(0, 0, 0, 0.12),
@@ -110,6 +109,9 @@
 /** -------------------------------
  *             DatePicker
  * ------------------------------ */
+.bear-react-datepicker__date-root{
+    width: calc(30px * 7 + 24px);
+}
 .bear-react-datepicker__date-year-month-row {
     display: flex;
     flex-direction: row;
@@ -362,7 +364,7 @@
     box-shadow: none;
 }
 
-.bear-react-datepicker__date-range-root[data-fastPicker] > div:nth-child(2){
+.bear-react-datepicker__date-range-root[data-fast] > div:nth-child(2){
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
@@ -554,5 +556,7 @@ button.bear-react-datepicker__time-now-button {
     font-size: inherit;
     color: var(--primary-color);
 }
+
+
 
 

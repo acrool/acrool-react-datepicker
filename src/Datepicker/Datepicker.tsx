@@ -5,6 +5,7 @@ import {ArrowIcon} from '../Icon';
 import translateI18n from '../locales';
 import {ICommon} from '../typing';
 import clsx from 'clsx';
+import DatePickerProvider, {useDatePicker} from '../DatePickerProvider';
 
 const config = {
     weekDay: [1, 2, 3, 4, 5, 6, 7],
@@ -40,10 +41,11 @@ const Datepicker = ({
     maxDate,
     tagDate = []
 }: IProps) => {
+    const {setPanelYearMonth, panelYearMonth} = useDatePicker();
 
     const dayRef = useRef<Dayjs>(dayjs());
     const today = dayRef.current;
-    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(value ? dayjs(value) : today);
+    // const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(value ? dayjs(value) : today);
 
 
     const initMaxYear = typeof maxYear !== 'undefined' ? maxYear : Number(today.add(1, 'year').year());
@@ -402,14 +404,14 @@ const Datepicker = ({
         </div>
     );
 
-    return (
-        <div className={clsx(elClassNames.root, className, {'dark-theme': isDark})} style={style}>
-            {renderYearMonth()}
-            {renderCurrentMonthDay()}
+    return <div className={clsx(
+        elClassNames.dateRoot,
+        className, {'dark-theme': isDark})} style={style}>
+        {renderYearMonth()}
+        {renderCurrentMonthDay()}
 
-            {isVisibleSetToday && renderTodayButton()}
-        </div>
-    );
+        {isVisibleSetToday && renderTodayButton()}
+    </div>;
 
 };
 

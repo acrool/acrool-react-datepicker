@@ -28,6 +28,7 @@ export default {
     dateLabelCheckCardCreate: `${elClassNames.elClassPrefix}__date-label-check-card-create`,
     dateTodayButton: `${elClassNames.elClassPrefix}__date-today-button`,
 
+    dateRoot: `${elClassNames.elClassPrefix}__date-root`,
     dateRangeRoot: `${elClassNames.elClassPrefix}__date-range-root`,
     dateRangeButton: `${elClassNames.elClassPrefix}__date-range-button`,
 

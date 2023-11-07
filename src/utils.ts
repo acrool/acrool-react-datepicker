@@ -8,6 +8,7 @@ export const defaultFormat = {
 };
 
 
+
 /**
  * 判定是否為空
  * @param value

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import CSS from 'csstype';
 import dayjs,{Dayjs} from 'dayjs';
 import {defaultFormat, getDatetime} from '../utils';
@@ -9,6 +9,7 @@ import {ICommon} from '../typing';
 import translateI18n from '../locales';
 
 import clsx from 'clsx';
+import DatePickerProvider, {DatePickerContext, useDatePicker} from '../DatePickerProvider';
 
 
 interface IProps extends ICommon{
@@ -42,6 +43,10 @@ const DateTimepicker = ({
     maxDate,
     isEnableSec = true,
 }: IProps) => {
+    const {onSetToday, today, panelYearMonth} = useDatePicker();
+
+    // const {onSetToday, } = useContext(DatePickerContext);
+// console.log('panelYearMonth', onSetToday, panelYearMonth);
     const propsDate = getDatetime(value);
     const dateProps = {dateFormat, minDate, maxDate, minYear, maxYear, locale, isDark};
     const timeProps = {locale, isDark, onClickOk, isEnableSec};
@@ -97,10 +102,34 @@ const DateTimepicker = ({
     };
 
 
+    /**
+     * 渲染按鈕的部分
+     */
+    const renderActionsButtons = () => {
+        return <div className={elClassNames.timeButtonContainer}>
+            <button className={elClassNames.timeNowButton} type="button" onClick={() => onSetToday()}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
+            <button className={elClassNames.timeConfirmButton} type="button" onClick={() => {}}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
+        </div>;
+
+        // return <DatePickerProviderContext.Consumer>
+        //     {args => {
+        //         return <div className={elClassNames.timeButtonContainer}>
+        //             <button className={elClassNames.timeNowButton} type="button" onClick={() => args.onSetToday()}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
+        //             <button className={elClassNames.timeConfirmButton} type="button" onClick={() => {}}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
+        //         </div>;
+        //     }}
+        // </DatePickerProviderContext.Consumer>;
+
+    };
 
 
-    return (
-        <div className={clsx(elClassNames.dateTimeRoot,
+
+    return <DatePickerProvider
+        onChange={onChange}
+    >
+        <div className={clsx(
+            elClassNames.root,
+            elClassNames.dateTimeRoot,
             {'dark-theme': isDark},
             className
         )}
@@ -111,14 +140,18 @@ const DateTimepicker = ({
                 <Timepicker {...timeProps} value={getTime(propsDate)} onChange={handleChangeTime} onClickOk={handleOnClickOk}/>
             </div>
 
-            <div className={elClassNames.timeButtonContainer}>
-                <button className={elClassNames.timeNowButton} type="button" onClick={() => {}}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
-                <button className={elClassNames.timeConfirmButton} type="button" onClick={() => {}}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
-            </div>
-        </div>
-    );
 
+            {renderActionsButtons()}
+        </div>
+    </DatePickerProvider>;
 };
 
+// export default DateTimepicker;
 
-export default DateTimepicker;
+export default (props: IProps) => {
+    return <DatePickerProvider
+        onChange={props.onChange}
+    >
+        <DateTimepicker {...props}/>
+    </DatePickerProvider>;
+};

@@ -161,7 +161,9 @@ const Timepicker = ({
 
     return (
         <div className={clsx(
-            elClassNames.timeRoot, className,
+            elClassNames.root,
+            elClassNames.timeRoot,
+            className,
             {'dark-theme': isDark, 'is-enable-sec': isEnableSec})} style={style}
         >
             <div className={elClassNames.timeHeader}>
