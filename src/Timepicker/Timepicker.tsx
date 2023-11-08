@@ -18,7 +18,8 @@ interface IProps {
     onClickOk?: (value: string) => void;
     locale?: string,
     isDark?: boolean
-    isEnableSec?: boolean,
+    isVisibleSecond?: boolean,
+    isVisibleNow?: boolean,
 }
 
 const {hourList, minuteList, secondList} = getTimeList();
@@ -46,14 +47,15 @@ const Timepicker = ({
     value,
     locale = 'en-US',
     isDark = false,
-    isEnableSec = true,
+    isVisibleSecond = true,
+    isVisibleNow = true,
 }: IProps) => {
     const hourBoxRef = useRef<HTMLDivElement>(null);
     const minuteBoxRef = useRef<HTMLDivElement>(null);
     const secondBoxRef = useRef<HTMLDivElement>(null);
 
     const [time, setTime] = useState<ITimeObj>(getTimeFormat(value));
-    const timeString = getTimeString(time, isEnableSec);
+    const timeString = getTimeString(time, isVisibleSecond);
 
 
     useEffect(() => {
@@ -78,7 +80,7 @@ const Timepicker = ({
             setTime(data);
 
             if(onChange){
-                onChange(getTimeString(data, isEnableSec));
+                onChange(getTimeString(data, isVisibleSecond));
             }
         });
     };
@@ -101,7 +103,7 @@ const Timepicker = ({
         const data = {
             hour: reToday.hour(),
             minute: reToday.minute(),
-            second: isEnableSec ? reToday.second() : undefined,
+            second: isVisibleSecond ? reToday.second() : undefined,
         };
 
         // 設定 時、分、秒
@@ -160,7 +162,7 @@ const Timepicker = ({
             <div className="bear-react-datepicker__date-week-row">
                 <div className="bear-react-datepicker__date-week">H</div>
                 <div className="bear-react-datepicker__date-week">M</div>
-                {isEnableSec && (
+                {isVisibleSecond && (
                     <div className="bear-react-datepicker__date-week">S</div>
                 )}
             </div>
@@ -184,7 +186,7 @@ const Timepicker = ({
             </div>
 
             {/* 秒 */}
-            {isEnableSec &&
+            {isVisibleSecond &&
                 <div className={elClassNames.timeSelectBox} ref={secondBoxRef}>
                     {renderOption('second', secondList)}
                 </div>
@@ -206,12 +208,12 @@ const Timepicker = ({
             elClassNames.root,
             elClassNames.timeRoot,
             className,
-            {'dark-theme': isDark, 'is-enable-sec': isEnableSec})} style={style}
+            {'dark-theme': isDark, 'is-enable-sec': isVisibleSecond})} style={style}
         >
 
             {renderHeader()}
             {renderTimePicker()}
-            {isEnableSec && renderButton()}
+            {isVisibleNow && renderButton()}
         </div>
     );
 };

@@ -19,7 +19,7 @@ interface IProps extends ICommon{
     dateFormat?: string;
     onChange: (newDate: string) => void;
     onClickOk: (newDate: string) => void;
-    isEnableSec?: boolean,
+    isVisibleSecond?: boolean,
 }
 
 
@@ -48,13 +48,13 @@ const DateTimepicker = ({
     isDark = false,
     minDate,
     maxDate,
-    isEnableSec = true,
+    isVisibleSecond = true,
 }: IProps) => {
     const {today} = useDatePicker();
 
     const propsDate = getDatetime(value);
     const dateProps = {dateFormat, minDate, maxDate, minYear, maxYear, locale, isDark};
-    const timeProps = {locale, isDark, onClickOk, isEnableSec};
+    const timeProps = {locale, isDark, onClickOk, isVisibleSecond};
 
     /**
      * 取得時間
@@ -62,7 +62,7 @@ const DateTimepicker = ({
      */
     const getTime = (dayObj: Dayjs) => {
         return (dayObj.isValid() ? dayObj: dayjs())
-            .format(isEnableSec ? defaultFormat.time : defaultFormat.timeNoSec);
+            .format(timeProps.isVisibleSecond ? defaultFormat.time : defaultFormat.timeNoSec);
     };
 
     /**
@@ -83,6 +83,7 @@ const DateTimepicker = ({
     const generateOnChange = (dateType?: EDateType) => {
         if(dateType === EDateType.date) {
             return (newValue: string) => {
+                console.log('getTime(propsDate)', getTime(propsDate));
                 onChange(`${newValue} ${getTime(propsDate)}`);
             };
         }
@@ -139,7 +140,9 @@ const DateTimepicker = ({
     >
         <div className={elClassNames.dateTimeGroup}>
             <Datepicker {...dateProps} value={getDate(propsDate)} onChange={generateOnChange(EDateType.date)}/>
-            <Timepicker {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)} isEnableSec={false}/>
+            <Timepicker {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}
+                isVisibleSecond={timeProps.isVisibleSecond}
+                isVisibleNow={false}/>
         </div>
 
         {renderActionsButtons()}
