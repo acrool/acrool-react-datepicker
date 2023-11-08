@@ -1,14 +1,16 @@
 import React from 'react';
 import CSS from 'csstype';
 import dayjs,{Dayjs} from 'dayjs';
-import cx from 'classnames';
 import {defaultFormat, getDatetime} from '../utils';
-import elClassNames from './el-class-names';
-import Datepicker from '../Datepicker/Datepicker';
-import Timepicker from '../Timepicker/Timepicker';
-import {ICommon} from '../Datepicker/typing';
+import elClassNames from '../el-class-names';
+import {DatepickerAtom as Datepicker} from '../Datepicker';
+import {TimepickerAtom as Timepicker} from '../Timepicker';
 
-import './styles.css';
+import {ICommon} from '../typing';
+import translateI18n from '../locales';
+
+import clsx from 'clsx';
+import useNowTime from '../hooks/useNow';
 
 
 interface IProps extends ICommon{
@@ -18,7 +20,14 @@ interface IProps extends ICommon{
     dateFormat?: string;
     onChange: (newDate: string) => void;
     onClickOk: (newDate: string) => void;
-    isEnableSec?: boolean,
+    isVisibleSecond?: boolean,
+}
+
+
+enum EDateType {
+    date,
+    time,
+    dateTime,
 }
 
 
@@ -31,7 +40,7 @@ const DateTimepicker = ({
     className,
     style,
     value,
-    dateFormat = defaultFormat.date,
+    dateFormat = defaultFormat.date ,
     onChange,
     onClickOk,
     locale = 'en-US',
@@ -40,69 +49,104 @@ const DateTimepicker = ({
     isDark = false,
     minDate,
     maxDate,
-    isEnableSec = true,
+    isVisibleSecond = true,
 }: IProps) => {
+    const today = useNowTime();
+
     const propsDate = getDatetime(value);
     const dateProps = {dateFormat, minDate, maxDate, minYear, maxYear, locale, isDark};
-    const timeProps = {locale, isDark, onClickOk, isEnableSec};
+    const timeProps = {locale, isDark, onClickOk, isVisibleSecond};
 
     /**
      * 取得時間
      * @param dayObj
      */
     const getTime = (dayObj: Dayjs) => {
-        if(propsDate.isValid()){
-            return dayObj.format(isEnableSec ? defaultFormat.time : defaultFormat.timeNoSec);
-        }
-        return dayjs().format(isEnableSec ? defaultFormat.time : defaultFormat.timeNoSec);
+        return (dayObj.isValid() ? dayObj: dayjs())
+            .format(timeProps.isVisibleSecond ? defaultFormat.time : defaultFormat.timeNoSec);
     };
 
     /**
-     * 取得日期
+     * 取得時間
      * @param dayObj
      */
     const getDate = (dayObj: Dayjs) => {
-        if(propsDate.isValid()){
-            return dayObj.format(dateFormat);
-        }
-        return dayjs().format(dateFormat);
+        return (dayObj.isValid() ? dayObj: dayjs())
+            .format(dateFormat);
     };
+
 
 
     /**
      * 處理日期異動
-     * @param newValue
+     * @param dateType
      */
-    const handleChangeDate = (newValue: string) => {
-        const oldTime = getTime(propsDate);
-        onChange(`${newValue} ${oldTime}`);
+    const generateOnChange = (dateType?: EDateType) => {
+        if(dateType === EDateType.date) {
+            return (newValue: string) => {
+                onChange(`${newValue} ${getTime(propsDate)}`);
+            };
+        }
+
+        if(dateType === EDateType.time){
+            return (newValue: string) => {
+                onChange(`${getDate(propsDate)} ${newValue}`);
+            };
+        }
+
+        return onChange;
     };
 
     /**
      * 處理點擊OK按鈕
      */
-    const handleOnClickOk = (newValue: string) => {
-        const oldDate = getDate(propsDate);
-        if(onClickOk) onClickOk(`${oldDate} ${newValue}`);
+    const handleOnClickOk = () => {
+        const dateStr = `${getDate(propsDate)} ${getTime(propsDate)}`;
+        if(onClickOk) onClickOk(dateStr);
+    };
+
+
+
+
+
+
+    /**
+     * 設定為今天日期
+     */
+    const handleSetNow = () => {
+        generateOnChange()(`${getDate(today)} ${getTime(today)}`);
     };
 
 
     /**
-     * 處理時間異動
-     * @param newValue
+     * 渲染按鈕的部分
      */
-    const handleChangeTime = (newValue: string) => {
-        const oldDate = getDate(propsDate);
-        onChange(`${oldDate} ${newValue}`);
+    const renderActionsButtons = () => {
+        return <div className={elClassNames.timeButtonContainer}>
+            <button className={elClassNames.timeNowButton} type="button" onClick={handleSetNow}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
+            <button className={elClassNames.timeConfirmButton} type="button" onClick={handleOnClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
+        </div>;
     };
 
-    return (
-        <div className={cx(elClassNames.root, className)} style={style}>
-            <Datepicker {...dateProps} value={getDate(propsDate)} onChange={handleChangeDate} />
-            <Timepicker {...timeProps} value={getTime(propsDate)} onChange={handleChangeTime} onClickOk={handleOnClickOk}/>
-        </div>
-    );
 
+
+    return <div className={clsx(
+        elClassNames.root,
+        elClassNames.dateTimeRoot,
+        {'dark-theme': isDark},
+        className
+    )}
+    style={style}
+    >
+        <div className={elClassNames.dateTimeGroup}>
+            <Datepicker {...dateProps} value={getDate(propsDate)} onChange={generateOnChange(EDateType.date)}/>
+            <Timepicker {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}
+                isVisibleSecond={timeProps.isVisibleSecond}
+                isVisibleNow={false}/>
+        </div>
+
+        {renderActionsButtons()}
+    </div>;
 };
 
 

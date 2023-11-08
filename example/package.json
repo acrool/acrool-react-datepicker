@@ -8,10 +8,17 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
+  "resolutions": {
+    "styled-components": "5.3.9"
+  },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "bear-react-datepicker": "link:.."
+    "bear-react-datepicker": "link:..",
+    "bear-react-grid": "5.0.11-alpha.2",
+    "styled-components": "5.3.9",
+    "@swc/plugin-styled-components": "^1.5.68",
+    "@types/styled-components": "^5.1.26"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
