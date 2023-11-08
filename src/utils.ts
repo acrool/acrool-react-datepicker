@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {EDateRange} from './typing';
+import {EDateRange, ITimeObj} from './typing';
 
 export const defaultFormat = {
     date: 'YYYY-MM-DD',
@@ -8,6 +8,21 @@ export const defaultFormat = {
     dateTime: 'YYYY-MM-DD HH:mm:ss'
 };
 
+
+
+
+
+/**
+ * 時間物件轉自串
+ * @param timeObj
+ * @param isEnableSec
+ */
+export const getTimeString = (timeObj: ITimeObj, isEnableSec?: boolean): string => {
+    if(isEnableSec){
+        return `${paddingLeft(timeObj?.hour ?? '00', 2)}:${paddingLeft(timeObj?.minute ?? '00', 2)}:${paddingLeft(timeObj?.second ?? '00', 2)}`;
+    }
+    return `${paddingLeft(timeObj?.hour ?? '00', 2)}:${paddingLeft(timeObj?.minute ?? '00', 2)}`;
+};
 
 
 /**

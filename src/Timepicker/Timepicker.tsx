@@ -1,12 +1,12 @@
-import React, {useState, useRef, useCallback, startTransition, useEffect} from 'react';
-import dayjs from 'dayjs';
+import React, {useState, useRef, useCallback, startTransition, useEffect, createElement} from 'react';
 import CSS from 'csstype';
 import elClassNames from '../el-class-names';
-import {getTimeList, getTimeFormat, paddingLeft} from '../utils';
+import {getTimeList, getTimeFormat, paddingLeft, getTimeString} from '../utils';
 import translateI18n from '../locales';
 import clsx from 'clsx';
 import {ITimeObj} from '../typing';
-import {getTimeString} from '../DatePickerProvider';
+import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
+import useNowTime from '../hooks/useNow';
 
 
 
@@ -39,7 +39,7 @@ const unitHeight = 30;
  * @param isDark 暗黑模式
  * @param isEnableSec
  */
-const Timepicker = ({
+export const TimepickerAtom = ({
     className,
     style,
     onChange,
@@ -50,6 +50,8 @@ const Timepicker = ({
     isVisibleSecond = true,
     isVisibleNow = true,
 }: IProps) => {
+    const now = useNowTime();
+
     const hourBoxRef = useRef<HTMLDivElement>(null);
     const minuteBoxRef = useRef<HTMLDivElement>(null);
     const secondBoxRef = useRef<HTMLDivElement>(null);
@@ -58,13 +60,13 @@ const Timepicker = ({
     const timeString = getTimeString(time, isVisibleSecond);
 
 
-    useEffect(() => {
-        handleOnChange(getTimeFormat(value));
+    useOnlyUpdateEffect(() => {
+        handleOnUpdate(getTimeFormat(value), true);
     }, [value]);
+
 
     useEffect(() => {
         handleMoveUnit(time, false);
-
     }, []);
 
 
@@ -74,17 +76,23 @@ const Timepicker = ({
      * @param isBehaviorSmooth
      */
     const handleOnChange = (data: ITimeObj, isBehaviorSmooth = true) => {
-        handleMoveUnit(data, isBehaviorSmooth);
+        handleOnUpdate(data, isBehaviorSmooth);
 
-        startTransition(() => {
-            setTime(data);
-
-            if(onChange){
-                onChange(getTimeString(data, isVisibleSecond));
-            }
-        });
+        if(onChange){
+            onChange(getTimeString(data, isVisibleSecond));
+        }
     };
 
+
+    /**
+     * 處理資料更新
+     * @param data
+     * @param isBehaviorSmooth
+     */
+    const handleOnUpdate = (data: ITimeObj, isBehaviorSmooth = true) => {
+        handleMoveUnit(data, isBehaviorSmooth);
+        setTime(data);
+    };
 
     /**
      * 處理點擊OK按鈕
@@ -98,12 +106,11 @@ const Timepicker = ({
      * 處理按下現在時間
      */
     const handleNowTime = useCallback(() => {
-        const reToday = dayjs();
 
         const data = {
-            hour: reToday.hour(),
-            minute: reToday.minute(),
-            second: isVisibleSecond ? reToday.second() : undefined,
+            hour: now.hour(),
+            minute: now.minute(),
+            second: now ? now.second() : undefined,
         };
 
         // 設定 時、分、秒
@@ -205,7 +212,6 @@ const Timepicker = ({
 
     return (
         <div className={clsx(
-            elClassNames.root,
             elClassNames.timeRoot,
             className,
             {'dark-theme': isDark, 'is-enable-sec': isVisibleSecond})} style={style}
@@ -218,5 +224,7 @@ const Timepicker = ({
     );
 };
 
+
+const Timepicker = (props: IProps) => createElement(TimepickerAtom, {...props, className: clsx(props.className, elClassNames.root)});
 export default Timepicker;
 

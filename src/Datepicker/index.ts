@@ -1,1 +1,1 @@
-export {default} from './DatepickerWithProvider';
+export {default} from './Datepicker';

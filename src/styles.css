@@ -1,26 +1,14 @@
 .bear-react-datepicker__root,
 .bear-react-datepicker__root *,
 .bear-react-datepicker__root *::before,
-.bear-react-datepicker__root *::after,
-.bear-react-datepicker__date-root *,
-.bear-react-datepicker__date-root *::before,
-.bear-react-datepicker__date-root *::after,
-.bear-react-datepicker__date-time-root *,
-.bear-react-datepicker__date-time-root *::before,
-.bear-react-datepicker__date-time-root *::after,
-.bear-react-datepicker__time-root *,
-.bear-react-datepicker__time-root *::before,
-.bear-react-datepicker__time-root *::after {
+.bear-react-datepicker__root *::after {
     box-sizing: border-box;
     line-height: normal;
     user-select: none;
 }
 
 
-.bear-react-datepicker__root,
-.bear-react-datepicker__date-range-root,
-.bear-react-datepicker__date-time-root,
-.bear-react-datepicker__time-root{
+.bear-react-datepicker__root {
 
     --primary-color: #00a3e0;
     --bg-color: #fff;
@@ -44,10 +32,7 @@
     --border-radius: 3px;
 }
 
-.bear-react-datepicker__root.dark-theme,
-.bear-react-datepicker__date-range-root.dark-theme,
-.bear-react-datepicker__date-time-root.dark-theme,
-.bear-react-datepicker__time-root.dark-theme {
+.bear-react-datepicker__root.dark-theme {
     --bg-color: #262626;
     --day-color: rgba(255, 255, 255, 0.65);
     --day-active-color: #fff;

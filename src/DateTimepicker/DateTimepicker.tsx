@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import CSS from 'csstype';
 import dayjs,{Dayjs} from 'dayjs';
 import {defaultFormat, getDatetime} from '../utils';
@@ -9,7 +9,7 @@ import {ICommon} from '../typing';
 import translateI18n from '../locales';
 
 import clsx from 'clsx';
-import DatePickerProvider, {DatePickerContext, useDatePicker} from '../DatePickerProvider';
+import useNowTime from '../hooks/useNow';
 
 
 interface IProps extends ICommon{
@@ -50,7 +50,7 @@ const DateTimepicker = ({
     maxDate,
     isVisibleSecond = true,
 }: IProps) => {
-    const {today} = useDatePicker();
+    const today = useNowTime();
 
     const propsDate = getDatetime(value);
     const dateProps = {dateFormat, minDate, maxDate, minYear, maxYear, locale, isDark};
@@ -83,7 +83,6 @@ const DateTimepicker = ({
     const generateOnChange = (dateType?: EDateType) => {
         if(dateType === EDateType.date) {
             return (newValue: string) => {
-                console.log('getTime(propsDate)', getTime(propsDate));
                 onChange(`${newValue} ${getTime(propsDate)}`);
             };
         }
@@ -114,7 +113,7 @@ const DateTimepicker = ({
      * 設定為今天日期
      */
     const handleSetNow = () => {
-        generateOnChange()(today.format(defaultFormat.dateTime));
+        generateOnChange()(`${getDate(today)} ${getTime(today)}`);
     };
 
 
@@ -150,8 +149,4 @@ const DateTimepicker = ({
 };
 
 
-export default (props: IProps) => {
-    return <DatePickerProvider>
-        <DateTimepicker {...props}/>
-    </DatePickerProvider>;
-};
+export default DateTimepicker;

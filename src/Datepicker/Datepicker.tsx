@@ -1,11 +1,12 @@
-import React, {useState, useCallback, useMemo, useRef, useEffect} from 'react';
+import React, {useState, useCallback, useMemo, useRef, useEffect, createElement} from 'react';
 import dayjs,{Dayjs} from 'dayjs';
 import elClassNames from '../el-class-names';
 import {ArrowIcon} from '../Icon';
 import translateI18n from '../locales';
 import {ICommon} from '../typing';
 import clsx from 'clsx';
-import DatePickerProvider, {useDatePicker} from '../DatePickerProvider';
+import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
+import useNowTime from '../hooks/useNow';
 
 const config = {
     weekDay: [1, 2, 3, 4, 5, 6, 7],
@@ -25,7 +26,7 @@ interface IProps extends ICommon{
  * Datepicker
  * 日期選擇器
  */
-const Datepicker = ({
+export const DatepickerAtom = ({
     className,
     style,
     value,
@@ -41,16 +42,18 @@ const Datepicker = ({
     maxDate,
     tagDate = []
 }: IProps) => {
-
-    const dayRef = useRef<Dayjs>(dayjs());
-    const today = dayRef.current;
+    const today = useNowTime();
     const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(value ? dayjs(value) : today);
 
 
     const initMaxYear = typeof maxYear !== 'undefined' ? maxYear : Number(today.add(1, 'year').year());
 
 
-
+    useOnlyUpdateEffect(() => {
+        const newYear = dayjs(value).get('year');
+        const newMonth = dayjs(value).get('month');
+        handleChangePanel(newYear, newMonth);
+    }, [value]);
 
     /**
      * 產生週星期文字
@@ -415,4 +418,6 @@ const Datepicker = ({
 };
 
 
+
+const Datepicker = (props: IProps) => createElement(DatepickerAtom, {...props, className: clsx(props.className, elClassNames.root)});
 export default Datepicker;
