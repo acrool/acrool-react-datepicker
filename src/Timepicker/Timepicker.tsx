@@ -1,12 +1,13 @@
-import React, {useState, useRef, useCallback, startTransition, useEffect} from 'react';
-import dayjs from 'dayjs';
+import React, {useState, useRef, useCallback, startTransition, useEffect, createElement} from 'react';
 import CSS from 'csstype';
-import elClassNames from './el-class-names';
-import cx from 'classnames';
-import {getTimeList, getTimeFormat, paddingLeft} from '../utils';
+import elClassNames from '../el-class-names';
+import {getTimeList, getTimeFormat, paddingLeft, getTimeString} from '../utils';
 import translateI18n from '../locales';
+import clsx from 'clsx';
+import {ITimeObj} from '../typing';
+import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
+import useNowTime from '../hooks/useNow';
 
-import './styles.css';
 
 
 interface IProps {
@@ -17,31 +18,16 @@ interface IProps {
     onClickOk?: (value: string) => void;
     locale?: string,
     isDark?: boolean
-    isEnableSec?: boolean,
+    title?: string
+    isVisibleSecond?: boolean,
+    isVisibleNow?: boolean,
 }
 
 const {hourList, minuteList, secondList} = getTimeList();
 
-const unitHeight = 32;
-
-interface ITimeObj {
-    hour: number,
-    minute: number,
-    second?: number,
-}
+const unitHeight = 30;
 
 
-/**
- * 時間物件轉自串
- * @param timeObj
- * @param isEnableSec
- */
-const getTimeString = (timeObj: ITimeObj, isEnableSec?: boolean): string => {
-    if(isEnableSec){
-        return `${paddingLeft(timeObj?.hour ?? '00', 2)}:${paddingLeft(timeObj?.minute ?? '00', 2)}:${paddingLeft(timeObj?.second ?? '00', 2)}`;
-    }
-    return `${paddingLeft(timeObj?.hour ?? '00', 2)}:${paddingLeft(timeObj?.minute ?? '00', 2)}`;
-};
 
 /**
  * 時間選擇器
@@ -54,7 +40,7 @@ const getTimeString = (timeObj: ITimeObj, isEnableSec?: boolean): string => {
  * @param isDark 暗黑模式
  * @param isEnableSec
  */
-const Timepicker = ({
+export const TimepickerAtom = ({
     className,
     style,
     onChange,
@@ -62,19 +48,27 @@ const Timepicker = ({
     value,
     locale = 'en-US',
     isDark = false,
-    isEnableSec = true,
+    title = 'Time',
+    isVisibleSecond = true,
+    isVisibleNow = true,
 }: IProps) => {
+    const now = useNowTime();
+
     const hourBoxRef = useRef<HTMLDivElement>(null);
     const minuteBoxRef = useRef<HTMLDivElement>(null);
     const secondBoxRef = useRef<HTMLDivElement>(null);
 
     const [time, setTime] = useState<ITimeObj>(getTimeFormat(value));
-    const timeString = getTimeString(time, isEnableSec);
+    const timeString = getTimeString(time, isVisibleSecond);
+
+
+    useOnlyUpdateEffect(() => {
+        handleOnUpdate(getTimeFormat(value), true);
+    }, [value]);
 
 
     useEffect(() => {
         handleMoveUnit(time, false);
-
     }, []);
 
 
@@ -84,17 +78,23 @@ const Timepicker = ({
      * @param isBehaviorSmooth
      */
     const handleOnChange = (data: ITimeObj, isBehaviorSmooth = true) => {
-        handleMoveUnit(data, isBehaviorSmooth);
+        handleOnUpdate(data, isBehaviorSmooth);
 
-        startTransition(() => {
-            setTime(data);
-
-            if(onChange){
-                onChange(getTimeString(data, isEnableSec));
-            }
-        });
+        if(onChange){
+            onChange(getTimeString(data, isVisibleSecond));
+        }
     };
 
+
+    /**
+     * 處理資料更新
+     * @param data
+     * @param isBehaviorSmooth
+     */
+    const handleOnUpdate = (data: ITimeObj, isBehaviorSmooth = true) => {
+        handleMoveUnit(data, isBehaviorSmooth);
+        setTime(data);
+    };
 
     /**
      * 處理點擊OK按鈕
@@ -102,6 +102,24 @@ const Timepicker = ({
     const handleOnClickOk = () => {
         if(onClickOk) onClickOk(timeString);
     };
+
+
+    /**
+     * 處理按下現在時間
+     */
+    const handleNowTime = useCallback(() => {
+
+        const data = {
+            hour: now.hour(),
+            minute: now.minute(),
+            second: now ? now.second() : undefined,
+        };
+
+        // 設定 時、分、秒
+        handleOnChange(data, true);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     /**
      * 處理移動時間
@@ -121,23 +139,6 @@ const Timepicker = ({
         }
     };
 
-    /**
-     * 處理按下現在時間
-     */
-    const handleNowTime = useCallback(() => {
-        const reToday = dayjs();
-
-        const data = {
-            hour: reToday.hour(),
-            minute: reToday.minute(),
-            second: isEnableSec ? reToday.second() : undefined,
-        };
-
-        // 設定 時、分、秒
-        handleOnChange(data, true);
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     /**
      * 產生時|分|秒 區塊
@@ -146,11 +147,10 @@ const Timepicker = ({
         return unitList.map(unit => {
             const isActive = time[unitCode] === unit;
             return (
-                <span className={cx(elClassNames.fakeOption, {'is-active': isActive})}
+                <span className={clsx(elClassNames.timeFakeOption, {'is-active': isActive})}
                     key={`unit-${unitCode}-${unit}`}
                     onClick={() => {
-                        const newTime = {...time, [unitCode]: unit};
-                        handleOnChange(newTime, true);
+                        handleOnChange({...time, [unitCode]: unit}, true);
                     }}
                 >
                     {paddingLeft(unit, 2)}
@@ -160,43 +160,73 @@ const Timepicker = ({
     }, [timeString, onChange]);
 
 
+    /**
+     * 渲染表頭
+     */
+    const renderHeader = () => {
+        return <>
+            <div className={elClassNames.timeHeader}>
+                <span className={elClassNames.timeHeaderText}>{title}</span>
+            </div>
+            <div className="bear-react-datepicker__date-week-row">
+                <div className="bear-react-datepicker__date-week">H</div>
+                <div className="bear-react-datepicker__date-week">M</div>
+                {isVisibleSecond && (
+                    <div className="bear-react-datepicker__date-week">S</div>
+                )}
+            </div>
+        </>;
+    };
+
+
+    /**
+     * 渲染選擇器
+     */
+    const renderTimePicker = () => {
+        return <div className={elClassNames.timePickContainer}>
+            {/* 時 */}
+            <div className={elClassNames.timeSelectBox} ref={hourBoxRef}>
+                {renderOption('hour', hourList)}
+            </div>
+
+            {/* 分 */}
+            <div className={elClassNames.timeSelectBox} ref={minuteBoxRef}>
+                {renderOption('minute', minuteList)}
+            </div>
+
+            {/* 秒 */}
+            {isVisibleSecond &&
+                <div className={elClassNames.timeSelectBox} ref={secondBoxRef}>
+                    {renderOption('second', secondList)}
+                </div>
+            }
+        </div>;
+    };
+
+
+    const renderButton = () => {
+        return <div className={elClassNames.timeButtonContainer}>
+            <button className={elClassNames.timeNowButton} type="button" onClick={handleNowTime}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
+            <button className={elClassNames.timeConfirmButton} type="button" onClick={handleOnClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
+        </div>;
+    };
+
+
     return (
-        <div className={cx(elClassNames.root, className, {'dark-theme': isDark, 'is-enable-sec': isEnableSec})} style={style}>
-            <div className={elClassNames.header}>
-                <span className={elClassNames.headerText}>{translateI18n('com.timepicker.time', {locale: locale})}</span>
-            </div>
-            <div className={elClassNames.pickContainer}>
-                {/* 時 */}
-                <div className={elClassNames.fakeSelectContainer}>
-                    <div className={elClassNames.selectBox} ref={hourBoxRef}>
-                        {renderOption('hour', hourList)}
-                    </div>
-                </div>
+        <div className={clsx(
+            elClassNames.timeRoot,
+            className,
+            {'dark-theme': isDark, 'is-enable-sec': isVisibleSecond})} style={style}
+        >
 
-                {/* 分 */}
-                <div className={elClassNames.fakeSelectContainer}>
-                    <div className={elClassNames.selectBox} ref={minuteBoxRef}>
-                        {renderOption('minute', minuteList)}
-                    </div>
-                </div>
-
-                {/* 秒 */}
-                {isEnableSec &&
-                    <div className={elClassNames.fakeSelectContainer}>
-                        <div className={elClassNames.selectBox} ref={secondBoxRef}>
-                            {renderOption('second', secondList)}
-                        </div>
-                    </div>
-                }
-            </div>
-
-            <div className={elClassNames.buttonContainer}>
-                <button className={elClassNames.nowButton} type="button" onClick={handleNowTime}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
-                <button className={elClassNames.confirmButton} type="button" onClick={handleOnClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
-            </div>
+            {renderHeader()}
+            {renderTimePicker()}
+            {isVisibleNow && renderButton()}
         </div>
     );
 };
 
+
+const Timepicker = (props: IProps) => createElement(TimepickerAtom, {...props, className: clsx(props.className, elClassNames.root)});
 export default Timepicker;
 
