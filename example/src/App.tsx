@@ -10,7 +10,7 @@ import {
 } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
-import {Datepicker, Timepicker, DateTimepicker, RangeDatepicker, IRangeDateValue} from 'bear-react-datepicker';
+import {Datepicker, Timepicker, DateTimepicker, RangeDatepicker, RangeTimeDatepicker, IRangeDateValue, IRangeDateTimeValue} from 'bear-react-datepicker';
 import dayjs from 'dayjs';
 
 import './App.css';
@@ -69,6 +69,8 @@ function App() {
     const [myDateTime, setMyDateTime] = useState('2023-10-02 12:00:08');
     const [myDateTimeNoSec, setMyDateTimeNoSec] = useState<string>('2023-10-02 12:00');
     const [myRangeDate, setMyRangeDate] = useState<IRangeDateValue>({startDate: '2023-10-02', endDate: '2023-10-08'});
+    const [myRangeDateTime, setMyRangeDateTime] = useState<IRangeDateTimeValue>({date: '2023-10-02', startTime: '08:00:10', endTime: '10:10:00'});
+    const [myRangeDateTimeNoSec, setMyRangeDateTimeNoSec] = useState<IRangeDateTimeValue>({date: '2023-10-02', startTime: '08:00', endTime: '10:10'});
 
 
     /**
@@ -135,7 +137,7 @@ function App() {
      * 渲染日期時間選擇器
      */
     const renderDateTimeHiddenSecondPicker = useCallback(() => {
-        return <FormControlGroup className="gap-2" data-label="DateTimePicker No Second">
+        return <FormControlGroup className="gap-2" data-label="DateTimePicker(No Second)">
             <input type="text" value={myDateTimeNoSec} onChange={(event) => setMyDateTime(event.target.value)}/>
             <Flex className="gap-3">
                 <DateTimepicker value={myDateTimeNoSec} onChange={setMyDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isVisibleSecond={false}/>
@@ -143,6 +145,34 @@ function App() {
             </Flex>
         </FormControlGroup>;
     }, [myDateTimeNoSec]);
+
+
+    /**
+     * 渲染日期時間選擇器
+     */
+    const renderRangeTimePicker = useCallback(() => {
+        return <FormControlGroup className="gap-2" data-label="Range DateTimePicker">
+            <input type="text" value={`${myRangeDateTime.date ?? ''} ${myRangeDateTime.startTime ?? ''}~${myRangeDateTime.endTime ?? ''}`} />
+            <Flex className="gap-3">
+                <RangeTimeDatepicker value={myRangeDateTime} onChange={setMyRangeDateTime} onClickOk={timeStr => console.log('val', timeStr)} />
+                <RangeTimeDatepicker value={myRangeDateTime} onChange={setMyRangeDateTime} onClickOk={timeStr => console.log('val', timeStr)} isDark/>
+            </Flex>
+        </FormControlGroup>;
+    }, [myRangeDateTime]);
+
+
+    /**
+     * 渲染日期時間選擇器
+     */
+    const renderRangeTimeHiddenSecondPicker = useCallback(() => {
+        return <FormControlGroup className="gap-2" data-label="Range DateTimePicker(No Second)">
+            <input type="text" value={`${myRangeDateTimeNoSec.date ?? ''} ${myRangeDateTimeNoSec.startTime ?? ''}~${myRangeDateTimeNoSec.endTime ?? ''}`} />
+            <Flex className="gap-3">
+                <RangeTimeDatepicker value={myRangeDateTimeNoSec} onChange={setMyRangeDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isVisibleSecond={false}/>
+                <RangeTimeDatepicker value={myRangeDateTimeNoSec} onChange={setMyRangeDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isDark isVisibleSecond={false}/>
+            </Flex>
+        </FormControlGroup>;
+    }, [myRangeDateTimeNoSec]);
 
 
 
@@ -166,6 +196,8 @@ function App() {
                 {renderTimePicker()}
                 {renderDateTimePicker()}
                 {renderDateTimeHiddenSecondPicker()}
+                {renderRangeTimePicker()}
+                {renderRangeTimeHiddenSecondPicker()}
 
 
                 <p>

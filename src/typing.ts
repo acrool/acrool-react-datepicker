@@ -1,6 +1,7 @@
 import CSS from 'csstype';
 
 export type IRangeDateValue = {startDate?: string, endDate?: string}
+export type IRangeDateTimeValue = {date?: string, startTime?: string, endTime?: string}
 
 export enum EDateRange {
     today = 'today',

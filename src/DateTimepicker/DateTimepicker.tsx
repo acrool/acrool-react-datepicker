@@ -3,8 +3,9 @@ import CSS from 'csstype';
 import dayjs,{Dayjs} from 'dayjs';
 import {defaultFormat, getDatetime} from '../utils';
 import elClassNames from '../el-class-names';
-import Datepicker from '../Datepicker/Datepicker';
-import Timepicker from '../Timepicker/Timepicker';
+import {DatepickerAtom as Datepicker} from '../Datepicker';
+import {TimepickerAtom as Timepicker} from '../Timepicker';
+
 import {ICommon} from '../typing';
 import translateI18n from '../locales';
 

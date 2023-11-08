@@ -53,6 +53,7 @@
 }
 
 .bear-react-datepicker__root {
+    display: flex;
     border-radius: var(--border-radius);
     background-color: var(--bg-color);
     margin: 0;
@@ -97,6 +98,7 @@
  *             DatePicker
  * ------------------------------ */
 .bear-react-datepicker__date-root{
+    flex-direction: column;
     width: calc(30px * 7 + 24px);
 }
 .bear-react-datepicker__date-year-month-row {
@@ -332,13 +334,6 @@
 /** -------------------------------
  *        Range Datepicker
  * ------------------------------ */
-.bear-react-datepicker__date-range-root{
-    display: flex;
-    box-shadow:
-            0 3px 6px -4px rgba(0, 0, 0, 0.12),
-            0 6px 16px 0 rgba(0, 0, 0, 0.08),
-            0 9px 28px 8px rgba(0, 0, 0, 0.05);
-}
 
 .bear-react-datepicker__date-range-root > div:nth-child(1){
     border-top-right-radius: 0;
@@ -416,13 +411,9 @@
     display: flex;
     border-radius: var(--border-radius);
     flex-direction: column;
-    background-color: var(--bg-color);
     width: calc(30px * 2);
     margin: 0;
-    box-shadow:
-            0 3px 6px -4px rgba(0, 0, 0, 0.12),
-            0 6px 16px 0 rgba(0, 0, 0, 0.08),
-            0 9px 28px 8px rgba(0, 0, 0, 0.05);
+
 
 }
 

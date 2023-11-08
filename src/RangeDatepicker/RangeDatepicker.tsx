@@ -2,7 +2,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 import elClassNames from '../el-class-names';
 
-import Datepicker from '../Datepicker/Datepicker';
+import {DatepickerAtom as Datepicker} from '../Datepicker';
 import {IRangeDateValue, EDateRange, ICommon} from '../typing';
 import translateI18n from '../locales';
 import {selectDateRange} from '../utils';

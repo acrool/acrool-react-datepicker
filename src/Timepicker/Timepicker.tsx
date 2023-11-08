@@ -18,6 +18,7 @@ interface IProps {
     onClickOk?: (value: string) => void;
     locale?: string,
     isDark?: boolean
+    title?: string
     isVisibleSecond?: boolean,
     isVisibleNow?: boolean,
 }
@@ -47,6 +48,7 @@ export const TimepickerAtom = ({
     value,
     locale = 'en-US',
     isDark = false,
+    title = 'Time',
     isVisibleSecond = true,
     isVisibleNow = true,
 }: IProps) => {
@@ -164,7 +166,7 @@ export const TimepickerAtom = ({
     const renderHeader = () => {
         return <>
             <div className={elClassNames.timeHeader}>
-                <span className={elClassNames.timeHeaderText}>{translateI18n('com.timepicker.time', {locale: locale})}</span>
+                <span className={elClassNames.timeHeaderText}>{title}</span>
             </div>
             <div className="bear-react-datepicker__date-week-row">
                 <div className="bear-react-datepicker__date-week">H</div>
