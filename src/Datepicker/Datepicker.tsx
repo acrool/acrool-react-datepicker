@@ -22,6 +22,15 @@ interface IProps extends ICommon{
     isVisibleSetToday?: boolean;
 }
 
+const getValue = (val: string, defaultValue: Dayjs) => {
+    const editValue = dayjs(val);
+    if(dayjs.isDayjs(editValue) && editValue.get('day')){
+        return editValue;
+    }
+    return defaultValue;
+};
+
+
 /**
  * Datepicker
  * 日期選擇器
@@ -43,8 +52,7 @@ export const DatepickerAtom = ({
     tagDate = []
 }: IProps) => {
     const today = useNowTime();
-    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(value ? dayjs(value) : today);
-
+    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(getValue(value, today));
 
     const initMaxYear = typeof maxYear !== 'undefined' ? maxYear : Number(today.add(1, 'year').year());
 
@@ -343,7 +351,7 @@ export const DatepickerAtom = ({
         const currentMonthLastDay = panelYearMonth.endOf('month').get('date');
 
         // 產生 Panel年月 當月日期表
-        const currentDayList = new Array(currentMonthLastDay);
+        const currentDayList = Array.from({length: currentMonthLastDay});
         for (let d = 0; d < currentMonthLastDay; d++) {
             const dayNumber = d + 1;
             const eachDate = panelYearMonth.set('date', dayNumber);
