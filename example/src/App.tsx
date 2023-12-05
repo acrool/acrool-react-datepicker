@@ -80,7 +80,7 @@ function App() {
         return <FormControlGroup className="gap-2" data-label="DatePicker">
             <input type="text" value={myDate} onChange={(event) => setMyTime(event.target.value)}/>
             <Flex className="gap-3">
-                <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-CN" tagDate={['2022-09-08', '2022-09-11']} format="YYYY/MM/DD"/>
+                <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-TW" tagDate={['2022-09-08', '2022-09-11']} format="YYYY/MM/DD"/>
                 <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-CN" tagDate={['2022-08-31','2022-09-08', '2022-09-09', '2022-09-11', '2022-10-01']} isDark onChangeYearMonthPanel={yearMonth => console.log('asdasd', yearMonth)}/>
             </Flex>
         </FormControlGroup>;
@@ -140,7 +140,7 @@ function App() {
         return <FormControlGroup className="gap-2" data-label="DateTimePicker(No Second)">
             <input type="text" value={myDateTimeNoSec} onChange={(event) => setMyDateTime(event.target.value)}/>
             <Flex className="gap-3">
-                <DateTimepicker value={myDateTimeNoSec} onChange={setMyDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isVisibleSecond={false}/>
+                <DateTimepicker value={myDateTimeNoSec} onChange={setMyDateTimeNoSec} locale="zh-TW" onClickOk={timeStr => console.log('val', timeStr)} isVisibleSecond={false}/>
                 <DateTimepicker value={myDateTimeNoSec} onChange={setMyDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isDark isVisibleSecond={false}/>
             </Flex>
         </FormControlGroup>;
@@ -168,7 +168,7 @@ function App() {
         return <FormControlGroup className="gap-2" data-label="Range DateTimePicker(No Second)">
             <input type="text" value={`${myRangeDateTimeNoSec.date ?? ''} ${myRangeDateTimeNoSec.startTime ?? ''}~${myRangeDateTimeNoSec.endTime ?? ''}`} />
             <Flex className="gap-3">
-                <RangeTimeDatepicker value={myRangeDateTimeNoSec} onChange={setMyRangeDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isVisibleSecond={false}/>
+                <RangeTimeDatepicker value={myRangeDateTimeNoSec} locale="zh-TW" onChange={setMyRangeDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isVisibleSecond={false}/>
                 <RangeTimeDatepicker value={myRangeDateTimeNoSec} onChange={setMyRangeDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isDark isVisibleSecond={false}/>
             </Flex>
         </FormControlGroup>;

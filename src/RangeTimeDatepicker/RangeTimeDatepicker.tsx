@@ -78,7 +78,7 @@ const RangeTimeDatepicker = ({
                 }}
             />
             <Timepicker {...timeProps}
-                title="Start"
+                title={translateI18n('com.timepicker.start', {defaultMessage: 'Start', locale: locale})}
                 value={value.startTime} onChange={newValue => {
                     if(onChange){
                         onChange({
@@ -90,7 +90,7 @@ const RangeTimeDatepicker = ({
                 isVisibleSecond={timeProps.isVisibleSecond}
                 isVisibleNow={false}/>
             <Timepicker {...timeProps}
-                title="End"
+                title={translateI18n('com.timepicker.end', {defaultMessage: 'End', locale: locale})}
                 value={value.endTime} onChange={newValue => {
                     if(onChange){
                         onChange({

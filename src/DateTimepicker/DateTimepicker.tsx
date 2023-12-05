@@ -142,6 +142,7 @@ const DateTimepicker = ({
             <Datepicker {...dateProps} value={getDate(propsDate)} onChange={generateOnChange(EDateType.date)}/>
             <Timepicker {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}
                 isVisibleSecond={timeProps.isVisibleSecond}
+                title={translateI18n('com.timepicker.time', {defaultMessage: 'Time', locale: locale})}
                 isVisibleNow={false}/>
         </div>
 

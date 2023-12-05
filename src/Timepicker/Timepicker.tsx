@@ -169,10 +169,16 @@ export const TimepickerAtom = ({
                 <span className={elClassNames.timeHeaderText}>{title}</span>
             </div>
             <div className="bear-react-datepicker__date-week-row">
-                <div className="bear-react-datepicker__date-week">H</div>
-                <div className="bear-react-datepicker__date-week">M</div>
+                <div className="bear-react-datepicker__date-week">
+                    {translateI18n('com.timepicker.hour', {defaultMessage: 'H', locale: locale})}
+                </div>
+                <div className="bear-react-datepicker__date-week">
+                    {translateI18n('com.timepicker.minute', {defaultMessage: 'M', locale: locale})}
+                </div>
                 {isVisibleSecond && (
-                    <div className="bear-react-datepicker__date-week">S</div>
+                    <div className="bear-react-datepicker__date-week">
+                        {translateI18n('com.timepicker.second', {defaultMessage: 'S', locale: locale})}
+                    </div>
                 )}
             </div>
         </>;

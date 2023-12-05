@@ -37,6 +37,12 @@ const locales: ILocale = {
         'com.timepicker.time': 'Time',
         'com.timepicker.setNow': 'Now',
         'com.timepicker.ok': 'OK',
+        'com.timepicker.start': 'Start',
+        'com.timepicker.end': 'End',
+        'com.timepicker.hour': 'H',
+        'com.timepicker.minute': 'M',
+        'com.timepicker.second': 'S',
+
     },
     'zh-TW': {
         'com.datepicker.month.1': '1月',
@@ -71,6 +77,11 @@ const locales: ILocale = {
         'com.timepicker.time': '時間',
         'com.timepicker.setNow': '現在',
         'com.timepicker.ok': '確定',
+        'com.timepicker.start': '開始',
+        'com.timepicker.end': '結束',
+        'com.timepicker.hour': '時',
+        'com.timepicker.minute': '分',
+        'com.timepicker.second': '秒',
     },
     'zh-CN': {
         'com.datepicker.month.1': '1月',
@@ -105,6 +116,11 @@ const locales: ILocale = {
         'com.timepicker.time': '时间',
         'com.timepicker.setNow': '此刻',
         'com.timepicker.ok': '确定',
+        'com.timepicker.start': '开始',
+        'com.timepicker.end': '结束',
+        'com.timepicker.hour': '时',
+        'com.timepicker.minute': '分',
+        'com.timepicker.second': '秒',
     }
 };
 
