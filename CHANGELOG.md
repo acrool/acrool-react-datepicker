@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.4-alpha.0](https://github.com/imagine10255/bear-react-datepicker/compare/v3.0.3...v3.0.4-alpha.0) (2023-12-05)
+
+
+### Features
+
+* add locale timepicker, modify css var primary-color ([fe9a0e0](https://github.com/imagine10255/bear-react-datepicker/commit/fe9a0e03cde6d1b059adbe936bf8399581950700))
+
 ### [3.0.3](https://github.com/imagine10255/bear-react-datepicker/compare/v3.0.3-alpha.3...v3.0.3) (2023-11-22)
 
 ### [3.0.3-alpha.3](https://github.com/imagine10255/bear-react-datepicker/compare/v3.0.3-alpha.2...v3.0.3-alpha.3) (2023-11-20)
