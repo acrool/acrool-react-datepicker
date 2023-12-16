@@ -11,6 +11,7 @@ import translateI18n from '../locales';
 
 import clsx from 'clsx';
 import useNowTime from '../hooks/useNow';
+import useLocale from '../locales';
 
 
 interface IProps extends ICommon{
@@ -51,6 +52,7 @@ const DateTimepicker = ({
     maxDate,
     isVisibleSecond = true,
 }: IProps) => {
+    const {i18n} = useLocale(locale);
     const today = useNowTime();
 
     const propsDate = getDatetime(value);
@@ -123,8 +125,8 @@ const DateTimepicker = ({
      */
     const renderActionsButtons = () => {
         return <div className={elClassNames.timeButtonContainer}>
-            <button className={elClassNames.timeNowButton} type="button" onClick={handleSetNow}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
-            <button className={elClassNames.timeConfirmButton} type="button" onClick={handleOnClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
+            <button className={elClassNames.timeNowButton} type="button" onClick={handleSetNow}>{i18n('com.timepicker.setNow', {def: 'Set now'})}</button>
+            <button className={elClassNames.timeConfirmButton} type="button" onClick={handleOnClickOk}>{i18n('com.timepicker.ok', {def: 'OK'})}</button>
         </div>;
     };
 
@@ -142,7 +144,7 @@ const DateTimepicker = ({
             <Datepicker {...dateProps} value={getDate(propsDate)} onChange={generateOnChange(EDateType.date)}/>
             <Timepicker {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}
                 isVisibleSecond={timeProps.isVisibleSecond}
-                title={translateI18n('com.timepicker.time', {defaultMessage: 'Time', locale: locale})}
+                title={i18n('com.timepicker.time', {def: 'Time'})}
                 isVisibleNow={false}/>
         </div>
 

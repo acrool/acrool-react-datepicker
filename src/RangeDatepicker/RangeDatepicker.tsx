@@ -7,6 +7,7 @@ import {IRangeDateValue, EDateRange, ICommon} from '../typing';
 import translateI18n from '../locales';
 import {selectDateRange} from '../utils';
 import clsx from 'clsx';
+import useLocale from '../locales';
 
 
 interface IProps extends ICommon{
@@ -44,6 +45,7 @@ const RangeDatepicker = ({
     maxDate,
     isDark,
 }: IProps) => {
+    const {i18n} = useLocale(locale);
     const commonProps = {isDark, format, minYear, maxYear, locale};
 
 
@@ -61,19 +63,19 @@ const RangeDatepicker = ({
     const renderRangeFastPicker = () => {
         return <div className={elClassNames.dateRangeLabelCheckCardCreate}>
             <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.today)}>
-                <span>{translateI18n('com.datepicker.today', {defaultMessage: 'today', locale: locale})}</span>
+                <span>{i18n('com.datepicker.today', {def: 'today'})}</span>
             </button>
             <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.tomorrow)}>
-                <span>{translateI18n('com.datepicker.tomorrow', {defaultMessage: 'tomorrow', locale: locale})}</span>
+                <span>{i18n('com.datepicker.tomorrow', {def: 'tomorrow'})}</span>
             </button>
             <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.twoDay)}>
-                <span>{translateI18n('com.datepicker.twoDay', {defaultMessage: 'two day', locale: locale})}</span>
+                <span>{i18n('com.datepicker.twoDay', {def: 'two day'})}</span>
             </button>
             <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.thisWeek)}>
-                <span>{translateI18n('com.datepicker.thisWeek', {defaultMessage: 'this week', locale: locale})}</span>
+                <span>{i18n('com.datepicker.thisWeek', {def: 'this week'})}</span>
             </button>
             <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.nextWeek)}>
-                <span>{translateI18n('com.datepicker.nextWeek', {defaultMessage: 'next week', locale: locale})}</span>
+                <span>{i18n('com.datepicker.nextWeek', {def: 'next week'})}</span>
             </button>
         </div>;
     };

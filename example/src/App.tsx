@@ -98,7 +98,7 @@ function App() {
                 setMyRangeDate({startDate: dateObj[0], endDate: dateObj[1]});
             }}/>
             <Flex className="gap-3">
-                <RangeDatepicker value={myRangeDate} onChange={setMyRangeDate} isVisibleFastPicker locale="zh-TW" format="YYYY/MM/DD" />
+                <RangeDatepicker value={myRangeDate} onChange={setMyRangeDate} isVisibleFastPicker isDark locale="zh-TW" format="YYYY/MM/DD" />
                 <RangeDatepicker value={myRangeDate} onChange={setMyRangeDate} locale="zh-CN" isDark minDate={dayjs().subtract(7, 'day').format('YYYY-MM-DD')} maxDate={dayjs().add(7, 'day').format('YYYY-MM-DD')}/>
             </Flex>
 

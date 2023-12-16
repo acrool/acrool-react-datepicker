@@ -8,6 +8,7 @@ import {IRangeDateValue, EDateRange, ICommon, IRangeDateTimeValue} from '../typi
 import translateI18n from '../locales';
 import {selectDateRange, getDatetime} from '../utils';
 import clsx from 'clsx';
+import useLocale from '../locales';
 
 
 interface IProps extends ICommon{
@@ -51,6 +52,7 @@ const RangeTimeDatepicker = ({
     maxDate,
     isDark,
 }: IProps) => {
+    const {i18n} = useLocale(locale);
     const dateProps = {dateFormat, locale, isDark};
     const timeProps = {locale, isDark, onClickOk, isVisibleSecond};
 
@@ -78,7 +80,7 @@ const RangeTimeDatepicker = ({
                 }}
             />
             <Timepicker {...timeProps}
-                title={translateI18n('com.timepicker.start', {defaultMessage: 'Start', locale: locale})}
+                title={i18n('com.timepicker.start', {def: 'Start'})}
                 value={value.startTime} onChange={newValue => {
                     if(onChange){
                         onChange({
@@ -90,7 +92,7 @@ const RangeTimeDatepicker = ({
                 isVisibleSecond={timeProps.isVisibleSecond}
                 isVisibleNow={false}/>
             <Timepicker {...timeProps}
-                title={translateI18n('com.timepicker.end', {defaultMessage: 'End', locale: locale})}
+                title={i18n('com.timepicker.end', {def: 'End'})}
                 value={value.endTime} onChange={newValue => {
                     if(onChange){
                         onChange({

@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import {ITimeObj} from '../typing';
 import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
+import useLocale from '../locales';
 
 
 
@@ -52,6 +53,7 @@ export const TimepickerAtom = ({
     isVisibleSecond = true,
     isVisibleNow = true,
 }: IProps) => {
+    const {i18n} = useLocale(locale);
     const now = useNowTime();
 
     const hourBoxRef = useRef<HTMLDivElement>(null);
@@ -170,14 +172,14 @@ export const TimepickerAtom = ({
             </div>
             <div className="bear-react-datepicker__date-week-row">
                 <div className="bear-react-datepicker__date-week">
-                    {translateI18n('com.timepicker.hour', {defaultMessage: 'H', locale: locale})}
+                    {i18n('com.timepicker.hour', {def: 'H'})}
                 </div>
                 <div className="bear-react-datepicker__date-week">
-                    {translateI18n('com.timepicker.minute', {defaultMessage: 'M', locale: locale})}
+                    {i18n('com.timepicker.minute', {def: 'M'})}
                 </div>
                 {isVisibleSecond && (
                     <div className="bear-react-datepicker__date-week">
-                        {translateI18n('com.timepicker.second', {defaultMessage: 'S', locale: locale})}
+                        {i18n('com.timepicker.second', {def: 'S'})}
                     </div>
                 )}
             </div>
@@ -212,8 +214,8 @@ export const TimepickerAtom = ({
 
     const renderButton = () => {
         return <div className={elClassNames.timeButtonContainer}>
-            <button className={elClassNames.timeNowButton} type="button" onClick={handleNowTime}>{translateI18n('com.timepicker.setNow', {locale: locale})}</button>
-            <button className={elClassNames.timeConfirmButton} type="button" onClick={handleOnClickOk}>{translateI18n('com.timepicker.ok', {locale: locale})}</button>
+            <button className={elClassNames.timeNowButton} type="button" onClick={handleNowTime}>{i18n('com.timepicker.setNow', {def: 'Set now'})}</button>
+            <button className={elClassNames.timeConfirmButton} type="button" onClick={handleOnClickOk}>{i18n('com.timepicker.ok', {def: 'OK'})}</button>
         </div>;
     };
 

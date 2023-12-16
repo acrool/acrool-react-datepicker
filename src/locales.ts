@@ -127,19 +127,23 @@ const locales: ILocale = {
 
 
 
-const translateI18n = (id: string, options?: {defaultMessage?: string, locale?: string}) => {
-    const selectLocale = typeof options?.locale !== 'undefined' ? options.locale : 'en-US';
-    const localeMap = locales[selectLocale] ? locales[selectLocale]: locales['en-US'];
+const useLocale = (locale?: string) => {
+    const i18n = (id: string, options?: {def?: string}) => {
+        const selectLocale = typeof locale !== 'undefined' ? locale : 'en-US';
+        const localeMap = locales[selectLocale] ? locales[selectLocale]: locales['en-US'];
 
-    if(typeof localeMap !== 'undefined' && typeof localeMap[id] !== 'undefined'){
-        return localeMap[id];
-    }
+        if(typeof localeMap !== 'undefined' && typeof localeMap[id] !== 'undefined'){
+            return localeMap[id];
+        }
 
-    if(typeof options?.defaultMessage !== 'undefined'){
-        return options?.defaultMessage;
-    }
+        if(typeof options?.def !== 'undefined'){
+            return options?.def;
+        }
 
-    return id;
+        return id;
+    };
+
+    return {i18n};
 };
 
-export default translateI18n;
+export default useLocale;

@@ -7,6 +7,7 @@ import {ICommon} from '../typing';
 import clsx from 'clsx';
 import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
+import useLocale from '../locales';
 
 const config = {
     weekDay: [1, 2, 3, 4, 5, 6, 7],
@@ -52,6 +53,7 @@ export const DatepickerAtom = ({
     tagDate = []
 }: IProps) => {
     const today = useNowTime();
+    const {i18n} = useLocale(locale);
     const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(getValue(value, today));
 
     const initMaxYear = typeof maxYear !== 'undefined' ? maxYear : Number(today.add(1, 'year').year());
@@ -68,7 +70,7 @@ export const DatepickerAtom = ({
      */
     const localeWeekDay = useMemo(() => {
         return config.weekDay.map((weekDate: number) => {
-            return translateI18n(`com.datepicker.weekDay.${weekDate}`, {defaultMessage: String(weekDate), locale: locale});
+            return i18n(`com.datepicker.weekDay.${weekDate}`, {def: String(weekDate)});
         });
     }, [locale]);
 
@@ -77,7 +79,7 @@ export const DatepickerAtom = ({
      */
     const localeMonth = useMemo(() => {
         return config.month.map((month: number) => {
-            return {text: translateI18n(`com.datepicker.month.${month}`, {locale: locale}), value: month - 1};
+            return {text: i18n(`com.datepicker.month.${month}`), value: month - 1};
         });
     }, [locale]);
 
@@ -88,7 +90,7 @@ export const DatepickerAtom = ({
     const localeYear = useMemo(() => {
         const length = initMaxYear - minYear + 1;
         const yearList = new Array(length).fill(initMaxYear);
-        const yearText = translateI18n('com.datepicker.unit.year', {defaultMessage: '', locale: locale});
+        const yearText = i18n('com.datepicker.unit.year', {def: 'Year'});
         return yearList.map((year, index) => {
             const calcYear = year - (index);
             return {text: `${calcYear}${yearText}`, value: calcYear};
@@ -409,7 +411,7 @@ export const DatepickerAtom = ({
     const renderTodayButton = () => (
         <div className={elClassNames.dateLabelCheckCardCreate}>
             <button className={elClassNames.dateTodayButton} type="button" onClick={handleSelectedToday}>
-                <span>{translateI18n('com.datepicker.setToday', {defaultMessage: 'Set to today', locale: locale})}</span>
+                <span>{i18n('com.datepicker.setToday', {def: 'Set to today'})}</span>
             </button>
         </div>
     );
