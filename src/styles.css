@@ -216,6 +216,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
 }
 .bear-react-datepicker__date-day-content{
     position: relative;
@@ -411,7 +412,8 @@
     display: flex;
     border-radius: var(--border-radius);
     flex-direction: column;
-    width: calc(30px * 2);
+    min-width: calc(30px * 2);
+    width: auto;
     margin: 0;
 
 
@@ -420,7 +422,7 @@
 
 
 .bear-react-datepicker__time-root.is-enable-sec {
-    width: calc(30px * 3);
+    min-width: calc(30px * 3);
 }
 
 
@@ -449,6 +451,7 @@
 .bear-react-datepicker__time-pick-container {
     display: flex;
     line-height: 1;
+    justify-content: center;
 }
 
 .bear-react-datepicker__time-fake-select-container {

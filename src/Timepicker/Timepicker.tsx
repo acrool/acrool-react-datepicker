@@ -49,7 +49,7 @@ export const TimepickerAtom = ({
     value,
     locale = 'en-US',
     isDark = false,
-    title = 'Time',
+    title,
     isVisibleSecond = true,
     isVisibleNow = true,
 }: IProps) => {
@@ -168,7 +168,7 @@ export const TimepickerAtom = ({
     const renderHeader = () => {
         return <>
             <div className={elClassNames.timeHeader}>
-                <span className={elClassNames.timeHeaderText}>{title}</span>
+                <span className={elClassNames.timeHeaderText}>{title ?? i18n('com.timepicker.time', {def: 'Time'})}</span>
             </div>
             <div className="bear-react-datepicker__date-week-row">
                 <div className="bear-react-datepicker__date-week">

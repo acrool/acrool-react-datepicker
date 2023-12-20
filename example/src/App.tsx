@@ -113,8 +113,8 @@ function App() {
 
             <input type="text" value={myTime} onChange={(event) => setMyTime(event.target.value)}/>
             <Flex className="gap-3">
-                <Timepicker value={myTime} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)}/>
-                <Timepicker value={myTime} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)} isDark/>
+                <Timepicker locale="ja-JP" value={myTime} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)}/>
+                <Timepicker locale="ja-JP" value={myTime} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)} isDark/>
             </Flex>
         </FormControlGroup>;
     }, [myTime]);
