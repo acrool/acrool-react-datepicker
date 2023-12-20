@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0-alpha.0](https://github.com/imagine10255/bear-react-datepicker/compare/v3.0.4...v3.1.0-alpha.0) (2023-12-20)
+
+
+### Features
+
+* add locale ja-jap, and fix timePicker width ([88f2ce5](https://github.com/imagine10255/bear-react-datepicker/commit/88f2ce54c886dc8cd32d17cf921ffb9203b834fd))
+
 ### [3.0.4](https://github.com/imagine10255/bear-react-datepicker/compare/v3.0.4-alpha.0...v3.0.4) (2023-12-16)
 
 
