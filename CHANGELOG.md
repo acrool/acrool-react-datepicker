@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0-alpha.1](https://github.com/imagine10255/bear-react-datepicker/compare/v3.1.0-alpha.0...v3.1.0-alpha.1) (2023-12-25)
+
+
+### Features
+
+* modify rangeDatePicker fastpicker position in left ([14a88b4](https://github.com/imagine10255/bear-react-datepicker/commit/14a88b479d42512bb54de6a310e7ec1ca66485d1))
+
 ## [3.1.0-alpha.0](https://github.com/imagine10255/bear-react-datepicker/compare/v3.0.4...v3.1.0-alpha.0) (2023-12-20)
 
 
