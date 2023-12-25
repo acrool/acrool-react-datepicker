@@ -1,8 +1,7 @@
-import React, {useState, useRef, useCallback, startTransition, useEffect, createElement} from 'react';
+import React, {useState, useRef, useCallback, useEffect, createElement} from 'react';
 import CSS from 'csstype';
 import elClassNames from '../el-class-names';
 import {getTimeList, getTimeFormat, paddingLeft, getTimeString} from '../utils';
-import translateI18n from '../locales';
 import clsx from 'clsx';
 import {ITimeObj} from '../typing';
 import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
