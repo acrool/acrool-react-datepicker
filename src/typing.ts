@@ -11,6 +11,13 @@ export enum EDateRange {
     nextWeek = 'nextWeek',
 }
 
+export enum EDateTimeRange {
+    now = 'now',
+    oneHour = 'oneHour',
+    twoHour = 'twoHour',
+    fourHour = 'fourHour',
+}
+
 
 
 export interface ICommon {
@@ -20,7 +27,6 @@ export interface ICommon {
     minYear?: number;
     maxYear?: number;
     isDark?: boolean;
-    format?: string;
     minDate?: string,
     maxDate?: string,
     tagDate?: string[],

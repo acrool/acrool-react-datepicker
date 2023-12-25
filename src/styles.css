@@ -352,24 +352,30 @@
     border-bottom-right-radius: 0;
 }
 .bear-react-datepicker__date-range-label-check-card-create{
-    width: 90px;
+    width: auto;
     background-color: var(--bg-color);
     color: var(--primary-color, var(--default-primary-color));
     display: flex;
     flex-direction: column;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+    padding: 5px;
 }
 
 
 .bear-react-datepicker__date-range-button{
-    color: var(--primary-color, var(--default-primary-color));
     background-color: transparent;
     border: none;
     font-size: var(--font-size);
     text-align: left;
     cursor: pointer;
     padding: 5px;
+    color: var(--button-color);
+}
+.bear-react-datepicker__date-range-button:hover{
+
+    color: var(--primary-color, var(--default-primary-color));
+
 }
 
 

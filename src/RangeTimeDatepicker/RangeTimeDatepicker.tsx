@@ -4,9 +4,8 @@ import elClassNames from '../el-class-names';
 
 import {DatepickerAtom as Datepicker} from '../Datepicker';
 import {TimepickerAtom as Timepicker} from '../Timepicker';
-import {IRangeDateValue, EDateRange, ICommon, IRangeDateTimeValue} from '../typing';
-import translateI18n from '../locales';
-import {selectDateRange, getDatetime} from '../utils';
+import {EDateRange, ICommon, IRangeDateTimeValue, EDateTimeRange} from '../typing';
+import {selectDateTimeRange} from '../utils';
 import clsx from 'clsx';
 import useLocale from '../locales';
 
@@ -41,7 +40,6 @@ const RangeTimeDatepicker = ({
     value = {date: today, startTime: '00:00:00', endTime: '00:00:00'},
     dateFormat = 'YYYY-MM-DD',
     onChange,
-    format,
     maxYear,
     minYear,
     locale,
@@ -53,9 +51,37 @@ const RangeTimeDatepicker = ({
     isDark,
 }: IProps) => {
     const {i18n} = useLocale(locale);
-    const dateProps = {dateFormat, locale, isDark};
+    const dateProps = {minYear, maxYear, minDate, maxDate, dateFormat, locale, isDark};
     const timeProps = {locale, isDark, onClickOk, isVisibleSecond};
 
+
+    const setRangeDate = (rangeType: EDateTimeRange) => {
+        const newVal = selectDateTimeRange(rangeType, dateFormat, timeProps.isVisibleSecond);
+        if(newVal){
+            onChange(newVal);
+        }
+    };
+
+
+    /**
+     * 快速選擇面板
+     */
+    const renderRangeFastPicker = () => {
+        return <div className={elClassNames.dateRangeLabelCheckCardCreate}>
+            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateTimeRange.now)}>
+                <span>{i18n('com.rangeTimeDatepicker.now', {def: 'Now'})}</span>
+            </button>
+            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateTimeRange.oneHour)}>
+                <span>{i18n('com.rangeTimeDatepicker.oneHour', {def: '1 Hour'})}</span>
+            </button>
+            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateTimeRange.twoHour)}>
+                <span>{i18n('com.rangeTimeDatepicker.twoHour', {def: '2 Hour'})}</span>
+            </button>
+            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateTimeRange.fourHour)}>
+                <span>{i18n('com.rangeTimeDatepicker.fourHour', {def: '4 Hour'})}</span>
+            </button>
+        </div>;
+    };
 
     return (
         <div data-fast={isVisibleFastPicker ? '': undefined}
@@ -67,6 +93,8 @@ const RangeTimeDatepicker = ({
             )}
             style={style}
         >
+            {renderRangeFastPicker()}
+
             <Datepicker
                 {...dateProps}
                 value={value.date}
@@ -81,7 +109,8 @@ const RangeTimeDatepicker = ({
             />
             <Timepicker {...timeProps}
                 title={i18n('com.timepicker.start', {def: 'Start'})}
-                value={value.startTime} onChange={newValue => {
+                value={value.startTime}
+                onChange={newValue => {
                     if(onChange){
                         onChange({
                             ...value,
@@ -93,7 +122,8 @@ const RangeTimeDatepicker = ({
                 isVisibleNow={false}/>
             <Timepicker {...timeProps}
                 title={i18n('com.timepicker.end', {def: 'End'})}
-                value={value.endTime} onChange={newValue => {
+                value={value.endTime}
+                onChange={newValue => {
                     if(onChange){
                         onChange({
                             ...value,

@@ -19,6 +19,7 @@ const config = {
 interface IProps extends ICommon{
     value?: string;
     onChange: (newDate: string) => void;
+    format?: string
     onChangeYearMonthPanel?: (yearMonth: { year: number, month: number }) => void;
     isVisibleSetToday?: boolean;
 }

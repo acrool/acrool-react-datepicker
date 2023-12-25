@@ -12,6 +12,7 @@ import useLocale from '../locales';
 
 interface IProps extends ICommon{
     value?: IRangeDateValue
+    format?: string
     onChange?: (value: IRangeDateValue) => void
     isVisibleFastPicker?: boolean
 }
@@ -36,7 +37,7 @@ const RangeDatepicker = ({
     style,
     value = {startDate: today, endDate: today},
     onChange,
-    format,
+    format = 'YYYY-MM-DD',
     maxYear,
     minYear,
     locale,
@@ -91,6 +92,8 @@ const RangeDatepicker = ({
             )}
             style={style}
         >
+            {isVisibleFastPicker && renderRangeFastPicker()}
+
             <Datepicker
                 {...commonProps}
                 value={value.startDate}
@@ -121,7 +124,6 @@ const RangeDatepicker = ({
                 maxDate={maxDate}
             />
 
-            {isVisibleFastPicker && renderRangeFastPicker()}
 
         </div>
     );

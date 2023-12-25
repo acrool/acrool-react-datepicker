@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {EDateRange, ITimeObj} from './typing';
+import {EDateRange, ITimeObj, EDateTimeRange} from './typing';
 
 export const defaultFormat = {
     date: 'YYYY-MM-DD',
@@ -141,6 +141,66 @@ export const selectDateRange = (rangeType: EDateRange, format: string) => {
         return {
             startDate: today.add(1, 'week').format(format),
             endDate: today.add(2, 'week').format(format),
+        };
+    }
+    return undefined;
+
+};
+
+
+export const selectDateTimeRange = (rangeType: EDateTimeRange, format: string, isVisibleSecond: boolean) => {
+    const now = dayjs();
+    const nowTimeObj = {
+        hour: now.get('hour'),
+        minute: now.get('minute'),
+        second: now.get('second'),
+    };
+
+    switch (rangeType){
+    case EDateTimeRange.now:
+        return {
+            date: now.format(format),
+            startTime: getTimeString(nowTimeObj, isVisibleSecond),
+            endTime: getTimeString(nowTimeObj, isVisibleSecond),
+        };
+    case EDateTimeRange.oneHour:
+        const oneHour = now.add(1, 'hour');
+        const oneHourObj = {
+            hour: oneHour.get('hour'),
+            minute: oneHour.get('minute'),
+            second: oneHour.get('second'),
+        };
+
+        return {
+            date: now.format(format),
+            startTime: getTimeString(nowTimeObj, isVisibleSecond),
+            endTime: getTimeString(oneHourObj, isVisibleSecond),
+        };
+    case EDateTimeRange.twoHour:
+        const twoHour = now.add(2, 'hour');
+        const twoHourObj = {
+            hour: twoHour.get('hour'),
+            minute: twoHour.get('minute'),
+            second: twoHour.get('second'),
+        };
+
+        return {
+            date: now.format(format),
+            startTime: getTimeString(nowTimeObj, isVisibleSecond),
+            endTime: getTimeString(twoHourObj, isVisibleSecond),
+        };
+    case EDateTimeRange.fourHour:
+        const fourHourHour = now.add(4, 'hour');
+        const fourHourHourObj = {
+            hour: fourHourHour.get('hour'),
+            minute: fourHourHour.get('minute'),
+            second: fourHourHour.get('second'),
+        };
+
+        return {
+            date: now.format(format),
+            startTime: getTimeString(nowTimeObj, isVisibleSecond),
+            endTime: getTimeString(fourHourHourObj, isVisibleSecond),
         };
     }
     return undefined;

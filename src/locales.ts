@@ -43,6 +43,10 @@ const locales: ILocale = {
         'com.timepicker.minute': 'M',
         'com.timepicker.second': 'S',
 
+        'com.rangeTimeDatepicker.now': 'Now',
+        'com.rangeTimeDatepicker.oneHour': '1 hour',
+        'com.rangeTimeDatepicker.twoHour': '2 Hour',
+        'com.rangeTimeDatepicker.fourHour': '4 Hour',
     },
     'zh-TW': {
         'com.datepicker.month.1': '1月',
@@ -82,6 +86,11 @@ const locales: ILocale = {
         'com.timepicker.hour': '時',
         'com.timepicker.minute': '分',
         'com.timepicker.second': '秒',
+
+        'com.rangeTimeDatepicker.now': '現在',
+        'com.rangeTimeDatepicker.oneHour': '1小時',
+        'com.rangeTimeDatepicker.twoHour': '2小時',
+        'com.rangeTimeDatepicker.fourHour': '4小時',
     },
     'zh-CN': {
         'com.datepicker.month.1': '1月',
@@ -121,6 +130,11 @@ const locales: ILocale = {
         'com.timepicker.hour': '时',
         'com.timepicker.minute': '分',
         'com.timepicker.second': '秒',
+
+        'com.rangeTimeDatepicker.now': '现在',
+        'com.rangeTimeDatepicker.oneHour': '1小时',
+        'com.rangeTimeDatepicker.twoHour': '2小时',
+        'com.rangeTimeDatepicker.fourHour': '4小时',
     },
     'ja-JP': {
         'com.datepicker.month.1': '1月',
@@ -160,6 +174,11 @@ const locales: ILocale = {
         'com.timepicker.hour': '時',
         'com.timepicker.minute': '分',
         'com.timepicker.second': '秒',
+
+        'com.rangeTimeDatepicker.now': '現在',
+        'com.rangeTimeDatepicker.oneHour': '1時間',
+        'com.rangeTimeDatepicker.twoHour': '2時間',
+        'com.rangeTimeDatepicker.fourHour': '4時間',
     }
 };
 
