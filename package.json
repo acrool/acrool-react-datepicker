@@ -45,10 +45,10 @@
     "release:patch": "standard-version -r patch",
     "release:alpha": "standard-version --prerelease alpha"
   },
-  "dependencies": {
-    "dayjs": "^1.x",
+  "peerDependencies": {
     "react": "^18.x",
-    "react-dom": "^18.x"
+    "react-dom": "^18.x",
+    "dayjs": "^1.x"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
@@ -64,6 +64,8 @@
     "npm-run-all": "^4.1.5",
     "rollup-plugin-visualizer": "^5.9.0",
     "standard-version": "^9.5.0",
+    "react": "^18.x",
+    "react-dom": "^18.x",
     "ts-jest": "^29.1.0",
     "typescript": "^4.9.3",
     "vite": "^4.2.0",
