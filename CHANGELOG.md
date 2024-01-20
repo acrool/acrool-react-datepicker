@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/imagine10255/bear-react-datepicker/compare/v3.1.0-alpha.1...v3.1.0) (2024-01-20)
+
+
+### Features
+
+* eslint fix ([bffeeb6](https://github.com/imagine10255/bear-react-datepicker/commit/bffeeb650b1208a1f4df05f50108c87442ab3b95))
+
 ## [3.1.0-alpha.1](https://github.com/imagine10255/bear-react-datepicker/compare/v3.1.0-alpha.0...v3.1.0-alpha.1) (2023-12-25)
 
 
