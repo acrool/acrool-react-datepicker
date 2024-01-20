@@ -52,7 +52,7 @@ const RangeDatepicker = ({
 
     const setRangeDate = (rangeType: EDateRange) => {
         const newVal = selectDateRange(rangeType, format);
-        if(newVal){
+        if(newVal && onChange){
             onChange(newVal);
         }
     };

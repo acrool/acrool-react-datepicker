@@ -24,7 +24,7 @@ interface IProps extends ICommon{
     isVisibleSetToday?: boolean;
 }
 
-const getValue = (val: string, defaultValue: Dayjs) => {
+const getValue = (defaultValue: Dayjs, val?: string) => {
     const editValue = dayjs(val);
     if(dayjs.isDayjs(editValue) && editValue.get('day')){
         return editValue;
@@ -55,7 +55,7 @@ export const DatepickerAtom = ({
 }: IProps) => {
     const today = useNowTime();
     const {i18n} = useLocale(locale);
-    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(getValue(value, today));
+    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(getValue(today, value));
 
     const initMaxYear = typeof maxYear !== 'undefined' ? maxYear : Number(today.add(1, 'year').year());
 

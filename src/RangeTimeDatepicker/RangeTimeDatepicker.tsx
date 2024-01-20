@@ -4,7 +4,7 @@ import elClassNames from '../el-class-names';
 
 import {DatepickerAtom as Datepicker} from '../Datepicker';
 import {TimepickerAtom as Timepicker} from '../Timepicker';
-import {EDateRange, ICommon, IRangeDateTimeValue, EDateTimeRange} from '../typing';
+import {ICommon, IRangeDateTimeValue, EDateTimeRange} from '../typing';
 import {selectDateTimeRange} from '../utils';
 import clsx from 'clsx';
 import useLocale from '../locales';
@@ -57,7 +57,7 @@ const RangeTimeDatepicker = ({
 
     const setRangeDate = (rangeType: EDateTimeRange) => {
         const newVal = selectDateTimeRange(rangeType, dateFormat, timeProps.isVisibleSecond);
-        if(newVal){
+        if(newVal && onChange){
             onChange(newVal);
         }
     };

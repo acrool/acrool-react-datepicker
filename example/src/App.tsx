@@ -1,11 +1,8 @@
 import {
     useState,
     useCallback,
-    Component,
     createElement,
     Fragment,
-    ComponentType,
-    FunctionComponent,
     ComponentClass, FC
 } from 'react';
 import reactLogo from './assets/react.svg';
@@ -15,7 +12,7 @@ import dayjs from 'dayjs';
 
 import './App.css';
 import 'bear-react-datepicker/dist/index.css';
-import {Flex, GridThemeProvider, IGridThemeProviderProps} from 'bear-react-grid';
+import {Flex, GridThemeProvider} from 'bear-react-grid';
 import styled from 'styled-components';
 
 
