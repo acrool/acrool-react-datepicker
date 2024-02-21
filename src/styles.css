@@ -30,6 +30,7 @@
     --bg-hover-color: #f5f5f5;
 
     --border-radius: 3px;
+    --container-border-color: #bfbfbf;
 }
 
 .bear-react-datepicker__root.dark-theme {
@@ -50,6 +51,8 @@
     --text-color: rgba(255, 255, 255, 0.65);
     --bg-active-color: #727373;
     --bg-hover-color: #5e5e5e;
+    --container-border-color: #4a4a4a;
+
 }
 
 .bear-react-datepicker__root {
@@ -73,6 +76,7 @@
     border: none;
     overflow: visible;
     text-transform: none;
+    white-space: nowrap;
 }
 .bear-react-datepicker__root button:focus {
     outline: none;
@@ -371,6 +375,7 @@
     cursor: pointer;
     padding: 5px;
     color: var(--button-color);
+    white-space: nowrap;
 }
 .bear-react-datepicker__date-range-button:hover{
 
@@ -528,6 +533,7 @@
     flex: 1;
     background-color: var(--bg-color);
     border-radius: var(--border-radius);
+    border-top: 1px solid var(--container-border-color);
 }
 button.bear-react-datepicker__time-confirm-button {
     color: #fff;
