@@ -79,6 +79,8 @@ function App() {
             <Flex className="gap-3">
                 <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-TW" tagDate={['2022-09-08', '2022-09-11']} format="YYYY/MM/DD"/>
                 <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-CN" tagDate={['2022-08-31','2022-09-08', '2022-09-09', '2022-09-11', '2022-10-01']} isDark onChangeYearMonthPanel={yearMonth => console.log('asdasd', yearMonth)}/>
+
+                <button type="button" onClick={() => setMyDate('')}>Clear</button>
             </Flex>
         </FormControlGroup>;
     }, [myDate]);
@@ -89,14 +91,18 @@ function App() {
      */
     const renderRangeDatePicker = useCallback(() => {
         return <FormControlGroup className="gap-2" data-label="RangeDatePicker">
-            <input type="text" value={`${myRangeDate.startDate ?? ''}~${myRangeDate.endDate ?? ''}`} onChange={(event) => {
-                const dateStr = event.target.value;
-                const dateObj = dateStr.split('~');
-                setMyRangeDate({startDate: dateObj[0], endDate: dateObj[1]});
-            }}/>
+            <input type="text" 
+                value={[myRangeDate.startDate, myRangeDate.endDate].filter(row => row).join('~')}
+                onChange={(event) => {
+                    const dateStr = event.target.value;
+                    const dateObj = dateStr.split('~');
+                    setMyRangeDate({startDate: dateObj[0], endDate: dateObj[1]});
+                }}/>
             <Flex className="gap-3">
                 <RangeDatepicker value={myRangeDate} onChange={setMyRangeDate} isVisibleFastPicker isDark locale="en-US" format="YYYY/MM/DD" />
                 <RangeDatepicker value={myRangeDate} onChange={setMyRangeDate} locale="zh-CN" isDark minDate={dayjs().subtract(7, 'day').format('YYYY-MM-DD')} maxDate={dayjs().add(7, 'day').format('YYYY-MM-DD')}/>
+
+                <button type="button" onClick={() => setMyRangeDate('')}>Clear</button>
             </Flex>
 
         </FormControlGroup>;
@@ -112,6 +118,8 @@ function App() {
             <Flex className="gap-3">
                 <Timepicker locale="ja-JP" value={myTime} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)}/>
                 <Timepicker locale="ja-JP" value={myTime} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)} isDark/>
+
+                <button type="button" onClick={() => setMyTime('')}>Clear</button>
             </Flex>
         </FormControlGroup>;
     }, [myTime]);
@@ -126,6 +134,8 @@ function App() {
             <Flex className="gap-3">
                 <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={timeStr => console.log('val', timeStr)}/>
                 <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={timeStr => console.log('val', timeStr)} isDark/>
+
+                <button type="button" onClick={() => setMyDateTime('')}>Clear</button>
             </Flex>
         </FormControlGroup>;
     }, [myDateTime]);
@@ -139,6 +149,8 @@ function App() {
             <Flex className="gap-3">
                 <DateTimepicker value={myDateTimeNoSec} onChange={setMyDateTimeNoSec} locale="zh-TW" onClickOk={timeStr => console.log('val', timeStr)} isVisibleSecond={false}/>
                 <DateTimepicker value={myDateTimeNoSec} onChange={setMyDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isDark isVisibleSecond={false}/>
+
+                <button type="button" onClick={() => setMyDateTimeNoSec('')}>Clear</button>
             </Flex>
         </FormControlGroup>;
     }, [myDateTimeNoSec]);
@@ -153,6 +165,8 @@ function App() {
             <Flex className="gap-3">
                 <RangeTimeDatepicker value={myRangeDateTime} onChange={setMyRangeDateTime} onClickOk={timeStr => console.log('val', timeStr)} />
                 <RangeTimeDatepicker value={myRangeDateTime} onChange={setMyRangeDateTime} onClickOk={timeStr => console.log('val', timeStr)} isDark/>
+
+                <button type="button" onClick={() => setMyRangeDateTime('')}>Clear</button>
             </Flex>
         </FormControlGroup>;
     }, [myRangeDateTime]);
@@ -163,10 +177,14 @@ function App() {
      */
     const renderRangeTimeHiddenSecondPicker = useCallback(() => {
         return <FormControlGroup className="gap-2" data-label="Range DateTimePicker(No Second)">
-            <input type="text" value={`${myRangeDateTimeNoSec.date ?? ''} ${myRangeDateTimeNoSec.startTime ?? ''}~${myRangeDateTimeNoSec.endTime ?? ''}`} />
+            <input type="text"
+                value={[`${myRangeDateTimeNoSec?.date ?? ''} ${myRangeDateTimeNoSec?.startTime ?? ''}`, myRangeDateTimeNoSec?.endTime].filter(row => row).join('~')}
+            />
             <Flex className="gap-3">
                 <RangeTimeDatepicker value={myRangeDateTimeNoSec} locale="zh-TW" onChange={setMyRangeDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isVisibleSecond={false} isVisibleFastPicker/>
                 <RangeTimeDatepicker value={myRangeDateTimeNoSec} onChange={setMyRangeDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isDark isVisibleSecond={false}/>
+
+                <button type="button" onClick={() => setMyRangeDateTimeNoSec('')}>Clear</button>
             </Flex>
         </FormControlGroup>;
     }, [myRangeDateTimeNoSec]);

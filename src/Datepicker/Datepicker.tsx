@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
-import {ICurrentDayList} from "./types";
+import {ICurrentDayList} from './types';
 
 const config = {
     weekDay: [1, 2, 3, 4, 5, 6, 7],
@@ -27,7 +27,7 @@ interface IProps extends ICommon{
 
 const getValue = (defaultValue: Dayjs, val?: string) => {
     const editValue = dayjs(val);
-    if(dayjs.isDayjs(editValue) && editValue.get('day')){
+    if(editValue.isValid()){
         return editValue;
     }
     return defaultValue;
@@ -62,8 +62,10 @@ export const DatepickerAtom = ({
 
 
     useOnlyUpdateEffect(() => {
-        const newYear = dayjs(value).get('year');
-        const newMonth = dayjs(value).get('month');
+        const dateVal = dayjs(value);
+        const now = dayjs();
+        const newYear = dateVal.isValid() ? dateVal.get('year') : now.get('year');
+        const newMonth = dateVal.isValid() ? dayjs(value).get('month'): now.get('month');
         handleChangePanel(newYear, newMonth);
     }, [value]);
 
