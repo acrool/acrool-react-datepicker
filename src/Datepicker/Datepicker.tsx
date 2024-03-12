@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
+import {ICurrentDayList} from "./types";
 
 const config = {
     weekDay: [1, 2, 3, 4, 5, 6, 7],
@@ -90,7 +91,8 @@ export const DatepickerAtom = ({
      */
     const localeYear = useMemo(() => {
         const length = initMaxYear - minYear + 1;
-        const yearList = new Array(length).fill(initMaxYear);
+        const yearList: number[]  = Array.from({length})
+            .map(row => initMaxYear);
         const yearText = i18n('com.datepicker.unit.year', {def: 'Year'});
         return yearList.map((year, index) => {
             const calcYear = year - (index);
@@ -274,13 +276,13 @@ export const DatepickerAtom = ({
         const preMonthFirstDay = preMonthLastDay - preMonthFirstContainer;
 
         // 產生 Panel年月 上個月的剩餘日期表
-        const preMonFirstDayList = new Array(preMonthFirstContainer);
+        const preMonFirstDayList: ICurrentDayList[] = Array.from({length: preMonthFirstContainer});
         for (let d = 0; d < preMonthFirstContainer; d++) {
             const dayNumber = preMonthFirstDay + d + 1;
             const eachDate = preMonth.set('date', dayNumber);
             const isDisable =
-                (minDate && eachDate.isBefore(minDate, 'date')) ||
-                (maxDate && eachDate.isAfter(maxDate, 'date'));
+                !!((minDate && eachDate.isBefore(minDate, 'date')) ||
+                    (maxDate && eachDate.isAfter(maxDate, 'date')));
 
             preMonFirstDayList[d] = {
                 isActive: currentDate.isSame(preMonth.set('date', dayNumber), 'date'),
@@ -321,13 +323,13 @@ export const DatepickerAtom = ({
         const nextMonthEndContainer = (7 * 6) % (preMonthFirstContainer + panelMonthLastDay);
 
         // 產生上個月的剩餘日期表
-        const nextMonEndDayList = new Array(nextMonthEndContainer);
+        const nextMonEndDayList: ICurrentDayList[] = Array.from({length: nextMonthEndContainer});
         for (let d = 0; d < nextMonthEndContainer; d++) {
             const dayNumber = d + 1;
             const eachDate = nextMonth.set('date', dayNumber);
             const isDisable =
-                (minDate && eachDate.isBefore(minDate, 'date')) ||
-                (maxDate && eachDate.isAfter(maxDate, 'date'));
+                !!((minDate && eachDate.isBefore(minDate, 'date')) ||
+                    (maxDate && eachDate.isAfter(maxDate, 'date')));
 
             nextMonEndDayList[d] = {
                 isActive: currentDate.isSame(nextMonth.set('date', dayNumber), 'date'),
@@ -354,13 +356,13 @@ export const DatepickerAtom = ({
         const currentMonthLastDay = panelYearMonth.endOf('month').get('date');
 
         // 產生 Panel年月 當月日期表
-        const currentDayList = Array.from({length: currentMonthLastDay});
+        const currentDayList: ICurrentDayList[] = Array.from({length: currentMonthLastDay});
         for (let d = 0; d < currentMonthLastDay; d++) {
             const dayNumber = d + 1;
             const eachDate = panelYearMonth.set('date', dayNumber);
-            const isDisable =
-                (minDate && eachDate.isBefore(minDate, 'date')) ||
-                (maxDate && eachDate.isAfter(maxDate, 'date'));
+            const isDisable: boolean =
+                !!((minDate && eachDate.isBefore(minDate, 'date')) ||
+                    (maxDate && eachDate.isAfter(maxDate, 'date')));
 
             currentDayList[d] = {
                 isActive: currentDate.isSame(eachDate, 'date'),
