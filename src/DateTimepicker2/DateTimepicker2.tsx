@@ -4,15 +4,13 @@ import dayjs,{Dayjs} from 'dayjs';
 import {defaultFormat, getDatetime} from '../utils';
 import elClassNames from '../el-class-names';
 import {DatepickerAtom as Datepicker} from '../Datepicker';
-import {TimepickerAtom as Timepicker} from '../Timepicker';
+import {Timepicker2Atom as Timepicker2} from '../Timepicker2';
 
 import {ICommon} from '../typing';
-import translateI18n from '../locales';
 
 import clsx from 'clsx';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
-import Timepicker2 from '../Timepicker2';
 import './styles.css';
 
 

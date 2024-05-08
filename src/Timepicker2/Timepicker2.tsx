@@ -63,23 +63,18 @@ export const Timepicker2Atom = ({
 
     /**
      * 處理異動時動作
-     * @param data
+     * @param newTime
      * @param isBehaviorSmooth
      */
-    const handleOnChange = (data: Partial<ITimeObj>, isBehaviorSmooth = true) => {
-        handleOnUpdate(data, isBehaviorSmooth);
-        setTime(curr => {
-            const dateObj = {
-                ...curr,
-                ...data,
-            };
-
-            if(onChange){
-                onChange(getTimeString(dateObj, isVisibleSecond));
-            }
-            return dateObj;
-        });
-
+    const handleOnChange = (newTime: Partial<ITimeObj>, isBehaviorSmooth = true) => {
+        const dateObj = {
+            ...time,
+            ...newTime,
+        };
+        setTime(dateObj);
+        if(onChange){
+            onChange(getTimeString(dateObj, isVisibleSecond));
+        }
     };
 
 
@@ -189,7 +184,7 @@ export const Timepicker2Atom = ({
                 </div>
             }
         </div>;
-    }, [time]);
+    }, [time, onChange]);
 
 
     const renderButton = () => {

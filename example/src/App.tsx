@@ -248,15 +248,15 @@ function App() {
             <h1>Bear React Datepicker</h1>
             <div className="card">
 
-                {renderDatePicker()}
-                {renderRangeDatePicker()}
-                {renderTimePicker()}
-                {renderTimePicker2()}
-                {renderDateTimePicker()}
+                {/*{renderDatePicker()}*/}
+                {/*{renderRangeDatePicker()}*/}
+                {/*{renderTimePicker()}*/}
+                {/*{renderTimePicker2()}*/}
+                {/*{renderDateTimePicker()}*/}
                 {renderDateTimePicker2()}
-                {renderDateTimeHiddenSecondPicker()}
-                {renderRangeTimePicker()}
-                {renderRangeTimeHiddenSecondPicker()}
+                {/*{renderDateTimeHiddenSecondPicker()}*/}
+                {/*{renderRangeTimePicker()}*/}
+                {/*{renderRangeTimeHiddenSecondPicker()}*/}
 
 
                 <p>
