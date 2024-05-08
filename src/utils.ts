@@ -17,7 +17,7 @@ export const defaultFormat = {
  * @param timeObj
  * @param isEnableSec
  */
-export const getTimeString = (timeObj: ITimeObj, isEnableSec?: boolean): string => {
+export const getTimeString = (timeObj: Partial<ITimeObj>, isEnableSec?: boolean): string => {
     if(isEnableSec){
         return `${paddingLeft(timeObj?.hour ?? '00', 2)}:${paddingLeft(timeObj?.minute ?? '00', 2)}:${paddingLeft(timeObj?.second ?? '00', 2)}`;
     }

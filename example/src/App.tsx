@@ -7,7 +7,17 @@ import {
 } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
-import {Datepicker, Timepicker, DateTimepicker, RangeDatepicker, RangeTimeDatepicker, IRangeDateValue, IRangeDateTimeValue} from 'bear-react-datepicker';
+import {
+    Datepicker,
+    Timepicker,
+    Timepicker2,
+    DateTimepicker,
+    RangeDatepicker,
+    RangeTimeDatepicker,
+    IRangeDateValue,
+    IRangeDateTimeValue,
+    DateTimepicker2
+} from 'bear-react-datepicker';
 import dayjs from 'dayjs';
 
 import './App.css';
@@ -124,6 +134,22 @@ function App() {
         </FormControlGroup>;
     }, [myTime]);
 
+    /**
+     * 渲染日期時間選擇器2
+     */
+    const renderTimePicker2 = useCallback(() => {
+        return <FormControlGroup className="gap-2" data-label="TimePicker2">
+
+            <input type="text" value={myTime} onChange={(event) => setMyTime(event.target.value)}/>
+            <Flex className="gap-3">
+                <Timepicker2 locale="ja-JP" value={myTime} isVisibleSecond={false} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)}/>
+                <Timepicker2 locale="ja-JP" value={myTime} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)} isDark/>
+
+                <button type="button" onClick={() => setMyTime('')}>Clear</button>
+            </Flex>
+        </FormControlGroup>;
+    }, [myTime]);
+
 
     /**
      * 渲染日期時間選擇器
@@ -134,6 +160,22 @@ function App() {
             <Flex className="gap-3">
                 <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={timeStr => console.log('val', timeStr)}/>
                 <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={timeStr => console.log('val', timeStr)} isDark/>
+
+                <button type="button" onClick={() => setMyDateTime('')}>Clear</button>
+            </Flex>
+        </FormControlGroup>;
+    }, [myDateTime]);
+
+
+    /**
+     * 渲染日期時間選擇器2
+     */
+    const renderDateTimePicker2 = useCallback(() => {
+        return <FormControlGroup className="gap-2" data-label="DateTimePicker">
+            <input type="text" value={myDateTime} onChange={(event) => setMyDateTime(event.target.value)}/>
+            <Flex className="gap-3">
+                <DateTimepicker2 value={myDateTime} onChange={setMyDateTime} onClickOk={timeStr => console.log('val', timeStr)}/>
+                <DateTimepicker2 value={myDateTime} isVisibleSecond={false} onChange={setMyDateTime} onClickOk={timeStr => console.log('val', timeStr)} isDark/>
 
                 <button type="button" onClick={() => setMyDateTime('')}>Clear</button>
             </Flex>
@@ -209,7 +251,9 @@ function App() {
                 {renderDatePicker()}
                 {renderRangeDatePicker()}
                 {renderTimePicker()}
+                {renderTimePicker2()}
                 {renderDateTimePicker()}
+                {renderDateTimePicker2()}
                 {renderDateTimeHiddenSecondPicker()}
                 {renderRangeTimePicker()}
                 {renderRangeTimeHiddenSecondPicker()}

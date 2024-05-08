@@ -1,0 +1,26 @@
+
+/** -------------------------------
+ *        Datepicker + timepicker2
+ * ------------------------------ */
+
+
+.bear-react-datepicker__date-time2-root {
+    display: flex;
+    flex-direction: column;
+
+}
+.bear-react-datepicker__date-time2-root > .bear-react-datepicker__date-time2-group > div:nth-child(1){
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: none;
+}
+.bear-react-datepicker__date-time2-root > .bear-react-datepicker__date-time2-group > div:nth-child(2){
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    box-shadow: none;
+}
+
+.bear-react-datepicker__date-time2-group {
+    display: flex;
+    flex-direction: column;
+}

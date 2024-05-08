@@ -12,7 +12,9 @@ import translateI18n from '../locales';
 import clsx from 'clsx';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
+import Timepicker2 from '../Timepicker2';
 import './styles.css';
+
 
 interface IProps extends ICommon{
     className?: string;
@@ -37,7 +39,7 @@ enum EDateType {
  * DateTimepicker
  * 日期選擇器
  */
-const DateTimepicker = ({
+const DateTimepicker2 = ({
     className,
     style,
     value,
@@ -134,15 +136,15 @@ const DateTimepicker = ({
 
     return <div className={clsx(
         elClassNames.root,
-        elClassNames.dateTimeRoot,
+        elClassNames.dateTime2Root,
         {'dark-theme': isDark},
         className
     )}
     style={style}
     >
-        <div className={elClassNames.dateTimeGroup}>
+        <div className={elClassNames.dateTime2Group}>
             <Datepicker {...dateProps} value={getDate(propsDate)} onChange={generateOnChange(EDateType.date)}/>
-            <Timepicker {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}
+            <Timepicker2 {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}
                 isVisibleSecond={timeProps.isVisibleSecond}
                 title={i18n('com.timepicker.time', {def: 'Time'})}
                 isVisibleNow={false}/>
@@ -153,4 +155,4 @@ const DateTimepicker = ({
 };
 
 
-export default DateTimepicker;
+export default DateTimepicker2;

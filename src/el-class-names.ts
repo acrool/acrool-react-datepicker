@@ -37,6 +37,9 @@ export default {
     dateTimeRoot: `${elClassNames.elClassPrefix}__date-time-root`,
     dateTimeGroup: `${elClassNames.elClassPrefix}__date-time-group`,
 
+    dateTime2Root: `${elClassNames.elClassPrefix}__date-time2-root`,
+    dateTime2Group: `${elClassNames.elClassPrefix}__date-time2-group`,
+
     timeRoot: `${elClassNames.elClassPrefix}__time-root`,
     timeHeader: `${elClassNames.elClassPrefix}__time-header`,
     timeHeaderText: `${elClassNames.elClassPrefix}__time-header-text`,
@@ -47,5 +50,18 @@ export default {
     timeButtonContainer: `${elClassNames.elClassPrefix}__time-button-container`,
     timeConfirmButton: `${elClassNames.elClassPrefix}__time-confirm-button`,
     timeNowButton: `${elClassNames.elClassPrefix}__time-now-button`,
+
+    time2Root: `${elClassNames.elClassPrefix}__time2-root`,
+    time2Header: `${elClassNames.elClassPrefix}__time2-header`,
+    time2HeaderText: `${elClassNames.elClassPrefix}__time2-header-text`,
+    time2HeaderTimeStr: `${elClassNames.elClassPrefix}__time2-header-time-str`,
+    time2InputGroup: `${elClassNames.elClassPrefix}__time2-input-group`,
+    time2PickContainer: `${elClassNames.elClassPrefix}__time2-pick-container`,
+    time2FakeSelectContainer: `${elClassNames.elClassPrefix}__time2-fake-select-container`,
+    time2SelectBox: `${elClassNames.elClassPrefix}__time2-select-box`,
+    time2FakeOption: `${elClassNames.elClassPrefix}__time2-fake-option`,
+    time2ButtonContainer: `${elClassNames.elClassPrefix}__time2-button-container`,
+    time2ConfirmButton: `${elClassNames.elClassPrefix}__time2-confirm-button`,
+    time2NowButton: `${elClassNames.elClassPrefix}__time2-now-button`,
 
 };

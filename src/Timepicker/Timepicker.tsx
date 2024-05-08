@@ -7,7 +7,7 @@ import {ITimeObj} from '../typing';
 import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
-
+import './styles.css';
 
 
 interface IProps {
