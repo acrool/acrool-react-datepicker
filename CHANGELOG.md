@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.5-alpha.1](https://github.com/imagine10255/bear-react-datepicker/compare/v3.1.5-alpha.0...v3.1.5-alpha.1) (2024-05-08)
+
+
+### Bug Fixes
+
+* setState in render error ([c04c07e](https://github.com/imagine10255/bear-react-datepicker/commit/c04c07e708c8a3fbba7d426d9172a3999bbc6ba2))
+
 ### [3.1.5-alpha.0](https://github.com/imagine10255/bear-react-datepicker/compare/v3.1.4...v3.1.5-alpha.0) (2024-05-08)
 
 ### [3.1.4](https://github.com/imagine10255/bear-react-datepicker/compare/v3.1.4-alpha.1...v3.1.4) (2024-03-13)
