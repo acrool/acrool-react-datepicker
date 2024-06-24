@@ -55,7 +55,7 @@ const Example = () => {
                         const dateObj = dateStr.split('~');
                         setMyRangeDate({startDate: dateObj[0], endDate: dateObj[1]});
                     }}/>
-                <button type="button" onClick={() => setMyRangeDate('')}>Clear</button>
+                <button type="button" onClick={() => setMyRangeDate({})}>Clear</button>
             </Flex>
             <Flex className="gap-3">
                 <RangeDatepicker value={myRangeDate} onChange={setMyRangeDate} isVisibleFastPicker isDark locale="en-US" format="YYYY/MM/DD" />
@@ -166,7 +166,7 @@ const Example = () => {
         return <FormControlGroup className="gap-2" data-label="Range DateTimePicker">
             <Flex className="gap-2">
                 <input type="text" value={`${myRangeDateTime.date ?? ''} ${myRangeDateTime.startTime ?? ''}~${myRangeDateTime.endTime ?? ''}`} />
-                <button type="button" onClick={() => setMyRangeDateTime('')}>Clear</button>
+                <button type="button" onClick={() => setMyRangeDateTime({})}>Clear</button>
             </Flex>
             <Flex className="gap-3">
                 <RangeTimeDatepicker value={myRangeDateTime} onChange={setMyRangeDateTime} onClickOk={timeStr => console.log('val', timeStr)} />
@@ -186,7 +186,7 @@ const Example = () => {
                 <input type="text"
                     value={[`${myRangeDateTimeNoSec?.date ?? ''} ${myRangeDateTimeNoSec?.startTime ?? ''}`, myRangeDateTimeNoSec?.endTime].filter(row => row).join('~')}
                 />
-                <button type="button" onClick={() => setMyRangeDateTimeNoSec('')}>Clear</button>
+                <button type="button" onClick={() => setMyRangeDateTimeNoSec({})}>Clear</button>
             </Flex>
             
             <Flex className="gap-3">
