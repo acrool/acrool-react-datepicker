@@ -36,19 +36,19 @@
 ## Install
 
 ```bash
-yarn add bear-react-datepicker dayjs
+yarn add @acrool/react-datepicker dayjs
 ```
 
 ## Usage
 
 add in your index.tsx
 ```tst
-import "bear-react-datepicker/dist/index.css";
+import "@acrool/react-datepicker/dist/index.css";
 ```
 
 then in your page
 ```tsx
-import {Datepicker, Timepicker, DateTimepicker} from 'bear-react-datepicker';
+import {Datepicker, Timepicker, DateTimepicker} from '@acrool/react-datepicker';
 
 
 const BaseUsed = () => {

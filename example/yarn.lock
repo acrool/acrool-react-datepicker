@@ -2,10 +2,6 @@
 # yarn lockfile v1
 
 
-"@acrool/react-datepicker@link:..":
-  version "0.0.0"
-  uid ""
-
 "@acrool/react-grid@5.2.1":
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/@acrool/react-grid/-/react-grid-5.2.1.tgz#d78395fe4d02dd693d810afb23298bf869d40bf0"
