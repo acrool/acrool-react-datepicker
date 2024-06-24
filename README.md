@@ -22,7 +22,7 @@
 
 
 
-<img src="https://raw.githubusercontent.com/imagine10255/bear-react-datepicker/main/docs/datepicker.jpg" width="500"/>
+<img src="https://acrool-react-datepicker.pages.dev/preview.webp" width="500"/>
 
 
 ## Features
