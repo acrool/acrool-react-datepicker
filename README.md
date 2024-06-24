@@ -1,4 +1,8 @@
-# Bear React Datepicker
+# Acrool React Datepicker
+
+<a href="https://acrool-react-datepicker.pages.dev/" title="Acrool React datepicker - Internationalize Elegant intl library based for Reactjs">
+    <img src="https://acrool-react-datepicker.pages.dev/og.webp" alt="Acrool React Datepicker Logo"/>
+</a>
 
 <p align="center">
     This is a date/time picker component developed using React + Dayjs, which can be used with TextField input.
@@ -6,12 +10,17 @@
 
 <div align="center">
 
-[![NPM](https://img.shields.io/npm/v/bear-react-datepicker.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-react-datepicker)
-[![npm downloads](https://img.shields.io/npm/dm/bear-react-datepicker.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-react-datepicker)
-[![npm](https://img.shields.io/npm/dt/bear-react-datepicker.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-react-datepicker)
-[![npm](https://img.shields.io/npm/l/bear-react-datepicker?style=for-the-badge)](https://github.com/imagine10255/bear-react-datepicker/blob/main/LICENSE)
+[![NPM](https://img.shields.io/npm/v/@acrool/react-datepicker.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/react-datepicker)
+[![npm](https://img.shields.io/bundlejs/size/@acrool/react-datepicker?style=for-the-badge)](https://github.com/acrool/@acrool/react-datepicker/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/l/@acrool/react-datepicker?style=for-the-badge)](https://github.com/acrool/react-datepicker/blob/main/LICENSE)
+
+[![npm downloads](https://img.shields.io/npm/dm/@acrool/react-datepicker.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/react-datepicker)
+[![npm](https://img.shields.io/npm/dt/@acrool/react-datepicker.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/react-datepicker)
+
 
 </div>
+
+
 
 <img src="https://raw.githubusercontent.com/imagine10255/bear-react-datepicker/main/docs/datepicker.jpg" width="500"/>
 
@@ -78,4 +87,4 @@ There is also a codesandbox template that you can fork and play with it:
 
 ## License
 
-MIT © [imagine10255](https://github.com/imagine10255)
+MIT © [Acrool](https://github.com/acrool) & [Imagine](https://github.com/imagine10255)

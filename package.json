@@ -1,5 +1,5 @@
 {
-  "name": "bear-react-datepicker",
+  "name": "@acrool/react-datepicker",
   "version": "3.1.5-alpha.1",
   "description": "Datepicker, Timepicker with React Component",
   "keywords": [
@@ -13,13 +13,14 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/imagine10255/bear-react-datepicker.git"
+    "url": "https://github.com/acrool/acrool-react-datepicker.git"
   },
-  "module": "./dist/bear-react-datepicker.es.js",
+  "module": "./dist/acrool-react-datepicker.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/bear-react-datepicker.es.js"
+      "browser": "./dist/acrool-react-datepicker.es.js",
+      "import": "./dist/acrool-react-datepicker.es.js"
     },
     "./dist/index.css": "./dist/style.css"
   },
