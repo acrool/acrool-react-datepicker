@@ -15,9 +15,9 @@ function App() {
                     <Github width={40} height={40}/>
                 </a>
 
-                <div style={{textAlign: 'center', border: '1px solid #606060', display: 'flex', flexDirection: 'column', padding: '20px', margin: '20px 0'}}>
-                    <img src="/logo.svg" style={{height: '100px'}} alt="Acrool React Locale"/>
-                    <div style={{fontSize: '40px', color: '#fff', fontWeight: 700}}>Acrool React Datepicker</div>
+                <div className="banner-wrapper">
+                    <img src="/logo.svg" alt="Acrool React Locale"/>
+                    <h1>Acrool React Datepicker</h1>
                 </div>
 
                 <Example/>
