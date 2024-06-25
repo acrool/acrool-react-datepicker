@@ -22,8 +22,6 @@
 
 
 
-<img src="https://acrool-react-datepicker.pages.dev/preview.webp" width="500"/>
-
 
 ## Features
 
@@ -80,9 +78,8 @@ const BaseUsed = () => {
 ```
 
 
-There is also a codesandbox template that you can fork and play with it:
+<img src="https://acrool-react-datepicker.pages.dev/preview.webp" width="500"/>
 
-[![Edit react-editext-template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/9he8m8)
 
 
 ## License
