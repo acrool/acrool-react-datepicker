@@ -17,9 +17,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/@acrool/react-datepicker.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/react-datepicker)
 [![npm](https://img.shields.io/npm/dt/@acrool/react-datepicker.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/react-datepicker)
 
-
 </div>
-
 
 
 
@@ -80,6 +78,11 @@ const BaseUsed = () => {
 
 <img src="https://acrool-react-datepicker.pages.dev/preview.webp" width="500"/>
 
+
+
+There is also a example that you can play with it:
+
+[![Play react-editext-example](https://raw.githubusercontent.com/acrool/acrool-react-datepicker/main/play-in-example-button.svg)](https://acrool-react-datepicker.pages.dev)
 
 
 ## License
