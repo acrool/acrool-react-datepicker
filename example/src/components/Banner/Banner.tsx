@@ -33,7 +33,7 @@ const Banner = ({
 
 
     const repositoryUrl = 'https://github.com/acrool/acrool-react-hooks';
-    const name = 'Acrool React Hooks';
+    const name = 'Acrool React Datepicker';
 
 
     return <BannerRoot className={className}>
