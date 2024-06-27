@@ -1,7 +1,7 @@
 # Acrool React Datepicker
 
 <a href="https://acrool-react-datepicker.pages.dev/" title="Acrool React datepicker - This is a date/time picker component developed using React + Dayjs, which can be used with TextField input.">
-    <img src="https://acrool-react-datepicker.pages.dev/og.webp" alt="Acrool React Datepicker Logo"/>
+    <img src="https://raw.githubusercontent.com/acrool/acrool-react-datepicker/main/example/public/og.webp" alt="Acrool React Datepicker Logo"/>
 </a>
 
 <p align="center">
