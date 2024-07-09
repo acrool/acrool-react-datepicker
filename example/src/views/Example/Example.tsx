@@ -165,7 +165,7 @@ const Example = () => {
     const renderRangeTimePicker = useCallback(() => {
         return <FormControlGroup className="gap-2" data-label="Range DateTimePicker">
             <Flex className="gap-2">
-                <input type="text" value={`${myRangeDateTime.date ?? ''} ${myRangeDateTime.startTime ?? ''}~${myRangeDateTime.endTime ?? ''}`} />
+                <input type="text" value={`${myRangeDateTime.date ?? ''} ${myRangeDateTime.startTime ?? ''}~${myRangeDateTime.endTime ?? ''}`} readOnly/>
                 <button type="button" onClick={() => setMyRangeDateTime({})}>Clear</button>
             </Flex>
             <Flex className="gap-3">
@@ -185,6 +185,7 @@ const Example = () => {
             <Flex className="gap-2">
                 <input type="text"
                     value={[`${myRangeDateTimeNoSec?.date ?? ''} ${myRangeDateTimeNoSec?.startTime ?? ''}`, myRangeDateTimeNoSec?.endTime].filter(row => row).join('~')}
+                    readOnly
                 />
                 <button type="button" onClick={() => setMyRangeDateTimeNoSec({})}>Clear</button>
             </Flex>

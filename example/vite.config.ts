@@ -8,4 +8,7 @@ export default defineConfig({
         react(),
         svgr(),
     ],
+    build: {
+        sourcemap: true,
+    }
 });
