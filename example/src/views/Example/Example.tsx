@@ -29,14 +29,13 @@ const Example = () => {
     const renderDatePicker = useCallback(() => {
         return <FormControlGroup className="gap-2" data-label="DatePicker">
 
-            <Flex className="gap-2">
+            <Flex className="gap-2 flex-wrap">
                 <input type="text" value={myDate} onChange={(event) => setMyTime(event.target.value)}/>
                 <button type="button" onClick={() => setMyDate('')}>Clear</button>
             </Flex>
-            <Flex className="gap-3">
+            <Flex className="gap-3 flex-wrap">
                 <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-TW" tagDate={['2022-09-08', '2022-09-11']} format="YYYY/MM/DD"/>
                 <Datepicker value={myDate} onChange={setMyDate} isVisibleSetToday locale="zh-CN" tagDate={['2022-08-31','2022-09-08', '2022-09-09', '2022-09-11', '2022-10-01']} isDark onChangeYearMonthPanel={yearMonth => console.log('asdasd', yearMonth)}/>
-
             </Flex>
         </FormControlGroup>;
     }, [myDate]);
@@ -47,7 +46,7 @@ const Example = () => {
      */
     const renderRangeDatePicker = useCallback(() => {
         return <FormControlGroup className="gap-2" data-label="RangeDatePicker">
-            <Flex className="gap-2">
+            <Flex className="gap-2 flex-wrap">
                 <input type="text"
                     value={[myRangeDate.startDate, myRangeDate.endDate].filter(row => row).join('~')}
                     onChange={(event) => {
@@ -57,7 +56,7 @@ const Example = () => {
                     }}/>
                 <button type="button" onClick={() => setMyRangeDate({})}>Clear</button>
             </Flex>
-            <Flex className="gap-3">
+            <Flex className="gap-3 flex-wrap">
                 <RangeDatepicker value={myRangeDate} onChange={setMyRangeDate} isVisibleFastPicker isDark locale="en-US" format="YYYY/MM/DD" />
                 <RangeDatepicker value={myRangeDate} onChange={setMyRangeDate} locale="zh-CN" isDark minDate={dayjs().subtract(7, 'day').format('YYYY-MM-DD')} maxDate={dayjs().add(7, 'day').format('YYYY-MM-DD')}/>
 
@@ -71,12 +70,12 @@ const Example = () => {
      */
     const renderTimePicker = useCallback(() => {
         return <FormControlGroup className="gap-2" data-label="TimePicker">
-            <Flex className="gap-2">
+            <Flex className="gap-2 flex-wrap">
                 <input type="text" value={myTime} onChange={(event) => setMyTime(event.target.value)}/>
                 <button type="button" onClick={() => setMyTime('')}>Clear</button>
             </Flex>
 
-            <Flex className="gap-3">
+            <Flex className="gap-3 flex-wrap">
                 <Timepicker locale="ja-JP" value={myTime} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)}/>
                 <Timepicker locale="ja-JP" value={myTime} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)} isDark/>
 
@@ -89,12 +88,12 @@ const Example = () => {
      */
     const renderTimePicker2 = useCallback(() => {
         return <FormControlGroup className="gap-2" data-label="TimePicker2">
-            <Flex className="gap-2">
+            <Flex className="gap-2 flex-wrap">
                 <input type="text" value={myTime} onChange={(event) => setMyTime(event.target.value)}/>
                 <button type="button" onClick={() => setMyTime('')}>Clear</button>
             </Flex>
 
-            <Flex className="gap-3">
+            <Flex className="gap-3 flex-wrap">
                 <Timepicker2 locale="ja-JP" value={myTime} isVisibleSecond={false} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)}/>
                 <Timepicker2 locale="ja-JP" value={myTime} onChange={setMyTime} onClickOk={(timeStr) => console.log('val', timeStr)} isDark/>
 
@@ -108,12 +107,12 @@ const Example = () => {
      */
     const renderDateTimePicker = useCallback(() => {
         return <FormControlGroup className="gap-2" data-label="DateTimePicker">
-            <Flex className="gap-2">
+            <Flex className="gap-2 flex-wrap">
                 <input type="text" value={myDateTime} onChange={(event) => setMyDateTime(event.target.value)}/>
                 <button type="button" onClick={() => setMyDateTime('')}>Clear</button>
             </Flex>
 
-            <Flex className="gap-3">
+            <Flex className="gap-3 flex-wrap">
                 <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={timeStr => console.log('val', timeStr)}/>
                 <DateTimepicker value={myDateTime} onChange={setMyDateTime} onClickOk={timeStr => console.log('val', timeStr)} isDark/>
 
@@ -127,12 +126,12 @@ const Example = () => {
      */
     const renderDateTimePicker2 = useCallback(() => {
         return <FormControlGroup className="gap-2" data-label="DateTimePicker">
-            <Flex className="gap-2">
+            <Flex className="gap-2 flex-wrap">
                 <input type="text" value={myDateTime} onChange={(event) => setMyDateTime(event.target.value)}/>
                 <button type="button" onClick={() => setMyDateTime('')}>Clear</button>
             </Flex>
 
-            <Flex className="gap-3">
+            <Flex className="gap-3 flex-wrap">
                 <DateTimepicker2 value={myDateTime} onChange={setMyDateTime} onClickOk={timeStr => console.log('val', timeStr)}/>
                 <DateTimepicker2 value={myDateTime} isVisibleSecond={false} onChange={setMyDateTime} onClickOk={timeStr => console.log('val', timeStr)} isDark/>
 
@@ -145,12 +144,12 @@ const Example = () => {
      */
     const renderDateTimeHiddenSecondPicker = useCallback(() => {
         return <FormControlGroup className="gap-2" data-label="DateTimePicker(No Second)">
-            <Flex className="gap-2">
+            <Flex className="gap-2 flex-wrap">
                 <input type="text" value={myDateTimeNoSec} onChange={(event) => setMyDateTime(event.target.value)}/>
                 <button type="button" onClick={() => setMyDateTimeNoSec('')}>Clear</button>
             </Flex>
             
-            <Flex className="gap-3">
+            <Flex className="gap-3 flex-wrap">
                 <DateTimepicker value={myDateTimeNoSec} onChange={setMyDateTimeNoSec} locale="zh-TW" onClickOk={timeStr => console.log('val', timeStr)} isVisibleSecond={false}/>
                 <DateTimepicker value={myDateTimeNoSec} onChange={setMyDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isDark isVisibleSecond={false}/>
 
@@ -164,11 +163,11 @@ const Example = () => {
      */
     const renderRangeTimePicker = useCallback(() => {
         return <FormControlGroup className="gap-2" data-label="Range DateTimePicker">
-            <Flex className="gap-2">
+            <Flex className="gap-2 flex-wrap">
                 <input type="text" value={`${myRangeDateTime.date ?? ''} ${myRangeDateTime.startTime ?? ''}~${myRangeDateTime.endTime ?? ''}`} readOnly/>
                 <button type="button" onClick={() => setMyRangeDateTime({})}>Clear</button>
             </Flex>
-            <Flex className="gap-3">
+            <Flex className="gap-3 flex-wrap">
                 <RangeTimeDatepicker value={myRangeDateTime} onChange={setMyRangeDateTime} onClickOk={timeStr => console.log('val', timeStr)} />
                 <RangeTimeDatepicker value={myRangeDateTime} onChange={setMyRangeDateTime} onClickOk={timeStr => console.log('val', timeStr)} isDark/>
 
@@ -182,7 +181,7 @@ const Example = () => {
      */
     const renderRangeTimeHiddenSecondPicker = useCallback(() => {
         return <FormControlGroup className="gap-2" data-label="Range DateTimePicker(No Second)">
-            <Flex className="gap-2">
+            <Flex className="gap-2 flex-wrap">
                 <input type="text"
                     value={[`${myRangeDateTimeNoSec?.date ?? ''} ${myRangeDateTimeNoSec?.startTime ?? ''}`, myRangeDateTimeNoSec?.endTime].filter(row => row).join('~')}
                     readOnly
@@ -190,7 +189,7 @@ const Example = () => {
                 <button type="button" onClick={() => setMyRangeDateTimeNoSec({})}>Clear</button>
             </Flex>
             
-            <Flex className="gap-3">
+            <Flex className="gap-3 flex-wrap">
                 <RangeTimeDatepicker value={myRangeDateTimeNoSec} locale="zh-TW" onChange={setMyRangeDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isVisibleSecond={false} isVisibleFastPicker/>
                 <RangeTimeDatepicker value={myRangeDateTimeNoSec} onChange={setMyRangeDateTimeNoSec} onClickOk={timeStr => console.log('val', timeStr)} isDark isVisibleSecond={false}/>
 
@@ -202,7 +201,7 @@ const Example = () => {
 
 
 
-    return <div style={{display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start', width: '100%'}}>
+    return <div className="d-flex flex-wrap gap-2">
         {renderDatePicker()}
         {renderRangeDatePicker()}
         {renderTimePicker()}

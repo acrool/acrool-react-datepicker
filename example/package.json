@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@acrool/react-datepicker": "link:..",
-    "@acrool/react-grid": "5.2.1",
+    "@acrool/react-grid": "5.2.2",
     "@swc/plugin-styled-components": "^1.5.68",
     "@types/styled-components": "^5.1.26",
     "@types/dom-to-image": "^2.6.7",
