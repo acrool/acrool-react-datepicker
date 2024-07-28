@@ -32,7 +32,7 @@
 ## Install
 
 ```bash
-yarn add @acrool/react-datepicker dayjs
+yarn add @acrool/react-datepicker
 ```
 
 ## Usage
