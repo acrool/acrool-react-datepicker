@@ -1,4 +1,4 @@
-import React, {useState, useCallback, createElement} from 'react';
+import React, {useState, useCallback, createElement, ForwardedRef} from 'react';
 import CSS from 'csstype';
 import elClassNames from '../el-class-names';
 import {getTimeFormat, getTimeString} from '../utils';
@@ -12,16 +12,19 @@ import './styles.css';
 
 
 interface IProps {
-    className?: string;
-    style?: CSS.Properties;
-    value?: string;
-    onChange?: (value: string) => void;
-    onClickOk?: (value: string) => void;
-    locale?: string,
+    className?: string
+    style?: CSS.Properties
+    value?: string
+    onChange?: (value: string) => void
+    onClickOk?: (value: string) => void
+    locale?: string
     isDark?: boolean
     title?: string
-    isVisibleSecond?: boolean,
-    isVisibleNow?: boolean,
+    isVisibleSecond?: boolean
+    isVisibleNow?: boolean
+    hourForwardedRef?: ForwardedRef<HTMLInputElement>
+    minuteForwardedRef?: ForwardedRef<HTMLInputElement>
+    secondForwardedRef?: ForwardedRef<HTMLInputElement>
 }
 
 
@@ -47,6 +50,10 @@ export const Timepicker2Atom = ({
     title,
     isVisibleSecond = true,
     isVisibleNow = true,
+
+    hourForwardedRef,
+    minuteForwardedRef,
+    secondForwardedRef,
 }: IProps) => {
     const {i18n} = useLocale(locale);
     const now = useNowTime();
@@ -145,6 +152,9 @@ export const Timepicker2Atom = ({
 
                 <input className={elClassNames.time2SelectBox}
                     type="range" min="0" max="23"
+                    tabIndex={-1}
+                    ref={hourForwardedRef}
+
                     value={time['hour']}
                     onChange={event => {
                         handleOnChange({hour: parseInt(event.target.value)}, true);
@@ -161,6 +171,7 @@ export const Timepicker2Atom = ({
                 <input className={elClassNames.time2SelectBox}
                     type="range" min="0" max="59"
                     value={time['minute']}
+                    ref={minuteForwardedRef}
                     onChange={event => {
                         handleOnChange({minute: parseInt(event.target.value)}, true);
                     }}
@@ -177,6 +188,7 @@ export const Timepicker2Atom = ({
                     <input className={elClassNames.time2SelectBox}
                         type="range" min="0" max="59"
                         value={time['second']}
+                        ref={secondForwardedRef}
                         onChange={event => {
                             handleOnChange({second: parseInt(event.target.value)}, true);
                         }}

@@ -211,6 +211,10 @@ export const selectDateTimeRange = (rangeType: EDateTimeRange, format: string, i
 };
 
 
+/**
+ * 讓按鈕停止冒泡事件
+ * @param e
+ */
 export const onButtonMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
