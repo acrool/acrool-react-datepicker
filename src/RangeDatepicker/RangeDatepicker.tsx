@@ -66,34 +66,39 @@ const RangeDatepicker = ({
             <button className={elClassNames.dateRangeButton} 
                 type="button"
                 onMouseDown={onButtonMouseDown}
+                tabIndex={-1}
                 onClick={() => setRangeDate(EDateRange.today)}
             >
                 <span>{i18n('com.datepicker.today', {def: 'today'})}</span>
             </button>
             <button className={elClassNames.dateRangeButton} 
                 type="button"
-                onMouseDown={onButtonMouseDown} 
+                onMouseDown={onButtonMouseDown}
+                tabIndex={-1}
                 onClick={() => setRangeDate(EDateRange.tomorrow)}
             >
                 <span>{i18n('com.datepicker.tomorrow', {def: 'tomorrow'})}</span>
             </button>
             <button className={elClassNames.dateRangeButton}
                 type="button"
-                onMouseDown={onButtonMouseDown} 
+                onMouseDown={onButtonMouseDown}
+                tabIndex={-1}
                 onClick={() => setRangeDate(EDateRange.twoDay)}
             >
                 <span>{i18n('com.datepicker.twoDay', {def: 'two day'})}</span>
             </button>
             <button className={elClassNames.dateRangeButton} 
                 type="button"
-                onMouseDown={onButtonMouseDown} 
+                onMouseDown={onButtonMouseDown}
+                tabIndex={-1}
                 onClick={() => setRangeDate(EDateRange.thisWeek)}
             >
                 <span>{i18n('com.datepicker.thisWeek', {def: 'this week'})}</span>
             </button>
             <button className={elClassNames.dateRangeButton} 
                 type="button"
-                onMouseDown={onButtonMouseDown} 
+                onMouseDown={onButtonMouseDown}
+                tabIndex={-1}
                 onClick={() => setRangeDate(EDateRange.nextWeek)}
             >
                 <span>{i18n('com.datepicker.nextWeek', {def: 'next week'})}</span>

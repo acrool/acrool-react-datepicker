@@ -221,6 +221,7 @@ export const DatepickerAtom = ({
                     <button className={clsx(elClassNames.dateMonthButton, 'pre-month')}
                         type="button"
                         onMouseDown={onButtonMouseDown}
+                        tabIndex={-1}
                         onClick={() => handleChangePanel(
                             panelPreYearMonth.year(),
                             panelPreYearMonth.month(),
@@ -233,6 +234,7 @@ export const DatepickerAtom = ({
                     <button className={clsx(elClassNames.dateMonthButton, 'next-month')}
                         type="button"
                         onMouseDown={onButtonMouseDown}
+                        tabIndex={-1}
                         onClick={() => handleChangePanel(
                             panelNextYearMonth.year(),
                             panelNextYearMonth.month(),
@@ -404,6 +406,7 @@ export const DatepickerAtom = ({
                             data-tag={row.isTag}
                             data-disable={row.isDisable}
                             onMouseDown={onButtonMouseDown}
+                            tabIndex={-1}
                             onClick={row.onClick}
                         >
                             <span>
@@ -420,7 +423,8 @@ export const DatepickerAtom = ({
         <div className={elClassNames.dateLabelCheckCardCreate}>
             <button className={elClassNames.dateTodayButton} 
                 type="button"
-                onMouseDown={onButtonMouseDown} 
+                onMouseDown={onButtonMouseDown}
+                tabIndex={-1}
                 onClick={handleSelectedToday}>
                 <span>{i18n('com.datepicker.setToday', {def: 'Set to today'})}</span>
             </button>

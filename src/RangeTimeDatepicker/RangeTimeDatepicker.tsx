@@ -71,24 +71,28 @@ const RangeTimeDatepicker = ({
             <button className={elClassNames.dateRangeButton} 
                 type="button"
                 onMouseDown={onButtonMouseDown}
+                tabIndex={-1}
                 onClick={() => setRangeDate(EDateTimeRange.now)}>
                 <span>{i18n('com.rangeTimeDatepicker.now', {def: 'Now'})}</span>
             </button>
             <button className={elClassNames.dateRangeButton} 
                 type="button"
                 onMouseDown={onButtonMouseDown}
+                tabIndex={-1}
                 onClick={() => setRangeDate(EDateTimeRange.oneHour)}>
                 <span>{i18n('com.rangeTimeDatepicker.oneHour', {def: '1 Hour'})}</span>
             </button>
             <button className={elClassNames.dateRangeButton} 
                 type="button"
                 onMouseDown={onButtonMouseDown}
+                tabIndex={-1}
                 onClick={() => setRangeDate(EDateTimeRange.twoHour)}>
                 <span>{i18n('com.rangeTimeDatepicker.twoHour', {def: '2 Hour'})}</span>
             </button>
             <button className={elClassNames.dateRangeButton} 
                 type="button"
                 onMouseDown={onButtonMouseDown}
+                tabIndex={-1}
                 onClick={() => setRangeDate(EDateTimeRange.fourHour)}>
                 <span>{i18n('com.rangeTimeDatepicker.fourHour', {def: '4 Hour'})}</span>
             </button>

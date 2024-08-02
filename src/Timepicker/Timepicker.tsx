@@ -150,6 +150,7 @@ export const TimepickerAtom = ({
             return (
                 <span className={clsx(elClassNames.timeFakeOption, {'is-active': isActive})}
                     key={`unit-${unitCode}-${unit}`}
+                    tabIndex={-1}
                     onMouseDown={onButtonMouseDown}
                     onClick={() => {
                         handleOnChange({...time, [unitCode]: unit}, true);
@@ -216,6 +217,7 @@ export const TimepickerAtom = ({
         return <div className={elClassNames.timeButtonContainer}>
             <button className={elClassNames.timeNowButton} 
                 type="button"
+                tabIndex={-1}
                 onMouseDown={onButtonMouseDown} 
                 onClick={handleNowTime}
             >
@@ -223,6 +225,7 @@ export const TimepickerAtom = ({
             </button>
             <button className={elClassNames.timeConfirmButton}
                 type="button"
+                tabIndex={-1}
                 onMouseDown={onButtonMouseDown} 
                 onClick={handleOnClickOk}
             >

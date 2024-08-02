@@ -170,6 +170,7 @@ export const Timepicker2Atom = ({
 
                 <input className={elClassNames.time2SelectBox}
                     type="range" min="0" max="59"
+                    tabIndex={-1}
                     value={time['minute']}
                     ref={minuteForwardedRef}
                     onChange={event => {
@@ -187,6 +188,7 @@ export const Timepicker2Atom = ({
 
                     <input className={elClassNames.time2SelectBox}
                         type="range" min="0" max="59"
+                        tabIndex={-1}
                         value={time['second']}
                         ref={secondForwardedRef}
                         onChange={event => {

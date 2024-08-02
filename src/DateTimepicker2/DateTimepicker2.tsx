@@ -134,6 +134,7 @@ const DateTimepicker2 = ({
         return <div className={elClassNames.timeButtonContainer}>
             <button className={elClassNames.timeNowButton} type="button"
                 onMouseDown={onButtonMouseDown}
+                tabIndex={-1}
                 onClick={handleSetNow}
             >
                 {i18n('com.timepicker.setNow', {def: 'Set now'})}
@@ -141,6 +142,7 @@ const DateTimepicker2 = ({
             <button className={elClassNames.timeConfirmButton}
                 type="button"
                 onMouseDown={onButtonMouseDown}
+                tabIndex={-1}
                 onClick={handleOnClickOk}
             >
                 {i18n('com.timepicker.ok', {def: 'OK'})}
