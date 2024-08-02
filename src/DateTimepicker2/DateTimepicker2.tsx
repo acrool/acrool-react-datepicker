@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ForwardedRef} from 'react';
 import CSS from 'csstype';
 import dayjs,{Dayjs} from 'dayjs';
 import {defaultFormat, getDatetime, onButtonMouseDown} from '../utils';
@@ -22,6 +22,9 @@ interface IProps extends ICommon{
     onChange: (newDate: string) => void;
     onClickOk: (newDate: string) => void;
     isVisibleSecond?: boolean,
+    hourForwardedRef?: ForwardedRef<HTMLInputElement>
+    minuteForwardedRef?: ForwardedRef<HTMLInputElement>
+    secondForwardedRef?: ForwardedRef<HTMLInputElement>
 }
 
 
@@ -51,6 +54,10 @@ const DateTimepicker2 = ({
     minDate,
     maxDate,
     isVisibleSecond = true,
+
+    hourForwardedRef,
+    minuteForwardedRef,
+    secondForwardedRef
 }: IProps) => {
     const {i18n} = useLocale(locale);
     const today = useNowTime();
@@ -156,7 +163,11 @@ const DateTimepicker2 = ({
             <Timepicker2 {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}
                 isVisibleSecond={timeProps.isVisibleSecond}
                 title={i18n('com.timepicker.time', {def: 'Time'})}
-                isVisibleNow={false}/>
+                isVisibleNow={false}
+                hourForwardedRef={hourForwardedRef}
+                minuteForwardedRef={minuteForwardedRef}
+                secondForwardedRef={secondForwardedRef}
+            />
         </div>
 
         {renderActionsButtons()}
