@@ -209,3 +209,9 @@ export const selectDateTimeRange = (rangeType: EDateTimeRange, format: string, i
     return undefined;
 
 };
+
+
+export const onButtonMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+};

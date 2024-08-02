@@ -1,7 +1,7 @@
 import React from 'react';
 import CSS from 'csstype';
 import dayjs,{Dayjs} from 'dayjs';
-import {defaultFormat, getDatetime} from '../utils';
+import {defaultFormat, getDatetime, onButtonMouseDown} from '../utils';
 import elClassNames from '../el-class-names';
 import {DatepickerAtom as Datepicker} from '../Datepicker';
 import {TimepickerAtom as Timepicker} from '../Timepicker';
@@ -125,8 +125,20 @@ const DateTimepicker = ({
      */
     const renderActionsButtons = () => {
         return <div className={elClassNames.timeButtonContainer}>
-            <button className={elClassNames.timeNowButton} type="button" onClick={handleSetNow}>{i18n('com.timepicker.setNow', {def: 'Set now'})}</button>
-            <button className={elClassNames.timeConfirmButton} type="button" onClick={handleOnClickOk}>{i18n('com.timepicker.ok', {def: 'OK'})}</button>
+            <button className={elClassNames.timeNowButton}
+                type="button"
+                onMouseDown={onButtonMouseDown} 
+                onClick={handleSetNow}
+            >
+                {i18n('com.timepicker.setNow', {def: 'Set now'})}
+            </button>
+            <button className={elClassNames.timeConfirmButton} 
+                type="button" 
+                onMouseDown={onButtonMouseDown}
+                onClick={handleOnClickOk}
+            >
+                {i18n('com.timepicker.ok', {def: 'OK'})}
+            </button>
         </div>;
     };
 

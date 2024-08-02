@@ -189,8 +189,20 @@ export const Timepicker2Atom = ({
 
     const renderButton = () => {
         return <div className={elClassNames.time2ButtonContainer}>
-            <button className={elClassNames.time2NowButton} type="button" onClick={handleNowTime}>{i18n('com.timepicker.setNow', {def: 'Set now'})}</button>
-            <button className={elClassNames.time2ConfirmButton} type="button" onClick={handleOnClickOk}>{i18n('com.timepicker.ok', {def: 'OK'})}</button>
+            <button 
+                className={elClassNames.time2NowButton}
+                type="button"
+                onClick={handleNowTime}
+            >
+                {i18n('com.timepicker.setNow', {def: 'Set now'})}
+            </button>
+            <button 
+                className={elClassNames.time2ConfirmButton} 
+                type="button"
+                onClick={handleOnClickOk}
+            >
+                {i18n('com.timepicker.ok', {def: 'OK'})}
+            </button>
         </div>;
     };
 

@@ -5,7 +5,7 @@ import elClassNames from '../el-class-names';
 import {DatepickerAtom as Datepicker} from '../Datepicker';
 import {IRangeDateValue, EDateRange, ICommon} from '../typing';
 import translateI18n from '../locales';
-import {selectDateRange} from '../utils';
+import {onButtonMouseDown, selectDateRange} from '../utils';
 import clsx from 'clsx';
 import useLocale from '../locales';
 
@@ -63,19 +63,39 @@ const RangeDatepicker = ({
      */
     const renderRangeFastPicker = () => {
         return <div className={elClassNames.dateRangeLabelCheckCardCreate}>
-            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.today)}>
+            <button className={elClassNames.dateRangeButton} 
+                type="button"
+                onMouseDown={onButtonMouseDown}
+                onClick={() => setRangeDate(EDateRange.today)}
+            >
                 <span>{i18n('com.datepicker.today', {def: 'today'})}</span>
             </button>
-            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.tomorrow)}>
+            <button className={elClassNames.dateRangeButton} 
+                type="button"
+                onMouseDown={onButtonMouseDown} 
+                onClick={() => setRangeDate(EDateRange.tomorrow)}
+            >
                 <span>{i18n('com.datepicker.tomorrow', {def: 'tomorrow'})}</span>
             </button>
-            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.twoDay)}>
+            <button className={elClassNames.dateRangeButton}
+                type="button"
+                onMouseDown={onButtonMouseDown} 
+                onClick={() => setRangeDate(EDateRange.twoDay)}
+            >
                 <span>{i18n('com.datepicker.twoDay', {def: 'two day'})}</span>
             </button>
-            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.thisWeek)}>
+            <button className={elClassNames.dateRangeButton} 
+                type="button"
+                onMouseDown={onButtonMouseDown} 
+                onClick={() => setRangeDate(EDateRange.thisWeek)}
+            >
                 <span>{i18n('com.datepicker.thisWeek', {def: 'this week'})}</span>
             </button>
-            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.nextWeek)}>
+            <button className={elClassNames.dateRangeButton} 
+                type="button"
+                onMouseDown={onButtonMouseDown} 
+                onClick={() => setRangeDate(EDateRange.nextWeek)}
+            >
                 <span>{i18n('com.datepicker.nextWeek', {def: 'next week'})}</span>
             </button>
         </div>;

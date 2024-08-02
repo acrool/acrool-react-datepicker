@@ -1,7 +1,7 @@
 import React, {useState, useRef, useCallback, useEffect, createElement} from 'react';
 import CSS from 'csstype';
 import elClassNames from '../el-class-names';
-import {getTimeList, getTimeFormat, paddingLeft, getTimeString} from '../utils';
+import {getTimeList, getTimeFormat, paddingLeft, getTimeString, onButtonMouseDown} from '../utils';
 import clsx from 'clsx';
 import {ITimeObj} from '../typing';
 import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
@@ -150,6 +150,7 @@ export const TimepickerAtom = ({
             return (
                 <span className={clsx(elClassNames.timeFakeOption, {'is-active': isActive})}
                     key={`unit-${unitCode}-${unit}`}
+                    onMouseDown={onButtonMouseDown}
                     onClick={() => {
                         handleOnChange({...time, [unitCode]: unit}, true);
                     }}
@@ -213,8 +214,20 @@ export const TimepickerAtom = ({
 
     const renderButton = () => {
         return <div className={elClassNames.timeButtonContainer}>
-            <button className={elClassNames.timeNowButton} type="button" onClick={handleNowTime}>{i18n('com.timepicker.setNow', {def: 'Set now'})}</button>
-            <button className={elClassNames.timeConfirmButton} type="button" onClick={handleOnClickOk}>{i18n('com.timepicker.ok', {def: 'OK'})}</button>
+            <button className={elClassNames.timeNowButton} 
+                type="button"
+                onMouseDown={onButtonMouseDown} 
+                onClick={handleNowTime}
+            >
+                {i18n('com.timepicker.setNow', {def: 'Set now'})}
+            </button>
+            <button className={elClassNames.timeConfirmButton}
+                type="button"
+                onMouseDown={onButtonMouseDown} 
+                onClick={handleOnClickOk}
+            >
+                {i18n('com.timepicker.ok', {def: 'OK'})}
+            </button>
         </div>;
     };
 

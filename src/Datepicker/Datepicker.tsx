@@ -9,6 +9,7 @@ import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
 import {ICurrentDayList} from './types';
+import {onButtonMouseDown} from '../utils';
 
 const config = {
     weekDay: [1, 2, 3, 4, 5, 6, 7],
@@ -219,6 +220,7 @@ export const DatepickerAtom = ({
                     {/*上個月的按鈕*/}
                     <button className={clsx(elClassNames.dateMonthButton, 'pre-month')}
                         type="button"
+                        onMouseDown={onButtonMouseDown}
                         onClick={() => handleChangePanel(
                             panelPreYearMonth.year(),
                             panelPreYearMonth.month(),
@@ -230,6 +232,7 @@ export const DatepickerAtom = ({
                     {/*下個月的按鈕*/}
                     <button className={clsx(elClassNames.dateMonthButton, 'next-month')}
                         type="button"
+                        onMouseDown={onButtonMouseDown}
                         onClick={() => handleChangePanel(
                             panelNextYearMonth.year(),
                             panelNextYearMonth.month(),
@@ -400,7 +403,7 @@ export const DatepickerAtom = ({
                             data-today={row.isToday}
                             data-tag={row.isTag}
                             data-disable={row.isDisable}
-
+                            onMouseDown={onButtonMouseDown}
                             onClick={row.onClick}
                         >
                             <span>
@@ -415,7 +418,10 @@ export const DatepickerAtom = ({
 
     const renderTodayButton = () => (
         <div className={elClassNames.dateLabelCheckCardCreate}>
-            <button className={elClassNames.dateTodayButton} type="button" onClick={handleSelectedToday}>
+            <button className={elClassNames.dateTodayButton} 
+                type="button"
+                onMouseDown={onButtonMouseDown} 
+                onClick={handleSelectedToday}>
                 <span>{i18n('com.datepicker.setToday', {def: 'Set to today'})}</span>
             </button>
         </div>
