@@ -1,5 +1,5 @@
 const elClassNames = {
-    elClassPrefix: 'acroolreact-datepicker',
+    elClassPrefix: 'acrool-react-datepicker',
 };
 
 

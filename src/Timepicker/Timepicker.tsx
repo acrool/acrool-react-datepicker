@@ -169,15 +169,15 @@ export const TimepickerAtom = ({
             <div className={elClassNames.timeHeader}>
                 <span className={elClassNames.timeHeaderText}>{title ?? i18n('com.timepicker.time', {def: 'Time'})}</span>
             </div>
-            <div className="acroolreact-datepicker__date-week-row">
-                <div className="acroolreact-datepicker__date-week">
+            <div className="acrool-react-datepicker__date-week-row">
+                <div className="acrool-react-datepicker__date-week">
                     {i18n('com.timepicker.hour', {def: 'H'})}
                 </div>
-                <div className="acroolreact-datepicker__date-week">
+                <div className="acrool-react-datepicker__date-week">
                     {i18n('com.timepicker.minute', {def: 'M'})}
                 </div>
                 {isVisibleSecond && (
-                    <div className="acroolreact-datepicker__date-week">
+                    <div className="acrool-react-datepicker__date-week">
                         {i18n('com.timepicker.second', {def: 'S'})}
                     </div>
                 )}

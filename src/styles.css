@@ -1,14 +1,14 @@
-.acroolreact-datepicker__root,
-.acroolreact-datepicker__root *,
-.acroolreact-datepicker__root *::before,
-.acroolreact-datepicker__root *::after {
+.acrool-react-datepicker__root,
+.acrool-react-datepicker__root *,
+.acrool-react-datepicker__root *::before,
+.acrool-react-datepicker__root *::after {
     box-sizing: border-box;
     line-height: normal;
     user-select: none;
 }
 
 
-.acroolreact-datepicker__root {
+.acrool-react-datepicker__root {
 
     --default-primary-color: #00a3e0;
     --bg-color: #fff;
@@ -33,7 +33,7 @@
     --container-border-color: #bfbfbf;
 }
 
-.acroolreact-datepicker__root.dark-theme {
+.acrool-react-datepicker__root.dark-theme {
     --bg-color: #262626;
     --day-color: rgba(255, 255, 255, 0.65);
     --day-active-color: #fff;
@@ -55,7 +55,7 @@
 
 }
 
-.acroolreact-datepicker__root {
+.acrool-react-datepicker__root {
     display: flex;
     border-radius: var(--border-radius);
     background-color: var(--bg-color);
@@ -70,7 +70,7 @@
 /** -------------------------------
  *             Reset
  * ------------------------------ */
-.acroolreact-datepicker__root button {
+.acrool-react-datepicker__root button {
     margin: 0;
     background: none;
     border: none;
@@ -78,41 +78,41 @@
     text-transform: none;
     white-space: nowrap;
 }
-.acroolreact-datepicker__root button:focus {
+.acrool-react-datepicker__root button:focus {
     outline: none;
 }
 
-.acroolreact-datepicker__root button,
-.acroolreact-datepicker__root [type="button"]{
+.acrool-react-datepicker__root button,
+.acrool-react-datepicker__root [type="button"]{
     -webkit-appearance: button;
 }
-.acroolreact-datepicker__root button:not(:disabled),
-.acroolreact-datepicker__root [type="button"]:not(:disabled){
+.acrool-react-datepicker__root button:not(:disabled),
+.acrool-react-datepicker__root [type="button"]:not(:disabled){
     cursor: pointer;
 }
-.acroolreact-datepicker__root button::-moz-focus-inner,
-.acroolreact-datepicker__root [type="button"]::-moz-focus-inner{
+.acrool-react-datepicker__root button::-moz-focus-inner,
+.acrool-react-datepicker__root [type="button"]::-moz-focus-inner{
     padding: 0;
     border-style: none;
 }
-.acroolreact-datepicker__root svg {overflow: hidden;vertical-align: middle;}
+.acrool-react-datepicker__root svg {overflow: hidden;vertical-align: middle;}
 
 
 /** -------------------------------
  *             DatePicker
  * ------------------------------ */
-.acroolreact-datepicker__date-root{
+.acrool-react-datepicker__date-root{
     flex-direction: column;
     width: calc(30px * 7 + 24px);
 }
-.acroolreact-datepicker__date-year-month-row {
+.acrool-react-datepicker__date-year-month-row {
     display: flex;
     flex-direction: row;
     justify-content: center;
     height: 30px;
 }
 
-.acroolreact-datepicker__date-year-month {
+.acrool-react-datepicker__date-year-month {
     color: var(--month-color);
     display: flex;
     align-items: center;
@@ -120,10 +120,10 @@
     padding-left: 14px;
 }
 
-.acroolreact-datepicker__date-year{
+.acrool-react-datepicker__date-year{
     margin-right: 4px;
 }
-.acroolreact-datepicker__date-year, .acroolreact-datepicker__date-month {
+.acrool-react-datepicker__date-year, .acrool-react-datepicker__date-month {
     color: inherit;
     font-size: 20px;
     flex: 0 0 auto;
@@ -131,15 +131,15 @@
 }
 
 
-.acroolreact-datepicker__date-year-group,
-.acroolreact-datepicker__date-month-group {
+.acrool-react-datepicker__date-year-group,
+.acrool-react-datepicker__date-month-group {
     position: relative;
 }
 
 
 
-.acroolreact-datepicker__date-month-select,
-.acroolreact-datepicker__date-year-select {
+.acrool-react-datepicker__date-month-select,
+.acrool-react-datepicker__date-year-select {
     position: absolute;
     opacity: 0;
     left: 0;
@@ -149,7 +149,7 @@
     cursor: pointer;
 }
 
-.acroolreact-datepicker__date-change-control {
+.acrool-react-datepicker__date-change-control {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -158,7 +158,7 @@
     padding-top: 8px;
 }
 
-.acroolreact-datepicker__date-month-button {
+.acrool-react-datepicker__date-month-button {
     padding: 0;
     border: none;
     background-color: transparent;
@@ -169,16 +169,16 @@
     justify-content: center;
 }
 
-.acroolreact-datepicker__date-month-button.next-month{
+.acrool-react-datepicker__date-month-button.next-month{
     transform: rotate(180deg);
 }
 
 
-.acroolreact-datepicker__date-month-button:hover > svg{
+.acrool-react-datepicker__date-month-button:hover > svg{
     fill: var(--button-hover-color);
 }
 
-.acroolreact-datepicker__date-month-button > svg{
+.acrool-react-datepicker__date-month-button > svg{
     transition: color .3s;
     fill: var(--button-color);
     opacity: .5;
@@ -186,7 +186,7 @@
 }
 
 
-.acroolreact-datepicker__date-day-row{
+.acrool-react-datepicker__date-day-row{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -196,9 +196,9 @@
 
 
 
-.acroolreact-datepicker__date-week,
-.acroolreact-datepicker__date-day,
-.acroolreact-datepicker__date-pre-day{
+.acrool-react-datepicker__date-week,
+.acrool-react-datepicker__date-day,
+.acrool-react-datepicker__date-pre-day{
     flex: 0 0 30px;
     color: var(--day-color);
     width: 30px;
@@ -210,22 +210,22 @@
     font-size: var(--font-size);
 }
 
-.acroolreact-datepicker__date-week{
+.acrool-react-datepicker__date-week{
     font-size: 12px;
     transform: scale(.9);
 }
 
 
-.acroolreact-datepicker__date-week-row, .acroolreact-datepicker__date-day-content{
+.acrool-react-datepicker__date-week-row, .acrool-react-datepicker__date-day-content{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
 }
-.acroolreact-datepicker__date-day-content{
+.acrool-react-datepicker__date-day-content{
     position: relative;
 }
-.acroolreact-datepicker__date-week-mask{
+.acrool-react-datepicker__date-week-mask{
     position: absolute;
     left: -5px;
     height: 20px;
@@ -236,13 +236,13 @@
     z-index: 0;
 }
 
-.acroolreact-datepicker__date-day,
-.acroolreact-datepicker__date-pre-day {
+.acrool-react-datepicker__date-day,
+.acrool-react-datepicker__date-pre-day {
     position: relative;
 }
 
-.acroolreact-datepicker__date-day:before,
-.acroolreact-datepicker__date-pre-day:before{
+.acrool-react-datepicker__date-day:before,
+.acrool-react-datepicker__date-pre-day:before{
     content: '';
     border-radius: 99em;
     position: absolute;
@@ -251,57 +251,57 @@
     z-index: 0;
 }
 
-.acroolreact-datepicker__date-day:hover,
-.acroolreact-datepicker__date-pre-day:hover{
+.acrool-react-datepicker__date-day:hover,
+.acrool-react-datepicker__date-pre-day:hover{
     color: var(--primary-color, var(--default-primary-color));
     cursor: pointer;
 
 }
 
-.acroolreact-datepicker__date-day[data-today=true]{
+.acrool-react-datepicker__date-day[data-today=true]{
     color: var(--primary-color, var(--default-primary-color));
 }
 
 
-.acroolreact-datepicker__date-day[data-disable=true],
-.acroolreact-datepicker__date-pre-day[data-disable=true]{
+.acrool-react-datepicker__date-day[data-disable=true],
+.acrool-react-datepicker__date-pre-day[data-disable=true]{
     color: var(--day-pre-color);
     cursor: not-allowed;
 }
 
-.acroolreact-datepicker__date-pre-day{
+.acrool-react-datepicker__date-pre-day{
     color: var(--day-pre-color);
 }
 
-.acroolreact-datepicker__date-day span,
-.acroolreact-datepicker__date-pre-day span{
+.acrool-react-datepicker__date-day span,
+.acrool-react-datepicker__date-pre-day span{
     z-index: 1;
 }
 
-.acroolreact-datepicker__date-day[data-active=true]:before,
-.acroolreact-datepicker__date-pre-day[data-active=true]:before{
+.acrool-react-datepicker__date-day[data-active=true]:before,
+.acrool-react-datepicker__date-pre-day[data-active=true]:before{
     /*background-color: var(--primary-color, var(--default-primary-color));*/
     background-color: #808080;
 }
 
 
-.acroolreact-datepicker__date-day[data-active=true][data-today=true]:before,
-.acroolreact-datepicker__date-pre-day[data-active=true][data-today=true]:before{
+.acrool-react-datepicker__date-day[data-active=true][data-today=true]:before,
+.acrool-react-datepicker__date-pre-day[data-active=true][data-today=true]:before{
     /*background-color: var(--primary-color, var(--default-primary-color));*/
     background-color: var(--primary-color, var(--default-primary-color));
 }
 
 
-.acroolreact-datepicker__date-day[data-active=true],
-.acroolreact-datepicker__date-pre-day[data-active=true],
-.acroolreact-datepicker__date-day[data-active=true]:after,
-.acroolreact-datepicker__date-pre-day[data-active=true]:after{
+.acrool-react-datepicker__date-day[data-active=true],
+.acrool-react-datepicker__date-pre-day[data-active=true],
+.acrool-react-datepicker__date-day[data-active=true]:after,
+.acrool-react-datepicker__date-pre-day[data-active=true]:after{
     /*color: var(--day-active-color);*/
     color: #fff;
 }
 
-.acroolreact-datepicker__date-day[data-tag=true]:after,
-.acroolreact-datepicker__date-pre-day[data-tag=true]:after{
+.acrool-react-datepicker__date-day[data-tag=true]:after,
+.acrool-react-datepicker__date-pre-day[data-tag=true]:after{
     content: '';
     width: 4px;
     height: 4px;
@@ -312,14 +312,14 @@
     background-color: #42a20d;
 }
 
-.acroolreact-datepicker__date-day[data-active=true][data-tag=true]:after,
-.acroolreact-datepicker__date-pre-day[data-active=true][data-tag=true]:after{
+.acrool-react-datepicker__date-day[data-active=true][data-tag=true]:after,
+.acrool-react-datepicker__date-pre-day[data-active=true][data-tag=true]:after{
     background-color: #fff;
 }
 
 
 
-.acroolreact-datepicker__date-label-check-card-create{
+.acrool-react-datepicker__date-label-check-card-create{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -329,7 +329,7 @@
     padding: 2px 0;
 }
 
-.acroolreact-datepicker__date-today-button{
+.acrool-react-datepicker__date-today-button{
     color: var(--primary-color, var(--default-primary-color));
     background-color: transparent;
     border: none;
@@ -340,22 +340,22 @@
  *        Range Datepicker
  * ------------------------------ */
 
-.acroolreact-datepicker__date-range-root > div:nth-child(1){
+.acrool-react-datepicker__date-range-root > div:nth-child(1){
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     box-shadow: none;
 }
-.acroolreact-datepicker__date-range-root > div:nth-child(2){
+.acrool-react-datepicker__date-range-root > div:nth-child(2){
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     box-shadow: none;
 }
 
-.acroolreact-datepicker__date-range-root[data-fast] > div:nth-child(2){
+.acrool-react-datepicker__date-range-root[data-fast] > div:nth-child(2){
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
-.acroolreact-datepicker__date-range-label-check-card-create{
+.acrool-react-datepicker__date-range-label-check-card-create{
     width: auto;
     background-color: var(--bg-color);
     color: var(--primary-color, var(--default-primary-color));
@@ -367,7 +367,7 @@
 }
 
 
-.acroolreact-datepicker__date-range-button{
+.acrool-react-datepicker__date-range-button{
     background-color: transparent;
     border: none;
     font-size: var(--font-size);
@@ -377,7 +377,7 @@
     color: var(--button-color);
     white-space: nowrap;
 }
-.acroolreact-datepicker__date-range-button:hover{
+.acrool-react-datepicker__date-range-button:hover{
 
     color: var(--primary-color, var(--default-primary-color));
 

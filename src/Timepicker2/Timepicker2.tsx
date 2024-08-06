@@ -139,7 +139,7 @@ export const Timepicker2Atom = ({
         return <div className={elClassNames.time2PickContainer}>
             {/* 時 */}
             <div className={elClassNames.time2InputGroup}>
-                <div className="acroolreact-datepicker__date-week">
+                <div className="acrool-react-datepicker__date-week">
                     {i18n('com.timepicker.hour', {def: 'H'})}
                 </div>
 
@@ -154,7 +154,7 @@ export const Timepicker2Atom = ({
 
             {/* 分 */}
             <div className={elClassNames.time2InputGroup}>
-                <div className="acroolreact-datepicker__date-week">
+                <div className="acrool-react-datepicker__date-week">
                     {i18n('com.timepicker.minute', {def: 'M'})}
                 </div>
 
@@ -170,7 +170,7 @@ export const Timepicker2Atom = ({
             {/* 秒 */}
             {isVisibleSecond &&
                 <div className={elClassNames.time2InputGroup}>
-                    <div className="acroolreact-datepicker__date-week">
+                    <div className="acrool-react-datepicker__date-week">
                         {i18n('com.timepicker.second', {def: 'S'})}
                     </div>
 
