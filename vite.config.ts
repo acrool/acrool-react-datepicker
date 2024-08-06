@@ -13,7 +13,7 @@ export default defineConfig({
         dts({
             insertTypesEntry: true,
         }),
-    visualizer() as Plugin,
+        visualizer() as Plugin,
     ],
     build: {
         sourcemap: process.env.NODE_ENV !== 'production',
