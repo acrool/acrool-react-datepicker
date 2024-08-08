@@ -2,10 +2,9 @@
 # yarn lockfile v1
 
 
-"@acrool/react-datepicker@3.1.6":
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/@acrool/react-datepicker/-/react-datepicker-3.1.6.tgz#3c3068fe9c02f531ef270b9c22ae75362d311a62"
-  integrity sha512-TFlGjT5z+TI08SH2Rb6cA/NSymq/peWH7L8+hGqr3TB5s41K9jxcBo5wYidz7PZypYb1u4D4Ir9LAv9WYzgLlQ==
+"@acrool/react-datepicker@link:..":
+  version "0.0.0"
+  uid ""
 
 "@acrool/react-grid@5.2.2":
   version "5.2.2"
@@ -1119,6 +1118,11 @@ data-uri-to-buffer@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-2.0.2.tgz#d296973d5a4897a5dbe31716d118211921f04770"
   integrity sha512-ND9qDTLc6diwj+Xe5cdAgVTbLVdXbtxTJRXRhli8Mowuaan+0EJOtdqJ0QCHNSSPyoXGx9HX2/VMnKeC34AChA==
+
+dayjs@^1.11.12:
+  version "1.11.12"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.12.tgz#5245226cc7f40a15bf52e0b99fd2a04669ccac1d"
+  integrity sha512-Rt2g+nTbLlDWZTwwrIXjy9MeiZmSDI375FvZs72ngxx8PDC6YXOeR3q5LAuPzjZQxhiWdRKac7RKV+YyQYfYIg==
 
 debug@^4.1.0:
   version "4.3.4"
