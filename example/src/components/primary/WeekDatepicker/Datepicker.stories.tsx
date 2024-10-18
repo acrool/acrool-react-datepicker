@@ -23,7 +23,8 @@ const meta = {
     argTypes: {},
     args: {
         onChange: fn(),
-        value: dayjs().format('YYYY-MM-DD'),
+        value: '2024-11-01',
+        locale: 'zh-TW',
     },
 } satisfies Meta<typeof WeekDatepicker>;
 
@@ -46,6 +47,7 @@ export const Primary: Story = {
                 {...args}
                 value={value}
                 onChange={fn(onChange)}
+                startWeekDate="2024-10-16"
             />
         </Flex>;
     },

@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useMemo, createElement} from 'react';
+import React, {useState, useCallback, useMemo, createElement, useRef, useEffect} from 'react';
 import dayjs,{Dayjs} from 'dayjs';
 import elClassNames from '../el-class-names';
 import {ArrowIcon} from '../Icon';
@@ -9,6 +9,7 @@ import useLocale from '../locales';
 import {ICurrentDayList, IWeekDatepickerProps} from './types';
 import {getValue} from './utils';
 import {config} from './config';
+import styles from './week-datepicker.module.scss';
 
 
 
@@ -31,21 +32,23 @@ const WeekDatepicker = ({
     isDark = false,
     minDate,
     maxDate,
-    tagDate = []
+    tagDate = [],
+    startWeekDate,
 }: IWeekDatepickerProps) => {
     const today = useNowTime();
     const {i18n} = useLocale(locale);
-    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(getValue(today, value));
+    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(getValue(today, startWeekDate, value));
 
     const initMaxYear = typeof maxYear !== 'undefined' ? maxYear : Number(today.add(1, 'year').year());
 
 
     useOnlyUpdateEffect(() => {
-        const dateVal = dayjs(value);
         const now = dayjs();
-        const newYear = dateVal.isValid() ? dateVal.get('year') : now.get('year');
-        const newMonth = dateVal.isValid() ? dayjs(value).get('month'): now.get('month');
-        handleChangePanel(newYear, newMonth);
+        const targetDate = getValue(now, startWeekDate, value);
+        const newYear = targetDate.get('year');
+        const newMonth = targetDate.get('month');
+        const newDate = targetDate.get('date');
+        handleChangePanel(newYear, newMonth, newDate);
     }, [value]);
 
     /**
@@ -87,13 +90,16 @@ const WeekDatepicker = ({
      * @param year
      * @param month
      */
-    const handleChangePanel = useCallback((year?: number, month?: number) => {
+    const handleChangePanel = useCallback((year?: number, month?: number, date?: number) => {
         let newPanelDate = panelYearMonth;
         if (typeof year !== 'undefined') {
             newPanelDate = newPanelDate.set('year', year);
         }
         if (typeof month !== 'undefined') {
             newPanelDate = newPanelDate.set('month', month);
+        }
+        if (typeof date !== 'undefined') {
+            newPanelDate = newPanelDate.set('date', date);
         }
 
         // 發出事件
@@ -146,8 +152,9 @@ const WeekDatepicker = ({
      * @returns {*}
      */
     const renderYearMonth = () => {
-        const panelPreYearMonth = panelYearMonth.subtract(1, 'month');
-        const panelNextYearMonth = panelYearMonth.add(1, 'month');
+        const panelPreYearMonth = panelYearMonth.subtract(7, 'day');
+        const panelNextYearMonth = panelYearMonth.add(7, 'day');
+        
 
         const activeYear = localeYear.find(row => String(row.value) === String(panelYearMonth.year()));
         const activeMonth = localeMonth.find(row => row.value === panelYearMonth.month());
@@ -195,23 +202,25 @@ const WeekDatepicker = ({
                     </div>
 
 
-                    {/*上個月的按鈕*/}
+                    {/*上一週的按鈕*/}
                     <button className={clsx(elClassNames.dateMonthButton, 'pre-month')}
                         type="button"
                         onClick={() => handleChangePanel(
                             panelPreYearMonth.year(),
                             panelPreYearMonth.month(),
+                            panelPreYearMonth.date(),
                         )}
                     >
                         <ArrowIcon/>
                     </button>
 
-                    {/*下個月的按鈕*/}
+                    {/*下一週的按鈕*/}
                     <button className={clsx(elClassNames.dateMonthButton, 'next-month')}
                         type="button"
                         onClick={() => handleChangePanel(
                             panelNextYearMonth.year(),
                             panelNextYearMonth.month(),
+                            panelNextYearMonth.date(),
                         )}
                     >
                         <ArrowIcon/>
@@ -224,108 +233,6 @@ const WeekDatepicker = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 
-    /**
-     * 產生週標題
-     */
-    const renderWeek = useCallback(() => (
-        <div className={elClassNames.dateWeekRow}>
-            {/* eslint-disable-next-line react/no-array-index-key */}
-            {localeWeekDay.map((week, index) => <div className={elClassNames.dateWeek} key={`localeWeekDay-${index}-${week}`}>{week}</div>)}
-        </div>
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    ), []);
-
-    /**
-     * 產生上個月的剩餘日期表
-     * @returns {Array}
-     */
-    const renderPreMonthDay = useCallback(() => {
-        const currentDate = dayjs(value);
-
-        // 取得指定年月的第一天是星期幾 (0, 1-6)
-        const currentMonFirstWeek = panelYearMonth.set('date', 1).day();
-
-        // 取 Panel年月 剩餘月份的可放空間 (星期六 ex: 6-1=5格, 星期日則為7天)
-        const preMonthFirstContainer = currentMonFirstWeek === 0 ? 6 : currentMonFirstWeek - 1;
-
-        // 取 Panel年月 上個月的最後一天是幾號
-        const preMonth = panelYearMonth.subtract(1, 'month');
-        const preMonthLastDay = Number(preMonth.endOf('month').get('date'));
-
-        // 取 Panel年月 結束日從幾號開始
-        const preMonthFirstDay = preMonthLastDay - preMonthFirstContainer;
-
-        // 產生 Panel年月 上個月的剩餘日期表
-        const preMonFirstDayList: ICurrentDayList[] = Array.from({length: preMonthFirstContainer});
-        for (let d = 0; d < preMonthFirstContainer; d++) {
-            const dayNumber = preMonthFirstDay + d + 1;
-            const eachDate = preMonth.set('date', dayNumber);
-            const isDisable =
-                !!((minDate && eachDate.isBefore(minDate, 'date')) ||
-                    (maxDate && eachDate.isAfter(maxDate, 'date')));
-
-            preMonFirstDayList[d] = {
-                isActive: currentDate.isSame(preMonth.set('date', dayNumber), 'date'),
-                isToday: today.isSame(eachDate, 'date'),
-                isTag: tagDate?.includes(eachDate.format('YYYY-MM-DD')),
-                isDisable,
-                className: elClassNames.datePreDay,
-                date: eachDate,
-                dayNumber: dayNumber,
-                onClick: () => !isDisable ? handleSelectedDate(preMonth.year(), preMonth.month(), dayNumber) : {}
-            };
-        }
-
-        return preMonFirstDayList;
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [panelYearMonth, value, minDate, maxDate, tagDate]);
-
-    /**
-     * 產生下個月的剩餘日期表
-     * @returns {Array}
-     */
-    const renderNextMonthDay = useCallback(() => {
-        const currentDate = dayjs(value);
-
-        // 取得指定年月的第一天是星期幾 (0, 1-6)
-        const currentMonFirstWeek = panelYearMonth.set('date', 1).day();
-
-        // 取 Panel年月 上個月份的已放空間 (星期六 ex: 6-1=5格, 星期日則為7天)
-        const preMonthFirstContainer = currentMonFirstWeek === 0 ? 6 : currentMonFirstWeek - 1;
-
-        // 取 Panel年月 這個月的最後一天是幾號
-        const panelMonthLastDay = panelYearMonth.endOf('month').get('date');
-
-        const nextMonth = panelYearMonth.add(1, 'month');
-
-        // 取得指定年月下個月剩餘月份可放空間
-        const nextMonthEndContainer = (7 * 6) % (preMonthFirstContainer + panelMonthLastDay);
-
-        // 產生上個月的剩餘日期表
-        const nextMonEndDayList: ICurrentDayList[] = Array.from({length: nextMonthEndContainer});
-        for (let d = 0; d < nextMonthEndContainer; d++) {
-            const dayNumber = d + 1;
-            const eachDate = nextMonth.set('date', dayNumber);
-            const isDisable =
-                !!((minDate && eachDate.isBefore(minDate, 'date')) ||
-                    (maxDate && eachDate.isAfter(maxDate, 'date')));
-
-            nextMonEndDayList[d] = {
-                isActive: currentDate.isSame(nextMonth.set('date', dayNumber), 'date'),
-                isToday: today.isSame(eachDate, 'date'),
-                isTag: tagDate?.includes(eachDate.format('YYYY-MM-DD')),
-                isDisable,
-                className: elClassNames.datePreDay,
-                date: eachDate,
-                dayNumber: dayNumber,
-                onClick: () => !isDisable ? handleSelectedDate(nextMonth.year(), nextMonth.month(), dayNumber): {}
-            };
-        }
-
-        return nextMonEndDayList;
-    }, [panelYearMonth, value, minDate, maxDate, tagDate]);
 
     /**
      * 產生當月日期表
@@ -334,13 +241,15 @@ const WeekDatepicker = ({
         const currentDate = dayjs(value);
 
         // 取 Panel年月 的最後一天
-        const currentMonthLastDay = panelYearMonth.endOf('month').get('date');
+        const currentMonthLastDay = 7;
+        // const firstDate = panelYearMonth.get('date');
 
         // 產生 Panel年月 當月日期表
         const currentDayList: ICurrentDayList[] = Array.from({length: currentMonthLastDay});
         for (let d = 0; d < currentMonthLastDay; d++) {
-            const dayNumber = d + 1;
-            const eachDate = panelYearMonth.set('date', dayNumber);
+            const eachDate = panelYearMonth.add(d, 'day');
+            const dayNumber = eachDate.date();
+            const dayInWeek = eachDate.day() + 1;
             const isDisable: boolean =
                 !!((minDate && eachDate.isBefore(minDate, 'date')) ||
                     (maxDate && eachDate.isAfter(maxDate, 'date')));
@@ -352,29 +261,27 @@ const WeekDatepicker = ({
                 isDisable,
                 className: elClassNames.dateDay,
                 date: eachDate,
+                dayInWeek,
                 dayNumber: dayNumber,
-                onClick: () => !isDisable ? handleSelectedDate(panelYearMonth.year(), panelYearMonth.month(), dayNumber) : {}
+                onClick: () => !isDisable ? handleSelectedDate(eachDate.year(), eachDate.month(), dayNumber) : {}
             };
         }
 
 
-        const preMonthDay = renderPreMonthDay();
-        const nextMonthDay = renderNextMonthDay();
-        const monthDateList = [...preMonthDay, ...currentDayList, ...nextMonthDay];
+        const monthDateList = currentDayList;
 
         const actIndex = monthDateList.findIndex((row) => row.isActive);
         const weekIndex = Math.floor(actIndex / 7);
 
         return (
             <div className={elClassNames.dateDayRow}>
-                {renderWeek()}
-                <div className={elClassNames.dateDayContent}>
-                    {weekIndex >= 0 && <div className={elClassNames.dateWeekMask} style={{top: weekIndex * 30}}/>}
+                {/*{renderWeek()}*/}
+                <div className={styles.weekWrapper}>
 
                     {monthDateList.map(row => {
                         return  <div
                             key={`currentDay-${row.date}`}
-                            className={row.className}
+                            className={clsx(row.className, styles.currentDay)}
                             data-active={row.isActive}
                             data-today={row.isToday}
                             data-tag={row.isTag}
@@ -382,9 +289,12 @@ const WeekDatepicker = ({
 
                             onClick={row.onClick}
                         >
-                            <span>
+                            <div>
                                 {row.dayNumber}
-                            </span>
+                            </div>
+                            <div className={styles.dayInWeek}>
+                                {i18n(`com.datepicker.weekDay.${row.dayInWeek}`, {def: String(row.dayInWeek)})}
+                            </div>
                         </div>;
                     })}
                 </div>
@@ -401,8 +311,11 @@ const WeekDatepicker = ({
     );
 
     return <div className={clsx(
-        elClassNames.dateRoot,
-        className, {'dark-theme': isDark})} style={style}>
+        className, {'dark-theme': isDark},
+        styles.root
+    )}
+    style={style}
+    >
         {renderYearMonth()}
         {renderCurrentMonthDay()}
 

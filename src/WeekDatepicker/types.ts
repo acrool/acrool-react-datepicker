@@ -9,6 +9,7 @@ export interface ICurrentDayList {
     className: string,
     date: Dayjs,
     dayNumber: number,
+    dayInWeek: number,
     onClick: () => void
 }
 
@@ -20,4 +21,5 @@ export interface IWeekDatepickerProps extends ICommon{
     format?: string
     onChangeYearMonthPanel?: (yearMonth: { year: number, month: number }) => void;
     isVisibleSetToday?: boolean;
+    startWeekDate: string,
 }

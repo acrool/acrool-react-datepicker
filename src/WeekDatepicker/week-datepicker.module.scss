@@ -1,0 +1,29 @@
+.root{
+    width: 270px;
+}
+
+.week-wrapper{
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.current-day{
+    width: 35px;
+    height: 35px;
+    flex: 0 0 auto;
+
+    display: flex;
+    flex-direction: column;
+
+    > * {
+        line-height: 14px;
+    }
+}
+
+.day-in-week{
+    font-size: 12px;
+}
