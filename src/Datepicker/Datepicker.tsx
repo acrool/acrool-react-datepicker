@@ -2,12 +2,12 @@ import React, {useState, useCallback, useMemo, createElement} from 'react';
 import dayjs,{Dayjs} from 'dayjs';
 import elClassNames from '../el-class-names';
 import {ArrowIcon} from '../Icon';
-import {ICommon} from '../typing';
 import clsx from 'clsx';
 import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
-import {ICurrentDayList} from './types';
+import {ICurrentDayList, IDatepickerProps} from './types';
+import {getValue} from './utils';
 
 const config = {
     weekDay: [1, 2, 3, 4, 5, 6, 7],
@@ -16,28 +16,12 @@ const config = {
 
 
 
-interface IProps extends ICommon{
-    value?: string;
-    onChange: (newDate: string) => void;
-    format?: string
-    onChangeYearMonthPanel?: (yearMonth: { year: number, month: number }) => void;
-    isVisibleSetToday?: boolean;
-}
-
-const getValue = (defaultValue: Dayjs, val?: string) => {
-    const editValue = dayjs(val);
-    if(editValue.isValid()){
-        return editValue;
-    }
-    return defaultValue;
-};
-
 
 /**
  * Datepicker
  * 日期選擇器
  */
-export const DatepickerAtom = ({
+const DatepickerAtom = ({
     className,
     style,
     value,
@@ -52,7 +36,7 @@ export const DatepickerAtom = ({
     minDate,
     maxDate,
     tagDate = []
-}: IProps) => {
+}: IDatepickerProps) => {
     const today = useNowTime();
     const {i18n} = useLocale(locale);
     const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(getValue(today, value));
@@ -433,5 +417,6 @@ export const DatepickerAtom = ({
 
 
 
-const Datepicker = (props: IProps) => createElement(DatepickerAtom, {...props, className: clsx(props.className, elClassNames.root)});
+const Datepicker = (props: IDatepickerProps) => createElement(DatepickerAtom, {...props, className: clsx(props.className, elClassNames.root)});
+export {DatepickerAtom};
 export default Datepicker;

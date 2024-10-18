@@ -1,2 +1,1 @@
-export {default} from './Datepicker';
-export * from './Datepicker';
+export {default, DatepickerAtom} from './Datepicker';
