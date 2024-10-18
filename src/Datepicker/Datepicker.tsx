@@ -1,8 +1,7 @@
-import React, {useState, useCallback, useMemo, useRef, useEffect, createElement} from 'react';
+import React, {useState, useCallback, useMemo, createElement} from 'react';
 import dayjs,{Dayjs} from 'dayjs';
 import elClassNames from '../el-class-names';
 import {ArrowIcon} from '../Icon';
-import translateI18n from '../locales';
 import {ICommon} from '../typing';
 import clsx from 'clsx';
 import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
