@@ -1,35 +1,16 @@
 import React from 'react';
-import CSS from 'csstype';
 import dayjs,{Dayjs} from 'dayjs';
 import {defaultFormat, getDatetime} from '../utils';
 import elClassNames from '../el-class-names';
-import {DatepickerAtom as Datepicker} from '../Datepicker';
-import {Timepicker2Atom as Timepicker2} from '../Timepicker2';
+import {DatepickerAtom} from '../Datepicker';
+import {Timepicker2Atom} from '../Timepicker2';
 
-import {ICommon} from '../typing';
 
 import clsx from 'clsx';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
 import './styles.css';
-
-
-interface IProps extends ICommon{
-    className?: string;
-    style?: CSS.Properties;
-    value?: string;
-    dateFormat?: string;
-    onChange: (newDate: string) => void;
-    onClickOk: (newDate: string) => void;
-    isVisibleSecond?: boolean,
-}
-
-
-enum EDateType {
-    date,
-    time,
-    dateTime,
-}
+import {IDateTimepicker2Props, EDateType} from './types';
 
 
 
@@ -51,7 +32,7 @@ const DateTimepicker2 = ({
     minDate,
     maxDate,
     isVisibleSecond = true,
-}: IProps) => {
+}: IDateTimepicker2Props) => {
     const {i18n} = useLocale(locale);
     const today = useNowTime();
 
@@ -141,8 +122,8 @@ const DateTimepicker2 = ({
     style={style}
     >
         <div className={elClassNames.dateTime2Group}>
-            <Datepicker {...dateProps} value={getDate(propsDate)} onChange={generateOnChange(EDateType.date)}/>
-            <Timepicker2 {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}
+            <DatepickerAtom {...dateProps} value={getDate(propsDate)} onChange={generateOnChange(EDateType.date)}/>
+            <Timepicker2Atom {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}
                 isVisibleSecond={timeProps.isVisibleSecond}
                 title={i18n('com.timepicker.time', {def: 'Time'})}
                 isVisibleNow={false}/>
