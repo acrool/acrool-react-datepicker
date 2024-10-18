@@ -8,7 +8,11 @@ export default defineConfig({
         react(),
         svgr(),
     ],
-    build: {
-        sourcemap: true,
-    }
+    css: {
+        modules: {
+            localsConvention: 'camelCase',
+            scopeBehaviour: 'local',
+            generateScopedName: 'example__[local]',
+        }
+    },
 });

@@ -1,22 +1,15 @@
 import React from 'react';
-import dayjs from 'dayjs';
 import elClassNames from '../el-class-names';
 
-import {DatepickerAtom as Datepicker} from '../Datepicker';
-import {IRangeDateValue, EDateRange, ICommon} from '../typing';
-import translateI18n from '../locales';
+import {DatepickerAtom} from '../Datepicker';
+import {EDateRange} from '../typing';
 import {selectDateRange} from '../utils';
 import clsx from 'clsx';
 import useLocale from '../locales';
+import {IRangeDatepickerProps} from './types';
+import {getToday} from './utils';
 
 
-interface IProps extends ICommon{
-    value?: IRangeDateValue
-    format?: string
-    onChange?: (value: IRangeDateValue) => void
-    isVisibleFastPicker?: boolean
-}
-const today = dayjs().format('YYYY-MM-DD');
 
 /**
  * 日期輸入控件
@@ -35,7 +28,7 @@ const today = dayjs().format('YYYY-MM-DD');
 const RangeDatepicker = ({
     className,
     style,
-    value = {startDate: today, endDate: today},
+    value = {startDate: getToday(), endDate: getToday()},
     onChange,
     format = 'YYYY-MM-DD',
     maxYear,
@@ -45,8 +38,10 @@ const RangeDatepicker = ({
     minDate,
     maxDate,
     isDark,
-}: IProps) => {
+}: IRangeDatepickerProps) => {
     const {i18n} = useLocale(locale);
+    const today = getToday();
+
     const commonProps = {isDark, format, minYear, maxYear, locale};
 
 
@@ -94,7 +89,7 @@ const RangeDatepicker = ({
         >
             {isVisibleFastPicker && renderRangeFastPicker()}
 
-            <Datepicker
+            <DatepickerAtom
                 {...commonProps}
                 value={value.startDate}
                 onChange={(newValue) => {
@@ -109,7 +104,7 @@ const RangeDatepicker = ({
                 maxDate={value?.endDate ? value?.endDate : maxDate}
             />
 
-            <Datepicker
+            <DatepickerAtom
                 {...commonProps}
                 value={value.endDate}
                 onChange={(newValue) => {

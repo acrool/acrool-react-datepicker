@@ -1,24 +1,15 @@
 import React from 'react';
-import dayjs from 'dayjs';
 import elClassNames from '../el-class-names';
 
-import {DatepickerAtom as Datepicker} from '../Datepicker';
-import {TimepickerAtom as Timepicker} from '../Timepicker';
-import {ICommon, IRangeDateTimeValue, EDateTimeRange} from '../typing';
+import {DatepickerAtom} from '../Datepicker';
+import {TimepickerAtom} from '../Timepicker';
+import {EDateTimeRange} from '../typing';
 import {selectDateTimeRange} from '../utils';
 import clsx from 'clsx';
 import useLocale from '../locales';
+import {getToday} from './utils';
+import {IRangeTimeDatepickerProps} from './types';
 
-
-interface IProps extends ICommon{
-    value?: IRangeDateTimeValue
-    onChange?: (value: IRangeDateTimeValue) => void
-    dateFormat?: string
-    isVisibleFastPicker?: boolean
-    isVisibleSecond?: boolean
-    onClickOk?: (value: string) => void
-}
-const today = dayjs().format('YYYY-MM-DD');
 
 /**
  * 日期輸入控件
@@ -37,7 +28,7 @@ const today = dayjs().format('YYYY-MM-DD');
 const RangeTimeDatepicker = ({
     className,
     style,
-    value = {date: today, startTime: '00:00:00', endTime: '00:00:00'},
+    value = {date: getToday(), startTime: '00:00:00', endTime: '00:00:00'},
     dateFormat = 'YYYY-MM-DD',
     onChange,
     maxYear,
@@ -49,7 +40,7 @@ const RangeTimeDatepicker = ({
     minDate,
     maxDate,
     isDark,
-}: IProps) => {
+}: IRangeTimeDatepickerProps) => {
     const {i18n} = useLocale(locale);
     const dateProps = {minYear, maxYear, minDate, maxDate, dateFormat, locale, isDark};
     const timeProps = {locale, isDark, onClickOk, isVisibleSecond};
@@ -95,7 +86,7 @@ const RangeTimeDatepicker = ({
         >
             {renderRangeFastPicker()}
 
-            <Datepicker
+            <DatepickerAtom
                 {...dateProps}
                 value={value.date}
                 onChange={newValue => {
@@ -107,7 +98,7 @@ const RangeTimeDatepicker = ({
                     }
                 }}
             />
-            <Timepicker {...timeProps}
+            <TimepickerAtom {...timeProps}
                 title={i18n('com.timepicker.start', {def: 'Start'})}
                 value={value.startTime}
                 onChange={newValue => {
@@ -120,7 +111,7 @@ const RangeTimeDatepicker = ({
                 }}
                 isVisibleSecond={timeProps.isVisibleSecond}
                 isVisibleNow={false}/>
-            <Timepicker {...timeProps}
+            <TimepickerAtom {...timeProps}
                 title={i18n('com.timepicker.end', {def: 'End'})}
                 value={value.endTime}
                 onChange={newValue => {

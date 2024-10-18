@@ -1,21 +1,23 @@
 import styled from 'styled-components';
 import {useRef} from 'react';
 import domtoimage from 'dom-to-image';
-import Github from '../../assets/github.svg?react';
+import Github from './github.svg?react';
 import {media} from '@acrool/react-grid';
 
 
 interface IProps {
     className?: string
+    repositoryUrl: string
+    name: string
+
 }
 
-
-const repositoryUrl = 'https://github.com/acrool/acrool-react-datepicker';
-const name = 'Acrool React Datepicker';
 
 
 const Banner = ({
     className,
+    name,
+    repositoryUrl,
 }: IProps) => {
     const ref = useRef<HTMLDivElement>(null);
 
@@ -28,7 +30,7 @@ const Banner = ({
 
         domtoimage.toPng(node, {quality: 0.95})
             .then(function (dataUrl) {
-                var link = document.createElement('a');
+                const link = document.createElement('a');
                 link.download = 'og.png';
                 link.href = dataUrl;
                 link.click();
@@ -36,17 +38,20 @@ const Banner = ({
     };
 
 
-
     return <BannerRoot className={className}>
-        <a href={repositoryUrl} target="_blank" rel="noopener noreferrer">
-            <Github width={40} height={40}/>
-        </a>
-        {/*<DownloadButton type="button" onClick={downloadBanner}>Download Banner</DownloadButton>*/}
+
+        <InfoWrapper>
+            <A href={repositoryUrl} target="_blank" rel="noopener noreferrer">
+                <Github width={40} height={40}/>
+            </A>
+            <DownloadButton type="button" onClick={downloadBanner}>Download Banner</DownloadButton>
+        </InfoWrapper>
 
         <DownloadWrapper ref={ref}>
             <img src="/logo.svg" alt={name}/>
             <h1>{name}</h1>
         </DownloadWrapper>
+
     </BannerRoot>;
 };
 
@@ -62,15 +67,14 @@ const DownloadWrapper = styled.div`
   justify-content: center;
   padding: 20px;
   height: 200px;
-  max-width: 920px;
-  width: 100%;
+  width: 920px;
   gap: 12px;
   background-color: #000;
-  
+
   > img{
     height: 100px;
   }
-  
+
   > h1{
     word-wrap:break-word;
 
@@ -92,9 +96,24 @@ const DownloadWrapper = styled.div`
 `;
 
 
+const A = styled.a`
+  display: flex;
+  color: #fff;
+  font-size: 12px;
+  align-items: center;
+  gap: 10px;
+`;
+
+const InfoWrapper = styled.div`
+  background-color: #000;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+`;
+
 const DownloadButton = styled.button`
-  position: absolute;
-  right: 0;
+  color: #fff;
 `;
 
 
