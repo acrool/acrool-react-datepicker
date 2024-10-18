@@ -8,11 +8,7 @@ import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
 import {ICurrentDayList, IDatepickerProps} from './types';
 import {getValue} from './utils';
-
-const config = {
-    weekDay: [1, 2, 3, 4, 5, 6, 7],
-    month: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-};
+import {config} from "./config";
 
 
 

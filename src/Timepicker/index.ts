@@ -1,2 +1,2 @@
 export {default} from './Timepicker';
-export * from './Timepicker';
+export type {ITimepickerProps} from './types';

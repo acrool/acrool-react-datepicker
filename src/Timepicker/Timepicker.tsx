@@ -1,31 +1,17 @@
 import React, {useState, useRef, useCallback, useEffect, createElement} from 'react';
-import CSS from 'csstype';
 import elClassNames from '../el-class-names';
-import {getTimeList, getTimeFormat, paddingLeft, getTimeString} from '../utils';
+import {getTimeFormat, paddingLeft, getTimeString} from '../utils';
 import clsx from 'clsx';
 import {ITimeObj} from '../typing';
 import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
 import './styles.css';
+import {ITimepickerProps} from './types';
+import {hourList, minuteList, secondList, unitHeight} from './config';
 
 
-interface IProps {
-    className?: string;
-    style?: CSS.Properties;
-    value?: string;
-    onChange?: (value: string) => void;
-    onClickOk?: (value: string) => void;
-    locale?: string,
-    isDark?: boolean
-    title?: string
-    isVisibleSecond?: boolean,
-    isVisibleNow?: boolean,
-}
 
-const {hourList, minuteList, secondList} = getTimeList();
-
-const unitHeight = 30;
 
 
 
@@ -40,7 +26,7 @@ const unitHeight = 30;
  * @param isDark 暗黑模式
  * @param isEnableSec
  */
-export const TimepickerAtom = ({
+const TimepickerAtom = ({
     className,
     style,
     onChange,
@@ -51,7 +37,7 @@ export const TimepickerAtom = ({
     title,
     isVisibleSecond = true,
     isVisibleNow = true,
-}: IProps) => {
+}: ITimepickerProps) => {
     const {i18n} = useLocale(locale);
     const now = useNowTime();
 
@@ -234,6 +220,9 @@ export const TimepickerAtom = ({
 };
 
 
-const Timepicker = (props: IProps) => createElement(TimepickerAtom, {...props, className: clsx(props.className, elClassNames.root)});
+const Timepicker = (props: ITimepickerProps) => createElement(TimepickerAtom, {...props, className: clsx(props.className, elClassNames.root)});
+export {
+    TimepickerAtom
+};
 export default Timepicker;
 

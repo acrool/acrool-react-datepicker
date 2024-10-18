@@ -1,35 +1,16 @@
 import React from 'react';
-import CSS from 'csstype';
 import dayjs,{Dayjs} from 'dayjs';
 import {defaultFormat, getDatetime} from '../utils';
 import elClassNames from '../el-class-names';
-import {DatepickerAtom as Datepicker} from '../Datepicker';
-import {TimepickerAtom as Timepicker} from '../Timepicker';
-
-import {ICommon} from '../typing';
-import translateI18n from '../locales';
+// import {DatepickerAtom} from '../Datepicker';
+// import {TimepickerAtom as Timepicker} from '../Timepicker';
 
 import clsx from 'clsx';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
 import './styles.css';
+import {EDateType, IDateTimepickerProps} from './types';
 
-interface IProps extends ICommon{
-    className?: string;
-    style?: CSS.Properties;
-    value?: string;
-    dateFormat?: string;
-    onChange: (newDate: string) => void;
-    onClickOk: (newDate: string) => void;
-    isVisibleSecond?: boolean,
-}
-
-
-enum EDateType {
-    date,
-    time,
-    dateTime,
-}
 
 
 
@@ -41,7 +22,7 @@ const DateTimepicker = ({
     className,
     style,
     value,
-    dateFormat = defaultFormat.date ,
+    dateFormat = defaultFormat.date,
     onChange,
     onClickOk,
     locale = 'en-US',
@@ -51,7 +32,7 @@ const DateTimepicker = ({
     minDate,
     maxDate,
     isVisibleSecond = true,
-}: IProps) => {
+}: IDateTimepickerProps) => {
     const {i18n} = useLocale(locale);
     const today = useNowTime();
 
@@ -141,11 +122,11 @@ const DateTimepicker = ({
     style={style}
     >
         <div className={elClassNames.dateTimeGroup}>
-            <Datepicker {...dateProps} value={getDate(propsDate)} onChange={generateOnChange(EDateType.date)}/>
-            <Timepicker {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}
-                isVisibleSecond={timeProps.isVisibleSecond}
-                title={i18n('com.timepicker.time', {def: 'Time'})}
-                isVisibleNow={false}/>
+            {/*<DatepickerAtom {...dateProps} value={getDate(propsDate)} onChange={generateOnChange(EDateType.date)}/>*/}
+            {/*<Timepicker {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}*/}
+            {/*    isVisibleSecond={timeProps.isVisibleSecond}*/}
+            {/*    title={i18n('com.timepicker.time', {def: 'Time'})}*/}
+            {/*    isVisibleNow={false}/>*/}
         </div>
 
         {renderActionsButtons()}
