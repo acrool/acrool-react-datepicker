@@ -2,8 +2,8 @@ import React from 'react';
 import dayjs,{Dayjs} from 'dayjs';
 import {defaultFormat, getDatetime} from '../utils';
 import elClassNames from '../el-class-names';
-// import {DatepickerAtom} from '../Datepicker';
-// import {TimepickerAtom as Timepicker} from '../Timepicker';
+import {DatepickerAtom} from '../Datepicker';
+import {TimepickerAtom} from '../Timepicker';
 
 import clsx from 'clsx';
 import useNowTime from '../hooks/useNow';
@@ -122,11 +122,11 @@ const DateTimepicker = ({
     style={style}
     >
         <div className={elClassNames.dateTimeGroup}>
-            {/*<DatepickerAtom {...dateProps} value={getDate(propsDate)} onChange={generateOnChange(EDateType.date)}/>*/}
-            {/*<Timepicker {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}*/}
-            {/*    isVisibleSecond={timeProps.isVisibleSecond}*/}
-            {/*    title={i18n('com.timepicker.time', {def: 'Time'})}*/}
-            {/*    isVisibleNow={false}/>*/}
+            <DatepickerAtom {...dateProps} value={getDate(propsDate)} onChange={generateOnChange(EDateType.date)}/>
+            <TimepickerAtom {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}
+                isVisibleSecond={timeProps.isVisibleSecond}
+                title={i18n('com.timepicker.time', {def: 'Time'})}
+                isVisibleNow={false}/>
         </div>
 
         {renderActionsButtons()}
