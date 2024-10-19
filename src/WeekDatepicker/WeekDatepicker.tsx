@@ -168,13 +168,13 @@ const WeekDatepicker = ({
 
                     {/*年月的按鈕*/}
                     <div className={elClassNames.dateYearMonth}>
-                        <div className={elClassNames.dateYearGroup}>
-                            <span className={elClassNames.dateYear}>
+                        <div className={styles.dateYearMonthWrapper}>
+                            <span className={styles.dateYearMonth}>
                                 {activeYear?.text}
                             </span>
 
                             <select
-                                className={elClassNames.dateYearSelect}
+                                className={styles.dateYearMonthSelect}
                                 onChange={e => handleChangePanel(panelYearMonth.set('year', Number(e.target.value)).year())}
                                 value={panelYearMonth.year()}
                             >
@@ -183,13 +183,13 @@ const WeekDatepicker = ({
                                 })}
                             </select>
                         </div>
-                        <div className={elClassNames.dateMonthGroup}>
-                            <span className={elClassNames.dateMonth}>
+                        <div className={styles.dateYearMonthWrapper}>
+                            <span className={styles.dateYearMonth}>
                                 {activeMonth?.text}
                             </span>
 
                             <select
-                                className={elClassNames.dateMonthSelect}
+                                className={styles.dateYearMonthSelect}
                                 onChange={e => handleChangePanel(undefined, panelYearMonth.set('month', Number(e.target.value)).month())}
                                 value={panelYearMonth.month()}
                             >
@@ -230,21 +230,19 @@ const WeekDatepicker = ({
             </div>
         );
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 
 
     /**
-     * 產生當月日期表
+     * 產生日期表
      */
     const renderCurrentMonthDay = () => {
         const currentDate = dayjs(value);
 
-        // 取 Panel年月 的最後一天
+        // 一週天數
         const currentMonthLastDay = 7;
-        // const firstDate = panelYearMonth.get('date');
 
-        // 產生 Panel年月 當月日期表
+        // 產生 Panel年月週日期表
         const currentDayList: ICurrentDayList[] = Array.from({length: currentMonthLastDay});
         for (let d = 0; d < currentMonthLastDay; d++) {
             const eachDate = panelYearMonth.add(d, 'day');
@@ -268,32 +266,24 @@ const WeekDatepicker = ({
         }
 
 
-        const monthDateList = currentDayList;
-
-        const actIndex = monthDateList.findIndex((row) => row.isActive);
-        const weekIndex = Math.floor(actIndex / 7);
-
         return (
             <div className={elClassNames.dateDayRow}>
                 {/*{renderWeek()}*/}
                 <div className={styles.weekWrapper}>
 
-                    {monthDateList.map(row => {
+                    {currentDayList.map(row => {
                         return  <div
                             key={`currentDay-${row.date}`}
-                            className={clsx(row.className, styles.currentDay)}
-                            data-active={row.isActive}
-                            data-today={row.isToday}
-                            data-tag={row.isTag}
-                            data-disable={row.isDisable}
+                            className={styles.dateDay}
+                            data-active={row.isActive ? '':undefined}
+                            data-today={row.isToday ? '': undefined}
+                            data-tag={row.isTag ? '' : undefined}
+                            data-disable={row.isDisable ? '':undefined}
 
                             onClick={row.onClick}
                         >
-                            <div>
+                            <div className={styles.dateDayText} data-week-date={i18n(`com.datepicker.weekDay.${row.dayInWeek}`, {def: String(row.dayInWeek)})}>
                                 {row.dayNumber}
-                            </div>
-                            <div className={styles.dayInWeek}>
-                                {i18n(`com.datepicker.weekDay.${row.dayInWeek}`, {def: String(row.dayInWeek)})}
                             </div>
                         </div>;
                     })}
@@ -302,24 +292,15 @@ const WeekDatepicker = ({
         );
     };
 
-    const renderTodayButton = () => (
-        <div className={elClassNames.dateLabelCheckCardCreate}>
-            <button className={elClassNames.dateTodayButton} type="button" onClick={handleSelectedToday}>
-                <span>{i18n('com.datepicker.setToday', {def: 'Set to today'})}</span>
-            </button>
-        </div>
-    );
 
     return <div className={clsx(
-        className, {'dark-theme': isDark},
+        className, {'theme-dark': isDark},
         styles.root
     )}
     style={style}
     >
         {renderYearMonth()}
         {renderCurrentMonthDay()}
-
-        {isVisibleSetToday && renderTodayButton()}
     </div>;
 
 };

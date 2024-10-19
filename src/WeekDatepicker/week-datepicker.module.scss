@@ -1,5 +1,36 @@
+@use '../mixin' as *;
+
+
 .root{
+    @include theme(false);
     width: 270px;
+}
+.root.theme-dark{
+    @include theme(true);
+}
+
+
+.date-year-month-wrapper{
+    position: relative;
+    display: flex;
+    gap: 5px;
+}
+
+.date-year-month, .date-year-month-select{
+    color: inherit;
+    font-size: 16px;
+    flex: 0 0 auto;
+    cursor: pointer;
+}
+
+.date-year-month-select{
+    position: absolute;
+    opacity: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 
 .week-wrapper{
@@ -19,11 +50,105 @@
     display: flex;
     flex-direction: column;
 
+    &[data-active]{
+      color: #fff;
+    }
+
     > * {
         line-height: 14px;
     }
 }
 
-.day-in-week{
-    font-size: 12px;
+.date-day{
+    position: relative;
+    color: var(--day-color);
+    flex: 0 0 auto;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-size: var(--font-size);
+
+    &:before{
+        content: '';
+        border-radius: 99em;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        background-color: transparent;
+        transition: background-color .2s;
+    }
+
+    &:hover{
+        color: var(--primary-color, var(--default-primary-color));
+        cursor: pointer;
+    }
+
+    &[data-active]{
+        color: #fff;
+
+        &:before {
+            background-color: #808080;
+        }
+    }
+
+    &[data-tag]{
+        color: #fff;
+
+        &:after {
+            content: '';
+            width: 4px;
+            height: 4px;
+            position: absolute;
+            bottom: 3.5px;
+            border-radius: 99em;
+            z-index: 1;
+            background-color: #42a20d;
+        }
+
+        &[data-tag]:after{
+            background-color: #fff;
+        }
+    }
+
+    &[data-today]{
+        color: var(--primary-color, var(--default-primary-color));
+
+        &[data-active]{
+            color: #fff;
+            &:before{
+                background-color: var(--primary-color, var(--default-primary-color));
+            }
+        }
+    }
+
+
+    &[data-disable]{
+        color: var(--day-pre-color);
+        cursor: not-allowed;
+    }
+
+
+}
+
+.date-day-text{
+    z-index: 1;
+    line-height: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: color .2s;
+
+
+    &:after{
+        content: attr(data-week-date);
+        display: block;
+        font-size: 8px;
+    }
 }
