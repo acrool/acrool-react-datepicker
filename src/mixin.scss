@@ -1,0 +1,53 @@
+@mixin theme($isDark) {
+    box-sizing: border-box;
+    line-height: normal;
+    user-select: none;
+
+
+
+    --default-primary-color: #00a3e0;
+    --bg-color: #fff;
+    --day-color: rgba(0, 0, 0, 0.65);
+    --day-active-color: #fff;
+    --day-pre-color: rgba(0, 0, 0, 0.25);
+
+    --week-mask-color: #e8e8e8;
+
+    --button-color: rgb(0 0 0 / 60%);
+    --button-hover-color: #ababab;
+
+    --month-color: rgba(0, 0, 0, 0.85);
+    --border-color: #f0f0f0;
+    --font-size: 13px;
+
+    --text-color: rgba(0, 0, 0, 0.65);
+    --bg-active-color: #e6f7ff;
+    --bg-hover-color: #f5f5f5;
+
+    --border-radius: 3px;
+    --container-border-color: #bfbfbf;
+
+    @if($isDark == true){
+        --bg-color: #262626;
+        --day-color: rgba(255, 255, 255, 0.65);
+        --day-active-color: #fff;
+        --day-pre-color: rgba(255, 255, 255, 0.25);
+
+        --week-mask-color: #414141;
+
+        --button-color: rgb(255 255 255 / 60%);
+        --button-hover-color: #fff;
+
+        --month-color: rgba(255, 255, 255, 0.85);
+        --border-color: rgba(255, 255, 255, 0.25);
+
+
+        --text-color: rgba(255, 255, 255, 0.65);
+        --bg-active-color: #727373;
+        --bg-hover-color: #5e5e5e;
+        --container-border-color: #4a4a4a;
+    }
+}
+
+
+
