@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.11-alpha.0](https://github.com/acrool/acrool-react-datepicker/compare/v3.1.10...v3.1.11-alpha.0) (2024-10-22)
+
 ### [3.1.10](https://github.com/acrool/acrool-react-datepicker/compare/v3.1.9...v3.1.10) (2024-10-19)
 
 ### [3.1.9](https://github.com/acrool/acrool-react-datepicker/compare/v3.1.9-alpha.0...v3.1.9) (2024-08-07)
