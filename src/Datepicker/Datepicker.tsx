@@ -8,7 +8,7 @@ import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
 import {ICurrentDayList, IDatepickerProps} from './types';
 import {getValue} from './utils';
-import {config} from "./config";
+import {config} from './config';
 
 
 

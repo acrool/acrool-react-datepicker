@@ -7,7 +7,7 @@ import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
 import {ICurrentDayList, IWeekDatepickerProps} from './types';
-import {getValue} from './utils';
+import {getValueInWeekStartDate} from './utils';
 import {config} from './config';
 import styles from './week-datepicker.module.scss';
 
@@ -37,14 +37,14 @@ const WeekDatepicker = ({
 }: IWeekDatepickerProps) => {
     const today = useNowTime();
     const {i18n} = useLocale(locale);
-    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(getValue(today, startWeekDate, value));
+    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(getValueInWeekStartDate(today, startWeekDate, value));
 
     const initMaxYear = typeof maxYear !== 'undefined' ? maxYear : Number(today.add(1, 'year').year());
 
 
     useOnlyUpdateEffect(() => {
         const now = dayjs();
-        const targetDate = getValue(now, startWeekDate, value);
+        const targetDate = getValueInWeekStartDate(now, startWeekDate, value);
         const newYear = targetDate.get('year');
         const newMonth = targetDate.get('month');
         const newDate = targetDate.get('date');

@@ -1,0 +1,56 @@
+/**
+ * css class setting
+ */
+declare const _default: {
+    root: string;
+    dateYearMonthRow: string;
+    dateYearMonth: string;
+    dateYearGroup: string;
+    dateYear: string;
+    dateMonthGroup: string;
+    dateMonth: string;
+    dateMonthSelect: string;
+    dateYearSelect: string;
+    dateChangeControl: string;
+    dateMonthButton: string;
+    dateDayContent: string;
+    dateDayRow: string;
+    datePreDay: string;
+    dateDay: string;
+    dateWeek: string;
+    dateWeekRow: string;
+    dateWeekMask: string;
+    dateLabelCheckCardCreate: string;
+    dateTodayButton: string;
+    dateRoot: string;
+    dateRangeRoot: string;
+    dateRangeButton: string;
+    dateRangeLabelCheckCardCreate: string;
+    dateTimeRoot: string;
+    dateTimeGroup: string;
+    dateTime2Root: string;
+    dateTime2Group: string;
+    timeRoot: string;
+    timeHeader: string;
+    timeHeaderText: string;
+    timePickContainer: string;
+    timeFakeSelectContainer: string;
+    timeSelectBox: string;
+    timeFakeOption: string;
+    timeButtonContainer: string;
+    timeConfirmButton: string;
+    timeNowButton: string;
+    time2Root: string;
+    time2Header: string;
+    time2HeaderText: string;
+    time2HeaderTimeStr: string;
+    time2InputGroup: string;
+    time2PickContainer: string;
+    time2FakeSelectContainer: string;
+    time2SelectBox: string;
+    time2FakeOption: string;
+    time2ButtonContainer: string;
+    time2ConfirmButton: string;
+    time2NowButton: string;
+};
+export default _default;

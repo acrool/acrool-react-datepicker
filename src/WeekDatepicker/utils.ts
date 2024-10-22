@@ -1,6 +1,6 @@
 import dayjs, {Dayjs} from 'dayjs';
 
-export const getValue = (defaultValue: Dayjs, startWeekDate: string, val?: string) => {
+export const getValueInWeekStartDate = (defaultValue: Dayjs, startWeekDate: string, val?: string) => {
     const editValue = dayjs(val);
 
     if(editValue.isValid()){
@@ -10,8 +10,7 @@ export const getValue = (defaultValue: Dayjs, startWeekDate: string, val?: strin
 };
 
 
-const getWeekRange = (startDate: Dayjs, currentDate: Dayjs) => {
-    console.log('startDate', startDate.format('YYYY-MM-DD'));
+export const getWeekRange = (startDate: Dayjs, currentDate: Dayjs) => {
     const daysDiff = currentDate.diff(startDate, 'day');
 
     // 第幾週（從0開始）
