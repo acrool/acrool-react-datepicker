@@ -31,7 +31,7 @@ const DatepickerAtom = ({
     isDark = false,
     minDate,
     maxDate,
-    tagDate = []
+    tagDates = []
 }: IDatepickerProps) => {
     const today = useNowTime();
     const {i18n} = useLocale(locale);
@@ -268,7 +268,7 @@ const DatepickerAtom = ({
             preMonFirstDayList[d] = {
                 isActive: currentDate.isSame(preMonth.set('date', dayNumber), 'date'),
                 isToday: today.isSame(eachDate, 'date'),
-                isTag: tagDate?.includes(eachDate.format('YYYY-MM-DD')),
+                isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
                 isDisable,
                 className: elClassNames.datePreDay,
                 date: eachDate,
@@ -280,7 +280,7 @@ const DatepickerAtom = ({
         return preMonFirstDayList;
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [panelYearMonth, value, minDate, maxDate, tagDate]);
+    }, [panelYearMonth, value, minDate, maxDate, tagDates]);
 
     /**
      * 產生下個月的剩餘日期表
@@ -315,7 +315,7 @@ const DatepickerAtom = ({
             nextMonEndDayList[d] = {
                 isActive: currentDate.isSame(nextMonth.set('date', dayNumber), 'date'),
                 isToday: today.isSame(eachDate, 'date'),
-                isTag: tagDate?.includes(eachDate.format('YYYY-MM-DD')),
+                isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
                 isDisable,
                 className: elClassNames.datePreDay,
                 date: eachDate,
@@ -325,7 +325,7 @@ const DatepickerAtom = ({
         }
 
         return nextMonEndDayList;
-    }, [panelYearMonth, value, minDate, maxDate, tagDate]);
+    }, [panelYearMonth, value, minDate, maxDate, tagDates]);
 
     /**
      * 產生當月日期表
@@ -348,7 +348,7 @@ const DatepickerAtom = ({
             currentDayList[d] = {
                 isActive: currentDate.isSame(eachDate, 'date'),
                 isToday: today.isSame(eachDate, 'date'),
-                isTag: tagDate?.includes(eachDate.format('YYYY-MM-DD')),
+                isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
                 isDisable,
                 className: elClassNames.dateDay,
                 date: eachDate,

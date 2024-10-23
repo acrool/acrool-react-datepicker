@@ -16,10 +16,10 @@ export interface ICurrentDayList {
 
 
 export interface IWeekDatepickerProps extends ICommon{
-    value?: Dayjs|string;
+    value?: string;
     onChange: (newDate: string) => void;
     format?: string
-    onChangeYearMonthPanel?: (yearMonth: { year: number, month: number }) => void;
-    isVisibleSetToday?: boolean;
-    startWeekDate: Dayjs|string,
+    onChangeYearMonthPanel?: (newStartDate: string, newEndDate: string) => void;
+    // isVisibleSetToday?: boolean;
+    startWeekDate: string,
 }

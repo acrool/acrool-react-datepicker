@@ -8,7 +8,7 @@ import {generatorArray} from '@acrool/js-utils/array';
 import dayjs from 'dayjs';
 
 const today = dayjs();
-const tagDate = generatorArray(8)
+const tagDates = generatorArray(8)
     .map((row, idx) => {
         return today.add(idx * 2, 'day').format('YYYY-MM-DD');
     });
@@ -54,7 +54,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {};
 export const WithTags: Story = {
     args: {
-        tagDate,
+        tagDates,
     },
 };
 

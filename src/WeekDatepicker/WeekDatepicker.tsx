@@ -25,14 +25,14 @@ const WeekDatepicker = ({
     format = 'YYYY-MM-DD',
     onChange,
     onChangeYearMonthPanel,
-    isVisibleSetToday = false,
+    // isVisibleSetToday = false,
     locale = 'en-US',
     minYear = 1911,
     maxYear,
     isDark = false,
     minDate,
     maxDate,
-    tagDate = [],
+    tagDates = [],
     startWeekDate,
 }: IWeekDatepickerProps) => {
     const today = useNowTime();
@@ -104,7 +104,10 @@ const WeekDatepicker = ({
 
         // 發出事件
         if(!newPanelDate.isSame(panelYearMonth, 'date') && onChangeYearMonthPanel){
-            onChangeYearMonthPanel({year: newPanelDate.year(), month: newPanelDate.month() + 1});
+            onChangeYearMonthPanel(
+                newPanelDate.format('YYYY-MM-DD'),
+                newPanelDate.add(6, 'day').format('YYYY-MM-DD'),
+            );
         }
 
         setPanelYearMonth(newPanelDate);
@@ -255,7 +258,7 @@ const WeekDatepicker = ({
             currentDayList[d] = {
                 isActive: currentDate.isSame(eachDate, 'date'),
                 isToday: today.isSame(eachDate, 'date'),
-                isTag: tagDate?.includes(eachDate.format('YYYY-MM-DD')),
+                isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
                 isDisable,
                 className: styles.dateDay,
                 date: eachDate,
