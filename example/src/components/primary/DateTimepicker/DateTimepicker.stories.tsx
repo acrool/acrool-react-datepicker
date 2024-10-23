@@ -4,7 +4,6 @@ import {DateTimepicker} from '@acrool/react-datepicker';
 import React from 'react';
 import {fn} from '@storybook/test';
 import {useArgs} from '@storybook/preview-api';
-import {Flex} from '@acrool/react-grid';
 import dayjs from 'dayjs';
 
 const meta = {
@@ -25,6 +24,16 @@ const meta = {
         onChange: fn(),
         value: dayjs().format('YYYY-MM-DD HH:mm:ss'),
     },
+    render: function Render(args) {
+        const [{value}, updateArgs] = useArgs<{value: string}>();
+        const onChange = (value: string) => updateArgs({value});
+
+        return <DateTimepicker
+            {...args}
+            value={value}
+            onChange={fn(onChange)}
+        />;
+    },
 } satisfies Meta<typeof DateTimepicker>;
 
 export default meta;
@@ -32,21 +41,4 @@ type Story = StoryObj<typeof meta>;
 
 
 
-export const Primary: Story = {
-    args: {
-    },
-    render: function Render(args) {
-        const [{value}, updateArgs] = useArgs<{value: string}>();
-
-        const onChange = (value: string) => updateArgs({value});
-
-        return <Flex column className="gap-3">
-            <div>Current Value: {value}</div>
-            <DateTimepicker
-                {...args}
-                value={value}
-                onChange={fn(onChange)}
-            />
-        </Flex>;
-    },
-};
+export const Primary: Story = {};

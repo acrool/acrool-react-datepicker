@@ -29,6 +29,16 @@ const meta = {
             endTime: '13:00:00',
         },
     },
+    render: function Render(args) {
+        const [{value}, updateArgs] = useArgs<{value: IRangeTimeDatepickerProps['value']}>();
+        const onChange = (value: IRangeTimeDatepickerProps['value']) => updateArgs({value});
+
+        return <RangeTimeDatepicker
+            {...args}
+            value={value}
+            onChange={fn(onChange)}
+        />;
+    },
 } satisfies Meta<typeof RangeTimeDatepicker>;
 
 export default meta;
@@ -36,21 +46,4 @@ type Story = StoryObj<typeof meta>;
 
 
 
-export const Primary: Story = {
-    args: {
-    },
-    render: function Render(args) {
-        const [{value}, updateArgs] = useArgs<{value: IRangeTimeDatepickerProps['value']}>();
-
-        const onChange = (value: IRangeTimeDatepickerProps['value']) => updateArgs({value});
-
-        return <Flex column className="gap-3">
-            <code>Current Value: {JSON.stringify(value)}</code>
-            <RangeTimeDatepicker
-                {...args}
-                value={value}
-                onChange={fn(onChange)}
-            />
-        </Flex>;
-    },
-};
+export const Primary: Story = {};

@@ -10,6 +10,11 @@ export const getValueInWeekStartDate = (defaultValue: Dayjs, startWeekDate: Dayj
 };
 
 
+/**
+ * 由週開始日，計算目前日期的週開始日
+ * @param startDate
+ * @param currentDate
+ */
 export const getWeekRange = (startDate: Dayjs, currentDate: Dayjs) => {
     const daysDiff = currentDate.diff(startDate, 'day');
 
@@ -23,8 +28,4 @@ export const getWeekRange = (startDate: Dayjs, currentDate: Dayjs) => {
     const weekEndDate = weekStartDate.add(6, 'day');
 
     return weekStartDate;
-    // return {
-    //     weekStartDate: weekStartDate.format('YYYY-MM-DD'),
-    //     weekEndDate: weekEndDate.format('YYYY-MM-DD'),
-    // };
 };
