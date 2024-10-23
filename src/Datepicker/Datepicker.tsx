@@ -411,8 +411,13 @@ const DatepickerAtom = ({
 
 };
 
+const Datepicker = (props: IDatepickerProps) => {
+    return <DatepickerAtom
+        {...props}
+        className={clsx(props.className, elClassNames.root)}
+    />;
+};
 
 
-const Datepicker = (props: IDatepickerProps) => createElement(DatepickerAtom, {...props, className: clsx(props.className, elClassNames.root)});
 export {DatepickerAtom};
 export default Datepicker;

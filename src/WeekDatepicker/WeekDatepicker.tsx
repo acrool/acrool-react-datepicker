@@ -103,7 +103,7 @@ const WeekDatepicker = ({
         }
 
         // 發出事件
-        if(onChangeYearMonthPanel){
+        if(!newPanelDate.isSame(panelYearMonth, 'date') && onChangeYearMonthPanel){
             onChangeYearMonthPanel({year: newPanelDate.year(), month: newPanelDate.month() + 1});
         }
 
@@ -257,7 +257,7 @@ const WeekDatepicker = ({
                 isToday: today.isSame(eachDate, 'date'),
                 isTag: tagDate?.includes(eachDate.format('YYYY-MM-DD')),
                 isDisable,
-                className: elClassNames.dateDay,
+                className: styles.dateDay,
                 date: eachDate,
                 dayInWeek,
                 dayNumber: dayNumber,

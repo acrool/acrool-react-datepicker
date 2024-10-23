@@ -9,6 +9,7 @@ import useLocale from '../locales';
 
 import './styles.css';
 import {ITimepicker2Props} from './types';
+import {ITimepickerProps, TimepickerAtom} from "../Timepicker";
 
 
 /**
@@ -195,7 +196,13 @@ const Timepicker2Atom = ({
 };
 
 
-const Timepicker2 = (props: ITimepicker2Props) => createElement(Timepicker2Atom, {...props, className: clsx(props.className, elClassNames.root)});
+const Timepicker2 = (props: ITimepickerProps) => {
+    return <Timepicker2Atom
+        {...props}
+        className={clsx(props.className, elClassNames.root)}
+    />;
+};
+
 export {Timepicker2Atom};
 export default Timepicker2;
 

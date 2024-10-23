@@ -1,6 +1,6 @@
 import dayjs, {Dayjs} from 'dayjs';
 
-export const getValueInWeekStartDate = (defaultValue: Dayjs, startWeekDate: string, val?: string) => {
+export const getValueInWeekStartDate = (defaultValue: Dayjs, startWeekDate: Dayjs|string, val?: Dayjs|string) => {
     const editValue = dayjs(val);
 
     if(editValue.isValid()){

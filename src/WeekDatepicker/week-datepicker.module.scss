@@ -97,21 +97,15 @@
     }
 
     &[data-tag]{
-        color: #fff;
-
         &:after {
             content: '';
-            width: 4px;
-            height: 4px;
+            width: 80%;
+            height: 2px;
             position: absolute;
-            bottom: 3.5px;
+            bottom: 0;
             border-radius: 99em;
             z-index: 1;
             background-color: #42a20d;
-        }
-
-        &[data-tag]:after{
-            background-color: #fff;
         }
     }
 
