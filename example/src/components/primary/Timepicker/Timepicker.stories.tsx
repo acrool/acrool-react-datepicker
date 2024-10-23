@@ -1,11 +1,9 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {Timepicker, ITimepickerProps} from '@acrool/react-datepicker';
+import {Timepicker} from '@acrool/react-datepicker';
 import React from 'react';
 import {fn} from '@storybook/test';
 import {useArgs} from '@storybook/preview-api';
-import {Flex} from '@acrool/react-grid';
-import dayjs from 'dayjs';
 
 const meta = {
     title: 'Primary/Timepicker',
@@ -43,3 +41,8 @@ type Story = StoryObj<typeof meta>;
 
 
 export const Primary: Story = {};
+export const WithHideSec: Story = {
+    args: {
+        isVisibleSecond: false,
+    }
+};

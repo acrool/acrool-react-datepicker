@@ -1,7 +1,7 @@
-.acrool-react-datepicker__root,
-.acrool-react-datepicker__root *,
-.acrool-react-datepicker__root *::before,
-.acrool-react-datepicker__root *::after {
+.root,
+.root *,
+.root *::before,
+.root *::after {
     box-sizing: border-box;
     line-height: normal;
     user-select: none;
@@ -14,7 +14,7 @@
  * ------------------------------ */
 
 
-.acrool-react-datepicker__time-root {
+.root {
     display: flex;
     border-radius: var(--border-radius);
     flex-direction: column;
@@ -27,14 +27,14 @@
 
 
 
-.acrool-react-datepicker__time-root.is-enable-sec {
+.root[data-enable-sec] {
     min-width: calc(30px * 3);
 }
 
 
 
 
-.acrool-react-datepicker__time-header {
+.time-header {
     height: 30px;
     width: 100%;
     padding-top: 8px;
@@ -42,7 +42,7 @@
     justify-content: center;
 }
 
-.acrool-react-datepicker__time-header-text {
+.time-header-text {
     text-align: center;
     color: var(--text-color);
     font-size: 20px;
@@ -54,17 +54,17 @@
 
 }
 
-.acrool-react-datepicker__time-pick-container {
+.time-pick-container {
     display: flex;
     line-height: 1;
     justify-content: center;
 }
 
-.acrool-react-datepicker__time-fake-select-container {
+.time-fake-select-container {
     overflow: hidden;
 }
 
-.acrool-react-datepicker__time-select-box {
+.time-select-box {
     height: calc(30px * 6);
     overflow-x: hidden;
     overflow-y: scroll;
@@ -75,20 +75,20 @@
 }
 
 
-.acrool-react-datepicker__time-select-box::-webkit-scrollbar {
+.time-select-box::-webkit-scrollbar {
     width: 0;
 }
-.acrool-react-datepicker__time-select-box::-webkit-scrollbar-track {
+.time-select-box::-webkit-scrollbar-track {
     background: transparent;
 }
-.acrool-react-datepicker__time-select-box::-webkit-scrollbar-thumb {
+.time-select-box::-webkit-scrollbar-thumb {
     background-color: transparent;
 }
 
 
 
 
-.acrool-react-datepicker__time-fake-option {
+.time-fake-option {
     cursor: pointer;
     color: var(--text-color);
     width: 30px;
@@ -100,12 +100,12 @@
     justify-content: center;
     background-color: transparent;
 }
-.acrool-react-datepicker__time-fake-option.is-active{
+.time-fake-option[data-active]{
     color: var(--day-active-color);
     position: relative;
     z-index: 1;
 }
-.acrool-react-datepicker__time-fake-option.is-active:before {
+.time-fake-option[data-active]:before {
     /*background-color: var(--bg-active-color);*/
     content: '';
     border-radius: 99em;
@@ -115,10 +115,10 @@
     height: 90%;
     background-color: #808080;
 }
-.acrool-react-datepicker__time-fake-option:not(.is-active):hover {
+.time-fake-option:not([data-active]):hover {
     color: var(--primary-color, var(--default-primary-color));
 }
-.acrool-react-datepicker__time-button-container {
+.time-button-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -130,7 +130,7 @@
     border-radius: var(--border-radius);
     border-top: 1px solid var(--container-border-color);
 }
-button.acrool-react-datepicker__time-confirm-button {
+button.time-confirm-button {
     color: #fff;
     border: none;
     font-size: inherit;
@@ -139,7 +139,7 @@ button.acrool-react-datepicker__time-confirm-button {
     background-color: var(--primary-color, var(--default-primary-color));
 
 }
-button.acrool-react-datepicker__time-now-button {
+button.time-now-button {
     background-color: transparent;
     border: none;
     font-size: inherit;
