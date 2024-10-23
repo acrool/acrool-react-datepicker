@@ -7,9 +7,9 @@ import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
 
-import './styles.css';
+import styles from './timepicker2.module.scss';
 import {ITimepicker2Props} from './types';
-import {ITimepickerProps, TimepickerAtom} from "../Timepicker";
+import {ITimepickerProps} from '../Timepicker';
 
 
 /**
@@ -110,9 +110,9 @@ const Timepicker2Atom = ({
      */
     const renderHeader = () => {
         return <>
-            <div className={elClassNames.time2Header}>
-                <span className={elClassNames.time2HeaderText}>{title ?? i18n('com.timepicker.time', {def: 'Time'})}</span>
-                <span className={elClassNames.time2HeaderTimeStr}>{timeString}</span>
+            <div className={styles.header}>
+                <span className={styles.headerText}>{title ?? i18n('com.timepicker.time', {def: 'Time'})}</span>
+                <span className={styles.headerTimeStr}>{timeString}</span>
             </div>
 
         </>;
@@ -123,14 +123,14 @@ const Timepicker2Atom = ({
      * 渲染選擇器
      */
     const renderTimePicker = useCallback(() => {
-        return <div className={elClassNames.time2PickContainer}>
+        return <div className={styles.pickContainer}>
             {/* 時 */}
-            <div className={elClassNames.time2InputGroup}>
+            <div className={styles.inputGroup}>
                 <div className="acrool-react-datepicker__date-week">
                     {i18n('com.timepicker.hour', {def: 'H'})}
                 </div>
 
-                <input className={elClassNames.time2SelectBox}
+                <input className={styles.selectBox}
                     type="range" min="0" max="23"
                     value={time['hour']}
                     onChange={event => {
@@ -140,12 +140,12 @@ const Timepicker2Atom = ({
             </div>
 
             {/* 分 */}
-            <div className={elClassNames.time2InputGroup}>
+            <div className={styles.inputGroup}>
                 <div className="acrool-react-datepicker__date-week">
                     {i18n('com.timepicker.minute', {def: 'M'})}
                 </div>
 
-                <input className={elClassNames.time2SelectBox}
+                <input className={styles.selectBox}
                     type="range" min="0" max="59"
                     value={time['minute']}
                     onChange={event => {
@@ -156,12 +156,12 @@ const Timepicker2Atom = ({
 
             {/* 秒 */}
             {isVisibleSecond &&
-                <div className={elClassNames.time2InputGroup}>
+                <div className={styles.inputGroup}>
                     <div className="acrool-react-datepicker__date-week">
                         {i18n('com.timepicker.second', {def: 'S'})}
                     </div>
 
-                    <input className={elClassNames.time2SelectBox}
+                    <input className={styles.selectBox}
                         type="range" min="0" max="59"
                         value={time['second']}
                         onChange={event => {
@@ -175,16 +175,16 @@ const Timepicker2Atom = ({
 
 
     const renderButton = () => {
-        return <div className={elClassNames.time2ButtonContainer}>
-            <button className={elClassNames.time2NowButton} type="button" onClick={handleNowTime}>{i18n('com.timepicker.setNow', {def: 'Set now'})}</button>
-            <button className={elClassNames.time2ConfirmButton} type="button" onClick={handleOnClickOk}>{i18n('com.timepicker.ok', {def: 'OK'})}</button>
+        return <div className={styles.buttonContainer}>
+            <button className={styles.nowButton} type="button" onClick={handleNowTime}>{i18n('com.timepicker.setNow', {def: 'Set now'})}</button>
+            <button className={styles.confirmButton} type="button" onClick={handleOnClickOk}>{i18n('com.timepicker.ok', {def: 'OK'})}</button>
         </div>;
     };
 
 
     return (
         <div className={clsx(
-            elClassNames.time2Root,
+            styles.root,
             className,
             {'dark-theme': isDark, 'is-enable-sec': isVisibleSecond})} style={style}
         >
