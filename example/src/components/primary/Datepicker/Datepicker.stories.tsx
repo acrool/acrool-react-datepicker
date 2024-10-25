@@ -1,11 +1,17 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {Datepicker} from '@acrool/react-datepicker';
-import React from 'react';
+import {Datepicker, IDatepickerProps} from '@acrool/react-datepicker';
+import React, {FC} from 'react';
 import {fn} from '@storybook/test';
 import {useArgs} from '@storybook/preview-api';
-import {Flex} from '@acrool/react-grid';
 import dayjs from 'dayjs';
+import {generatorArray} from '@acrool/js-utils/array';
+
+const today = dayjs();
+const tagDate = generatorArray(8)
+    .map((row, idx) => {
+        return today.subtract(idx + 2, 'day').format('YYYY-MM-DD');
+    });
 
 const meta = {
     title: 'Primary/Datepicker',
@@ -23,7 +29,17 @@ const meta = {
     argTypes: {},
     args: {
         onChange: fn(),
-        value: dayjs().format('YYYY-MM-DD'),
+        value: today.format('YYYY-MM-DD'),
+    },
+    render: function Render(args) {
+        const [{value}, updateArgs] = useArgs<{value: string}>();
+        const onChange = (value: string) => updateArgs({value});
+
+        return <Datepicker
+            {...args}
+            value={value}
+            onChange={fn(onChange)}
+        />;
     },
 } satisfies Meta<typeof Datepicker>;
 
@@ -32,21 +48,9 @@ type Story = StoryObj<typeof meta>;
 
 
 
-export const Primary: Story = {
+export const Primary: Story = {};
+export const WithTags: Story = {
     args: {
-    },
-    render: function Render(args) {
-        const [{value}, updateArgs] = useArgs<{value: string}>();
-
-        const onChange = (value: string) => updateArgs({value});
-
-        return <Flex column className="gap-3">
-            <div>Current Value: {value}</div>
-            <Datepicker
-                {...args}
-                value={value}
-                onChange={fn(onChange)}
-            />
-        </Flex>;
+        tagDate,
     },
 };

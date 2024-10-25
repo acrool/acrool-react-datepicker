@@ -29,7 +29,7 @@ export interface ICommon {
     isDark?: boolean;
     minDate?: string,
     maxDate?: string,
-    tagDate?: string[],
+    tagDates?: string[],
 }
 
 export interface ITimeObj {

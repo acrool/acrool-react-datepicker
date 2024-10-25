@@ -24,6 +24,16 @@ const meta = {
         onChange: fn(),
         value: '10:12:00',
     },
+    render: function Render(args) {
+        const [{value}, updateArgs] = useArgs<{value: string}>();
+        const onChange = (value: string) => updateArgs({value});
+
+        return <Timepicker2
+            {...args}
+            value={value}
+            onChange={fn(onChange)}
+        />;
+    },
 } satisfies Meta<typeof Timepicker2>;
 
 export default meta;
@@ -31,21 +41,4 @@ type Story = StoryObj<typeof meta>;
 
 
 
-export const Primary: Story = {
-    args: {
-    },
-    render: function Render(args) {
-        const [{value}, updateArgs] = useArgs<{value: string}>();
-
-        const onChange = (value: string) => updateArgs({value});
-
-        return <Flex column className="gap-3">
-            <div>Current Value: {value}</div>
-            <Timepicker2
-                {...args}
-                value={value}
-                onChange={fn(onChange)}
-            />
-        </Flex>;
-    },
-};
+export const Primary: Story = {};

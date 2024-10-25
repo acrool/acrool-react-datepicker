@@ -10,4 +10,4 @@ export {default as Timepicker2, type ITimepicker2Props} from './Timepicker2';
 export {default as DateTimepicker, type IDateTimepickerProps} from './DateTimepicker';
 export {default as DateTimepicker2, type IDateTimepicker2Props} from './DateTimepicker2';
 export {default as RangeTimeDatepicker, type IRangeTimeDatepickerProps} from './RangeTimeDatepicker';
-export {default as WeekDatepicker, type IWeekDatepickerProps} from './WeekDatepicker';
+export {default as WeekDatepicker, type IWeekDatepickerProps, getWeekRange} from './WeekDatepicker';

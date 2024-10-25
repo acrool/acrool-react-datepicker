@@ -4,23 +4,23 @@
  * ------------------------------ */
 
 
-.acrool-react-datepicker__date-time-root {
+.root {
     display: flex;
     flex-direction: column;
 
 }
-.acrool-react-datepicker__date-time-root > .acrool-react-datepicker__date-time-group > div:nth-child(1){
+.root > .group > div:nth-child(1){
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     box-shadow: none;
 }
-.acrool-react-datepicker__date-time-root > .acrool-react-datepicker__date-time-group > div:nth-child(2){
+.root > .group > div:nth-child(2){
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     box-shadow: none;
 }
 
-.acrool-react-datepicker__date-time-group {
+.group {
     display: flex;
     flex-direction: row;
 }

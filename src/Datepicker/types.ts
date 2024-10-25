@@ -1,5 +1,5 @@
 import {Dayjs} from 'dayjs';
-import {ICommon} from "../typing";
+import {ICommon} from '../typing';
 
 export interface ICurrentDayList {
     isActive: boolean

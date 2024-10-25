@@ -9,7 +9,7 @@ import {Timepicker2Atom} from '../Timepicker2';
 import clsx from 'clsx';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
-import './styles.css';
+import styles from './date-timepicker2.module.scss';
 import {IDateTimepicker2Props, EDateType} from './types';
 
 
@@ -115,13 +115,13 @@ const DateTimepicker2 = ({
 
     return <div className={clsx(
         elClassNames.root,
-        elClassNames.dateTime2Root,
+        styles.root,
         {'dark-theme': isDark},
         className
     )}
     style={style}
     >
-        <div className={elClassNames.dateTime2Group}>
+        <div className={styles.group}>
             <DatepickerAtom {...dateProps} value={getDate(propsDate)} onChange={generateOnChange(EDateType.date)}/>
             <Timepicker2Atom {...timeProps} value={getTime(propsDate)} onChange={generateOnChange(EDateType.time)}
                 isVisibleSecond={timeProps.isVisibleSecond}
