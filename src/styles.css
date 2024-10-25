@@ -303,8 +303,8 @@
 .acrool-react-datepicker__date-day[data-tag=true]:after,
 .acrool-react-datepicker__date-pre-day[data-tag=true]:after{
     content: '';
-    width: 4px;
-    height: 4px;
+    width: 50%;
+    height: 2px;
     position: absolute;
     bottom: 3.5px;
     border-radius: 99em;

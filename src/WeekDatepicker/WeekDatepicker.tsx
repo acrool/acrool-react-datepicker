@@ -7,7 +7,7 @@ import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
 import {ICurrentDayList, IWeekDatepickerProps} from './types';
-import {getValue} from './utils';
+import {getValueInWeekStartDate} from './utils';
 import {config} from './config';
 import styles from './week-datepicker.module.scss';
 
@@ -25,26 +25,26 @@ const WeekDatepicker = ({
     format = 'YYYY-MM-DD',
     onChange,
     onChangeYearMonthPanel,
-    isVisibleSetToday = false,
+    // isVisibleSetToday = false,
     locale = 'en-US',
     minYear = 1911,
     maxYear,
     isDark = false,
     minDate,
     maxDate,
-    tagDate = [],
+    tagDates = [],
     startWeekDate,
 }: IWeekDatepickerProps) => {
     const today = useNowTime();
     const {i18n} = useLocale(locale);
-    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(getValue(today, startWeekDate, value));
+    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(getValueInWeekStartDate(today, startWeekDate, value));
 
     const initMaxYear = typeof maxYear !== 'undefined' ? maxYear : Number(today.add(1, 'year').year());
 
 
     useOnlyUpdateEffect(() => {
         const now = dayjs();
-        const targetDate = getValue(now, startWeekDate, value);
+        const targetDate = getValueInWeekStartDate(now, startWeekDate, value);
         const newYear = targetDate.get('year');
         const newMonth = targetDate.get('month');
         const newDate = targetDate.get('date');
@@ -103,8 +103,11 @@ const WeekDatepicker = ({
         }
 
         // 發出事件
-        if(onChangeYearMonthPanel){
-            onChangeYearMonthPanel({year: newPanelDate.year(), month: newPanelDate.month() + 1});
+        if(!newPanelDate.isSame(panelYearMonth, 'date') && onChangeYearMonthPanel){
+            onChangeYearMonthPanel(
+                newPanelDate.format('YYYY-MM-DD'),
+                newPanelDate.add(6, 'day').format('YYYY-MM-DD'),
+            );
         }
 
         setPanelYearMonth(newPanelDate);
@@ -255,9 +258,9 @@ const WeekDatepicker = ({
             currentDayList[d] = {
                 isActive: currentDate.isSame(eachDate, 'date'),
                 isToday: today.isSame(eachDate, 'date'),
-                isTag: tagDate?.includes(eachDate.format('YYYY-MM-DD')),
+                isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
                 isDisable,
-                className: elClassNames.dateDay,
+                className: styles.dateDay,
                 date: eachDate,
                 dayInWeek,
                 dayNumber: dayNumber,

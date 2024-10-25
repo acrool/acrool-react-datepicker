@@ -3,7 +3,7 @@
 
 .root{
     @include theme(false);
-    width: 270px;
+    width: auto;
 }
 .root.theme-dark{
     @include theme(true);
@@ -40,6 +40,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 2px;
 }
 
 .current-day{
@@ -50,7 +51,7 @@
     display: flex;
     flex-direction: column;
 
-    &[data-active]{
+    &[data-tag]{
       color: #fff;
     }
 
@@ -88,7 +89,7 @@
         cursor: pointer;
     }
 
-    &[data-active]{
+    &[data-tag]{
         color: #fff;
 
         &:before {
@@ -96,29 +97,23 @@
         }
     }
 
-    &[data-tag]{
-        color: #fff;
-
+    &[data-active]{
         &:after {
             content: '';
-            width: 4px;
-            height: 4px;
+            width: 80%;
+            height: 2px;
             position: absolute;
-            bottom: 3.5px;
+            bottom: -3px;
             border-radius: 99em;
             z-index: 1;
             background-color: #42a20d;
-        }
-
-        &[data-tag]:after{
-            background-color: #fff;
         }
     }
 
     &[data-today]{
         color: var(--primary-color, var(--default-primary-color));
 
-        &[data-active]{
+        &[data-tag]{
             color: #fff;
             &:before{
                 background-color: var(--primary-color, var(--default-primary-color));

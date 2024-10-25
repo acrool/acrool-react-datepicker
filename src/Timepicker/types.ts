@@ -1,6 +1,6 @@
 import {Dayjs} from 'dayjs';
-import {ICommon} from "../typing";
-import CSS from "csstype";
+import {ICommon} from '../typing';
+import CSS from 'csstype';
 
 export interface ICurrentDayList {
     isActive: boolean

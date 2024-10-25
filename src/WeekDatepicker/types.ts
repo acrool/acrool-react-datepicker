@@ -19,7 +19,7 @@ export interface IWeekDatepickerProps extends ICommon{
     value?: string;
     onChange: (newDate: string) => void;
     format?: string
-    onChangeYearMonthPanel?: (yearMonth: { year: number, month: number }) => void;
-    isVisibleSetToday?: boolean;
+    onChangeYearMonthPanel?: (newStartDate: string, newEndDate: string) => void;
+    // isVisibleSetToday?: boolean;
     startWeekDate: string,
 }

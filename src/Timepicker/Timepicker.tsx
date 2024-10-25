@@ -6,7 +6,7 @@ import {ITimeObj} from '../typing';
 import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
-import './styles.css';
+import styles from './timepicker.module.scss';
 import {ITimepickerProps} from './types';
 import {hourList, minuteList, secondList, unitHeight} from './config';
 
@@ -134,8 +134,9 @@ const TimepickerAtom = ({
         return unitList.map(unit => {
             const isActive = time[unitCode] === unit;
             return (
-                <span className={clsx(elClassNames.timeFakeOption, {'is-active': isActive})}
+                <span className={styles.timeFakeOption}
                     key={`unit-${unitCode}-${unit}`}
+                    data-active={isActive ? '': undefined}
                     onClick={() => {
                         handleOnChange({...time, [unitCode]: unit}, true);
                     }}
@@ -152,8 +153,8 @@ const TimepickerAtom = ({
      */
     const renderHeader = () => {
         return <>
-            <div className={elClassNames.timeHeader}>
-                <span className={elClassNames.timeHeaderText}>{title ?? i18n('com.timepicker.time', {def: 'Time'})}</span>
+            <div className={styles.timeHeader}>
+                <span className={styles.timeHeaderText}>{title ?? i18n('com.timepicker.time', {def: 'Time'})}</span>
             </div>
             <div className="acrool-react-datepicker__date-week-row">
                 <div className="acrool-react-datepicker__date-week">
@@ -176,20 +177,20 @@ const TimepickerAtom = ({
      * 渲染選擇器
      */
     const renderTimePicker = () => {
-        return <div className={elClassNames.timePickContainer}>
+        return <div className={styles.timePickContainer}>
             {/* 時 */}
-            <div className={elClassNames.timeSelectBox} ref={hourBoxRef}>
+            <div className={styles.timeSelectBox} ref={hourBoxRef}>
                 {renderOption('hour', hourList)}
             </div>
 
             {/* 分 */}
-            <div className={elClassNames.timeSelectBox} ref={minuteBoxRef}>
+            <div className={styles.timeSelectBox} ref={minuteBoxRef}>
                 {renderOption('minute', minuteList)}
             </div>
 
             {/* 秒 */}
             {isVisibleSecond &&
-                <div className={elClassNames.timeSelectBox} ref={secondBoxRef}>
+                <div className={styles.timeSelectBox} ref={secondBoxRef}>
                     {renderOption('second', secondList)}
                 </div>
             }
@@ -198,18 +199,22 @@ const TimepickerAtom = ({
 
 
     const renderButton = () => {
-        return <div className={elClassNames.timeButtonContainer}>
-            <button className={elClassNames.timeNowButton} type="button" onClick={handleNowTime}>{i18n('com.timepicker.setNow', {def: 'Set now'})}</button>
-            <button className={elClassNames.timeConfirmButton} type="button" onClick={handleOnClickOk}>{i18n('com.timepicker.ok', {def: 'OK'})}</button>
+        return <div className={styles.timeButtonContainer}>
+            <button className={styles.timeNowButton} type="button" onClick={handleNowTime}>{i18n('com.timepicker.setNow', {def: 'Set now'})}</button>
+            <button className={styles.timeConfirmButton} type="button" onClick={handleOnClickOk}>{i18n('com.timepicker.ok', {def: 'OK'})}</button>
         </div>;
     };
 
 
     return (
-        <div className={clsx(
-            elClassNames.timeRoot,
-            className,
-            {'dark-theme': isDark, 'is-enable-sec': isVisibleSecond})} style={style}
+        <div
+            className={clsx(
+                styles.root,
+                className,
+                {'dark-theme': isDark})
+            }
+            style={style}
+            data-enable-sec={isVisibleSecond ? '': undefined}
         >
 
             {renderHeader()}
@@ -220,9 +225,14 @@ const TimepickerAtom = ({
 };
 
 
-const Timepicker = (props: ITimepickerProps) => createElement(TimepickerAtom, {...props, className: clsx(props.className, elClassNames.root)});
-export {
-    TimepickerAtom
+
+const Timepicker = (props: ITimepickerProps) => {
+    return <TimepickerAtom
+        {...props}
+        className={clsx(props.className, elClassNames.root)}
+    />;
 };
+
+export {TimepickerAtom};
 export default Timepicker;
 
