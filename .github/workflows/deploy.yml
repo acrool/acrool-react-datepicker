@@ -2,6 +2,8 @@ name: Deploy Storybook to Pages
 
 on:
   push:
+    branches:
+      - storybook
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
@@ -17,6 +19,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Wait for npm publish
+        run: sleep 30  # 延遲30秒，可根據實際情況調整
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -24,7 +29,7 @@ jobs:
 
       - name: Replace local links with actual versions
         run: |
-          sed -i 's#"@acrool/react-img": "link:.."#"@acrool/react-datepicker": "latest"#' package.json
+          sed -i 's#"@acrool/react-datepicker": "link:.."#"@acrool/react-datepicker": "latest"#' package.json
           sed -i 's#"react": "link:../node_modules/react"#"react": "^18.0.0"#' package.json
           sed -i 's#"react-dom": "link:../node_modules/react-dom"#"react-dom": "^18.0.0"#' package.json
 
