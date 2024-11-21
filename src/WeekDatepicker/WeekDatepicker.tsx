@@ -51,14 +51,6 @@ const WeekDatepicker = ({
         handleChangePanel(newYear, newMonth, newDate);
     }, [value]);
 
-    /**
-     * 產生週星期文字
-     */
-    const localeWeekDay = useMemo(() => {
-        return config.weekDay.map((weekDate: number) => {
-            return i18n(`com.datepicker.weekDay.${weekDate}`, {def: String(weekDate)});
-        });
-    }, [locale]);
 
     /**
      * 產生月文字
@@ -250,7 +242,7 @@ const WeekDatepicker = ({
         for (let d = 0; d < currentMonthLastDay; d++) {
             const eachDate = panelYearMonth.add(d, 'day');
             const dayNumber = eachDate.date();
-            const dayInWeek = eachDate.day() + 1;
+            const dayInWeek = eachDate.day();
             const isDisable: boolean =
                 !!((minDate && eachDate.isBefore(minDate, 'date')) ||
                     (maxDate && eachDate.isAfter(maxDate, 'date')));
