@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import elClassNames from '../el-class-names';
 
 import {DatepickerAtom} from './Datepicker';
 import {EDateRange} from '../typing';
-import {selectDateRange} from '../utils';
+import {isEmpty, selectDateRange} from '../utils';
 import clsx from 'clsx';
 import useLocale from '../locales';
 import {IScrollRangeDatepickerProps} from './types';
 import {getToday} from './utils';
 import styles from './styles.module.scss';
+import dayjs from 'dayjs';
+import {useLocaleWeekDay} from '../hooks';
 
 
 
@@ -42,6 +44,8 @@ const ScrollRangeDatepicker = ({
 }: IScrollRangeDatepickerProps) => {
     const {i18n} = useLocale(locale);
     const today = getToday();
+
+    const localeWeekDay = useLocaleWeekDay(locale);
 
     const commonProps = {isDark, format, minYear, maxYear, locale};
 
@@ -78,6 +82,66 @@ const ScrollRangeDatepicker = ({
     };
 
 
+
+
+    const handleOnChange = (newValue: string) => {
+        if(onChange){
+            if(value?.endDate){
+                onChange({
+                    startDate: newValue,
+                    endDate: undefined,
+                });
+                return;
+            }
+
+            onChange({
+                ...value,
+                endDate: newValue,
+            });
+
+        }
+    };
+
+    /**
+     * 產生週標題
+     */
+    const renderWeek = useCallback(() => (
+        <div className={elClassNames.dateWeekRow}>
+            {/* eslint-disable-next-line react/no-array-index-key */}
+            {localeWeekDay.map((week, index) => <div className={elClassNames.dateWeek} key={`localeWeekDay-${index}-${week}`}>{week}</div>)}
+        </div>
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    ), []);
+
+
+
+    const renderDateRange = () => {
+
+        const todayMonth = dayjs().set('date', 1);
+        const monthLimit = Array.from({length: 6});
+        const months = monthLimit.map((_, idx) => {
+            return todayMonth.add(idx, 'month');
+        });
+        
+        console.log('value', value);
+
+        return months.map(row => {
+            return <DatepickerAtom
+                key={row.format('YYYY-MM')}
+                {...commonProps}
+                values={value}
+                onChange={handleOnChange}
+                minDate={isEmpty(value?.endDate) ? value?.startDate: undefined}
+                panelYearMonth={row}
+                // minDate={minDate}
+                // maxDate={value?.endDate ? value?.endDate : maxDate}
+            />;
+        });
+
+    };
+
+
     return (
         <div data-fast={isVisibleFastPicker ? '': undefined}
             className={clsx(
@@ -89,35 +153,32 @@ const ScrollRangeDatepicker = ({
         >
             {isVisibleFastPicker && renderRangeFastPicker()}
 
-            <DatepickerAtom
-                {...commonProps}
-                value={value.startDate}
-                onChange={(newValue) => {
-                    if(onChange){
-                        onChange({
-                            startDate: newValue,
-                            endDate: value?.endDate ? value.endDate : today
-                        });
-                    }
-                }}
-                minDate={minDate}
-                maxDate={value?.endDate ? value?.endDate : maxDate}
-            />
 
-            <DatepickerAtom
-                {...commonProps}
-                value={value.endDate}
-                onChange={(newValue) => {
-                    if(onChange){
-                        onChange({
-                            startDate: value?.startDate ? value.startDate : today,
-                            endDate: newValue
-                        });
-                    }
-                }}
-                minDate={value?.startDate ? value?.startDate: minDate}
-                maxDate={maxDate}
-            />
+            {renderWeek()}
+            {renderDateRange()}
+
+            {/*<DatepickerAtom*/}
+            {/*    {...commonProps}*/}
+            {/*    value={value}*/}
+            {/*    onChange={handleOnChange}*/}
+            {/*    // minDate={minDate}*/}
+            {/*    // maxDate={value?.endDate ? value?.endDate : maxDate}*/}
+            {/*/>*/}
+
+            {/*<DatepickerAtom*/}
+            {/*    {...commonProps}*/}
+            {/*    value={value.endDate}*/}
+            {/*    onChange={(newValue) => {*/}
+            {/*        if(onChange){*/}
+            {/*            onChange({*/}
+            {/*                startDate: value?.startDate ? value.startDate : today,*/}
+            {/*                endDate: newValue*/}
+            {/*            });*/}
+            {/*        }*/}
+            {/*    }}*/}
+            {/*    minDate={value?.startDate ? value?.startDate: minDate}*/}
+            {/*    maxDate={maxDate}*/}
+            {/*/>*/}
 
 
         </div>

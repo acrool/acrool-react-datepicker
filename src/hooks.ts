@@ -95,10 +95,22 @@ export const useDatepicker = ({
     
     return {
         panelYearMonth,
-        localeWeekDay,
         localeMonth,
         localeYear,
         handleChangePanel,
         handleSelectedToday,
     };
+};
+
+
+
+/**
+ * 產生週星期文字
+ */
+export const useLocaleWeekDay = (locale?: string) => {
+    const {i18n} = useLocale(locale);
+
+    return config.weekDay.map((weekDate: number) => {
+        return i18n(`com.datepicker.weekDay.${weekDate}`, {def: String(weekDate)});
+    });
 };

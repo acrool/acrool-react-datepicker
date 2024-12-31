@@ -7,7 +7,7 @@ import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
 import {ICurrentDayList, IDatepickerProps} from './types';
-import {useDatepicker} from '../hooks';
+import {useDatepicker, useLocaleWeekDay} from '../hooks';
 
 
 
@@ -34,10 +34,10 @@ const DatepickerAtom = ({
 }: IDatepickerProps) => {
     const today = useNowTime();
     const {i18n} = useLocale(locale);
+    const localeWeekDay = useLocaleWeekDay(locale);
 
 
     const {
-        localeWeekDay,
         localeMonth,
         localeYear,
         panelYearMonth,

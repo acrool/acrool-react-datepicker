@@ -6,7 +6,9 @@ import {Dayjs} from "dayjs";
 
 
 export interface ICurrentDayList {
-    isActive: boolean
+    isStartActive: boolean
+    isEndActive: boolean
+    isInRange: boolean
     isToday: boolean,
     isTag: boolean,
     isDisable: boolean,
@@ -19,11 +21,12 @@ export interface ICurrentDayList {
 
 
 export interface IDatepickerProps extends ICommon{
-    value?: string;
+    values?: IRangeDateValue;
     onChange: (newDate: string) => void;
     format?: string
     onChangeYearMonthPanel?: (yearMonth: { year: number, month: number }) => void;
     isVisibleSetToday?: boolean;
+    panelYearMonth: Dayjs,
 }
 
 
@@ -33,6 +36,7 @@ export interface IDatepickerProps extends ICommon{
 export interface IScrollRangeDatepickerProps extends ICommon{
     value?: IRangeDateValue
     format?: string
-    onChange?: (value: IRangeDateValue) => void
+    // onChange?: (updater: (current: IRangeDateValue | undefined) => any) => void,
+    onChange?: (newValue: IRangeDateValue | undefined) => void,
     isVisibleFastPicker?: boolean
 }
