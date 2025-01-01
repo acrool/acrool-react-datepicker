@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import elClassNames from '../el-class-names';
 
 import {DatepickerAtom} from './Datepicker';
@@ -11,6 +11,7 @@ import {getToday} from './utils';
 import styles from './styles.module.scss';
 import dayjs from 'dayjs';
 import {useLocaleWeekDay} from '../hooks';
+import {useInfiniteScroll} from './useInfiniteScroll';
 
 
 
@@ -45,10 +46,41 @@ const ScrollRangeDatepicker = ({
     const {i18n} = useLocale(locale);
     const today = getToday();
 
+
+    const [beforeData, setBeforeData] = useState<number>(3);
+    const [afterData, setAfterData] = useState<number>(3);
+    const [hasMoreTop, setHasMoreTop] = useState(false);
+    const [hasMoreBottom, setHasMoreBottom] = useState(false);
+
+    const loadMoreTop = async () => {
+        setHasMoreTop(true);
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // 模擬載入延遲
+        setBeforeData(curr => curr + 3);
+        setHasMoreTop(false);
+    };
+
+    const loadMoreBottom = async () => {
+        setHasMoreBottom(true);
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // 模擬載入延遲
+        setAfterData(curr => curr + 3);
+        setHasMoreBottom(false);
+    };
+
+    const {topRef, bottomRef, isLoadingTop, isLoadingBottom} = useInfiniteScroll({
+        loadMoreTop,
+        loadMoreBottom,
+        hasMoreTop,
+        hasMoreBottom,
+    });
+    
+    
+    
+    
     const localeWeekDay = useLocaleWeekDay(locale);
 
     const commonProps = {isDark, format, minYear, maxYear, locale};
 
+    
 
     const setRangeDate = (rangeType: EDateRange) => {
         const newVal = selectDateRange(rangeType, format);
@@ -59,31 +91,9 @@ const ScrollRangeDatepicker = ({
 
 
     /**
-     * 快速選擇面板
+     * 當資料異動
+     * @param newValue
      */
-    const renderRangeFastPicker = () => {
-        return <div className={elClassNames.dateRangeLabelCheckCardCreate}>
-            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.today)}>
-                <span>{i18n('com.datepicker.today', {def: 'today'})}</span>
-            </button>
-            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.tomorrow)}>
-                <span>{i18n('com.datepicker.tomorrow', {def: 'tomorrow'})}</span>
-            </button>
-            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.twoDay)}>
-                <span>{i18n('com.datepicker.twoDay', {def: 'two day'})}</span>
-            </button>
-            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.thisWeek)}>
-                <span>{i18n('com.datepicker.thisWeek', {def: 'this week'})}</span>
-            </button>
-            <button className={elClassNames.dateRangeButton} type="button" onClick={() => setRangeDate(EDateRange.nextWeek)}>
-                <span>{i18n('com.datepicker.nextWeek', {def: 'next week'})}</span>
-            </button>
-        </div>;
-    };
-
-
-
-
     const handleOnChange = (newValue: string) => {
         if(onChange){
             if(dayjs(value?.startDate).isSame(newValue)){
@@ -114,19 +124,18 @@ const ScrollRangeDatepicker = ({
      */
     const renderWeek = useCallback(() => (
         <div className={styles.dateWeekRow}>
-            {/* eslint-disable-next-line react/no-array-index-key */}
             {localeWeekDay.map((week, index) => <div className={styles.dateWeek} key={`localeWeekDay-${index}-${week}`}>{week}</div>)}
         </div>
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     ), []);
 
 
-
+    /**
+     * 產生日曆表
+     */
     const renderDateRange = () => {
 
         const months = getYearMonth(6);
-
 
         return months.map(row => {
             return <DatepickerAtom
@@ -156,11 +165,16 @@ const ScrollRangeDatepicker = ({
         >
             {renderWeek()}
 
-            <div className={styles.scrollLister}/>
+            {(isLoadingTop) && <p>top loading...</p>}
+
+            <div ref={topRef} style={{height: '1px', background: 'transparent'}} />
 
             {renderDateRange()}
 
-            <div className={styles.scrollLister}/>
+            <div ref={bottomRef} style={{height: '1px', background: 'transparent'}} />
+
+            {(isLoadingBottom) && <p>bottom loading...</p>}
+
             {/*<DatepickerAtom*/}
             {/*    {...commonProps}*/}
             {/*    value={value}*/}
