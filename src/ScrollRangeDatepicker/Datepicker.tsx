@@ -13,7 +13,7 @@ import {
     getNextMonthDays,
     getPreMonthDays,
 } from '../utils';
-import styles from './styles.module.scss';
+import styles from './scroll-range-datepicker.module.scss';
 
 
 

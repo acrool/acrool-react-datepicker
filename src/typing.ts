@@ -1,5 +1,5 @@
 import CSS from 'csstype';
-import {Dayjs} from "dayjs";
+import {Dayjs} from 'dayjs';
 
 export type IRangeDateValue = {startDate?: string, endDate?: string}
 export type IRangeDateTimeValue = {date?: string, startTime?: string, endTime?: string}

@@ -3,8 +3,8 @@ import dayjs, {Dayjs} from 'dayjs';
 import useLocale from './locales';
 import {config} from './config';
 import {ICurrentDayList} from './typing';
-import {isEmpty} from "./utils";
-import styles from "./ScrollRangeDatepicker/styles.module.scss";
+import {isEmpty} from './utils';
+import styles from './ScrollRangeDatepicker/styles.module.scss';
 
 
 interface IDatepickerProps {

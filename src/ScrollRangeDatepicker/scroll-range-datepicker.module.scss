@@ -1,4 +1,4 @@
-@import '../mixin.scss';
+@use '../mixin' as m;
 
 
 .root{
@@ -10,10 +10,10 @@
   height: 437px;
   background-color: var(--bg-color);
 
-  @include theme(false);
+  @include m.theme(false);
 
   &.dark-theme{
-    @include theme(true);
+    @include m.theme(true);
   }
 }
 
