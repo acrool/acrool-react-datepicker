@@ -1,12 +1,10 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import elClassNames from '../el-class-names';
-import {ArrowIcon} from '../Icon';
 import clsx from 'clsx';
-import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
-import {ICurrentDayList, IDatepickerProps} from './types';
+import {IDatepickerProps} from './types';
 import {useDatepicker} from '../hooks';
 import {
     getCheckDateStartEnd,
@@ -14,7 +12,6 @@ import {
     getCheckDateRangeKind,
     getNextMonthDays,
     getPreMonthDays,
-    isEmpty
 } from '../utils';
 import styles from './styles.module.scss';
 
@@ -48,13 +45,6 @@ const DatepickerAtom = ({
 
     const {
         localeMonth,
-        localeYear,
-        // getPreMonthDays,
-        // getNextMonthDays,
-        // getCurrentMonthDays,
-        // panelYearMonth,
-        // handleChangePanel,
-        // handleSelectedToday,
     } = useDatepicker({
         format,
         locale,
@@ -105,7 +95,6 @@ const DatepickerAtom = ({
         const formatDate = newDate.format(format);
         onChange(formatDate);
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 
 
@@ -116,17 +105,15 @@ const DatepickerAtom = ({
      */
     const renderYearMonth = () => {
 
-        const activeYear = localeYear.find(row => String(row.value) === String(yearMonthPanel.year()));
         const activeMonth = localeMonth.find(row => row.value === yearMonthPanel.month());
 
         // 產生年月標題
         return (
             <div className={styles.dateYearMonthRow}>
-                {activeMonth?.text} {activeYear?.text}
+                {activeMonth?.text} {yearMonthPanel.year()}
             </div>
         );
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 
 
@@ -134,46 +121,11 @@ const DatepickerAtom = ({
      * 產生當月日期表
      */
     const renderCurrentMonthDay = () => {
-        // const current1Date =
-        //     [
-        //         values?.startDate,
-        //         values?.endDate,
-        //     ].filter(row => !isEmpty(row));
-
-        // 取 Panel年月 的最後一天
-        // const currentMonthLastDay = panelYearMonth.endOf('month').get('date');
-        //
-        // // 產生 Panel年月 當月日期表
-        // const currentDayList: ICurrentDayList[] = Array.from({length: currentMonthLastDay});
-        // for (let d = 0; d < currentMonthLastDay; d++) {
-        //     const dayNumber = d + 1;
-        //     const eachDate = panelYearMonth.set('date', dayNumber);
-        //     const isDisable: boolean =
-        //         !!((minDate && eachDate.isBefore(minDate, 'date')) ||
-        //             (maxDate && eachDate.isAfter(maxDate, 'date')));
-        //
-        //     currentDayList[d] = {
-        //         isStartActive: values?.startDate ? eachDate.isSame(values?.startDate, 'date'): false,
-        //         isEndActive: values?.endDate ? eachDate.isSame(values?.endDate, 'date') : false,
-        //         isInRange: (!isEmpty(values?.startDate) && !isEmpty(values?.endDate)) && eachDate.isAfter(values?.startDate) && (eachDate.isBefore(values?.endDate) || eachDate.isSame(values?.endDate, 'date')),
-        //         isToday: today.isSame(eachDate, 'date'),
-        //         isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
-        //         isDisable,
-        //         className: styles.dateDay,
-        //         date: eachDate,
-        //         dayNumber: dayNumber,
-        //         // onClick: () => !isDisable ? handleSelectedDate(panelYearMonth.year(), panelYearMonth.month(), dayNumber) : {}
-        //     };
-        // }
-
         const preMonthDay = getPreMonthDays(yearMonthPanel);
         const currentMonthDay = getCurrentMonthDays(yearMonthPanel);
         const nextMonthDays = getNextMonthDays(yearMonthPanel);
 
         const monthDateList = [...preMonthDay, ...currentMonthDay, ...nextMonthDays];
-
-        // const actIndex = monthDateList.findIndex((row) => row.isStartActive || row.isEndActive);
-        // const weekIndex = Math.floor(actIndex / 7);
 
         return (
             <div className={styles.dateDayRow}>
@@ -181,26 +133,12 @@ const DatepickerAtom = ({
 
                     {monthDateList.map(row => {
 
-                        // isStartActive: values?.startDate ? eachDate.isSame(values?.startDate, 'date'): false,
-                        // isEndActive: values?.endDate ? eachDate.isSame(values?.endDate, 'date') : false,
-                        // isInRange: (!isEmpty(values?.startDate) && !isEmpty(values?.endDate)) && eachDate.isAfter(values?.startDate) && (eachDate.isBefore(values?.endDate) || eachDate.isSame(values?.endDate, 'date')),
-                        // isToday: today.isSame(eachDate, 'date'),
-                        // isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
-                        // isDisable,
-                        // className: styles.dateDay,
-
-
                         return <div
                             key={`currentDay-${row.date}`}
                             className={styles.dateDay}
                             data-active={getCheckDateStartEnd(row.date, values)}
                             data-range-kind={getCheckDateRangeKind(row.date, values)}
-                            // data-start-active={row.isStartActive ? '': undefined}
-                            // data-end-active={row.isEndActive ? '': undefined}
-                            // data-range={row.isInRange}
                             data-today={today.isSame(row.date, 'date') ? '': undefined}
-                            // data-tag={row.isTag}
-                            // data-disable={row.isDisable}
                             data-type={row.type}
                             onClick={() => handleSelectedDate(row.date.year(), row.date.month(), row.dayNumber)}
                         >
@@ -217,9 +155,12 @@ const DatepickerAtom = ({
 
 
 
-    return <div className={clsx(
-        elClassNames.dateRoot,
-        className, {'dark-theme': isDark})} style={style}>
+    return <div
+        data-year-Month={yearMonthPanel.format('YYYY-MM')}
+        className={clsx(
+            elClassNames.dateRoot,
+            className, {'dark-theme': isDark})} style={style}
+    >
         {renderYearMonth()}
         {renderCurrentMonthDay()}
 

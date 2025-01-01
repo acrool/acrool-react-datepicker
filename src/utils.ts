@@ -212,9 +212,14 @@ export const selectDateTimeRange = (rangeType: EDateTimeRange, format: string, i
 };
 
 
-export const getYearMonth = (length: number) => {
-    const todayMonth = dayjs().set('date', 1);
-    const monthLimit = Array.from({length});
+/**
+ * 取得年月範圍
+ * @param start
+ * @param end
+ */
+export const getYearMonthRange = (start: number, end: number) => {
+    const todayMonth = dayjs().subtract(start, 'month').set('date', 1);
+    const monthLimit = Array.from({length: start + end});
     return monthLimit.map((_, idx) => {
         return todayMonth.add(idx, 'month');
     });

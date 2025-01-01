@@ -2,34 +2,44 @@ import {useEffect, useRef, useState, useCallback} from 'react';
 
 type UseInfiniteScrollOptions = {
     loadMoreTop: () => Promise<void>; // 載入頂部更多數據
-    loadMoreBottom: () => Promise<void>; // 載入底部更多數據
-    hasMoreTop: boolean; // 是否還有更多頂部數據
-    hasMoreBottom: boolean; // 是否還有更多底部數據
+    loadMoreBottom: () => Promise<void>; // 載入底部更多數據\
 };
 
 export function useInfiniteScroll({
     loadMoreTop,
     loadMoreBottom,
-    hasMoreTop,
-    hasMoreBottom,
 }: UseInfiniteScrollOptions) {
+    const containerRef = useRef<HTMLDivElement | null>(null); // 內部管理滾動容器
     const topRef = useRef<HTMLDivElement | null>(null);
     const bottomRef = useRef<HTMLDivElement | null>(null);
 
     const [isLoadingTop, setIsLoadingTop] = useState(false);
     const [isLoadingBottom, setIsLoadingBottom] = useState(false);
 
+    useEffect(() => {
+        const container = containerRef.current;
+        if (container) {
+            container.scrollTop = 50; // 將滾動條設置到底部
+        }
+    }, []);
+
     const handleIntersect = useCallback(
         async (entries: IntersectionObserverEntry[]) => {
+            const container = containerRef.current;
+            if (!container) return;
+
             for (const entry of entries) {
                 if (entry.isIntersecting) {
-                    if (entry.target === topRef.current && hasMoreTop && !isLoadingTop) {
+                    if (entry.target === topRef.current && !isLoadingTop) {
+                        // 記錄滾動位置和高度
+                        container.scrollTop = 40;
+
                         setIsLoadingTop(true);
                         await loadMoreTop();
                         setIsLoadingTop(false);
+
                     } else if (
                         entry.target === bottomRef.current &&
-                        hasMoreBottom &&
                         !isLoadingBottom
                     ) {
                         setIsLoadingBottom(true);
@@ -39,7 +49,7 @@ export function useInfiniteScroll({
                 }
             }
         },
-        [hasMoreTop, hasMoreBottom, loadMoreTop, loadMoreBottom, isLoadingTop, isLoadingBottom]
+        [loadMoreTop, loadMoreBottom, isLoadingTop, isLoadingBottom]
     );
 
     useEffect(() => {
@@ -58,5 +68,5 @@ export function useInfiniteScroll({
         };
     }, [handleIntersect]);
 
-    return {topRef, bottomRef, isLoadingTop, isLoadingBottom};
+    return {containerRef, topRef, bottomRef, isLoadingTop, isLoadingBottom};
 }

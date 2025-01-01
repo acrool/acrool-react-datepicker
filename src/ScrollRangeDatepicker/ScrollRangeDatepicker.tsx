@@ -1,9 +1,9 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import elClassNames from '../el-class-names';
 
 import {DatepickerAtom} from './Datepicker';
 import {EDateRange} from '../typing';
-import {getYearMonth, isEmpty, selectDateRange} from '../utils';
+import {getYearMonthRange, isEmpty, selectDateRange} from '../utils';
 import clsx from 'clsx';
 import useLocale from '../locales';
 import {IScrollRangeDatepickerProps} from './types';
@@ -49,28 +49,20 @@ const ScrollRangeDatepicker = ({
 
     const [beforeData, setBeforeData] = useState<number>(3);
     const [afterData, setAfterData] = useState<number>(3);
-    const [hasMoreTop, setHasMoreTop] = useState(false);
-    const [hasMoreBottom, setHasMoreBottom] = useState(false);
 
     const loadMoreTop = async () => {
-        setHasMoreTop(true);
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // 模擬載入延遲
         setBeforeData(curr => curr + 3);
-        setHasMoreTop(false);
+        setAfterData(curr => curr - 3);
     };
 
     const loadMoreBottom = async () => {
-        setHasMoreBottom(true);
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // 模擬載入延遲
+        setBeforeData(curr => curr - 3);
         setAfterData(curr => curr + 3);
-        setHasMoreBottom(false);
     };
 
-    const {topRef, bottomRef, isLoadingTop, isLoadingBottom} = useInfiniteScroll({
+    const {containerRef, topRef, bottomRef, isLoadingTop, isLoadingBottom} = useInfiniteScroll({
         loadMoreTop,
         loadMoreBottom,
-        hasMoreTop,
-        hasMoreBottom,
     });
     
     
@@ -135,7 +127,7 @@ const ScrollRangeDatepicker = ({
      */
     const renderDateRange = () => {
 
-        const months = getYearMonth(6);
+        const months = getYearMonthRange(beforeData, afterData);
 
         return months.map(row => {
             return <DatepickerAtom
@@ -155,7 +147,9 @@ const ScrollRangeDatepicker = ({
 
 
     return (
-        <div data-fast={isVisibleFastPicker ? '': undefined}
+        <div
+            ref={containerRef}
+            data-fast={isVisibleFastPicker ? '': undefined}
             className={clsx(
                 styles.root,
                 className,
@@ -167,7 +161,9 @@ const ScrollRangeDatepicker = ({
 
             {(isLoadingTop) && <p>top loading...</p>}
 
-            <div ref={topRef} style={{height: '1px', background: 'transparent'}} />
+            {!isLoadingTop &&
+                <div ref={topRef} style={{height: '1px', width: '100%', flex: '0 0 auto', marginBottom: '50px', background: 'red'}} />
+            }
 
             {renderDateRange()}
 

@@ -43,6 +43,7 @@ const meta = {
         return <ScrollRangeDatepicker
             {...args}
             value={value}
+            locale="zh-TW"
             onChange={fn(onChange)}
         />;
     },
