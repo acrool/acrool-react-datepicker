@@ -32,7 +32,7 @@ const DatepickerAtom = ({
     isDark = false,
     minDate,
     maxDate,
-    panelYearMonth,
+    yearMonthPanel,
     tagDates = []
 }: IDatepickerProps) => {
     const today = useNowTime();
@@ -42,29 +42,36 @@ const DatepickerAtom = ({
     const {
         localeMonth,
         localeYear,
+        getPreMonthDays,
+        getNextMonthDays,
+        getCurrentMonthDays,
         // panelYearMonth,
-        handleChangePanel,
+        // handleChangePanel,
         // handleSelectedToday,
     } = useDatepicker({
         format,
         locale,
+        minDate,
+        maxDate,
         minYear: minYear,
         maxYear: maxYear || dayjs().year() + 1,
+        tagDates,
         // value: value,
         today: dayjs(),
-        onChangeYearMonthPanel: onChangeYearMonthPanel,
+        yearMonthPanel,
+        // onChangeYearMonthPanel: onChangeYearMonthPanel,
         onChange,
     });
 
 
 
-    useOnlyUpdateEffect(() => {
-        const dateVal = dayjs(values?.startDate);
-        const now = dayjs();
-        const newYear = dateVal.isValid() ? dateVal.get('year') : now.get('year');
-        const newMonth = dateVal.isValid() ? dayjs(values?.startDate).get('month'): now.get('month');
-        handleChangePanel(newYear, newMonth);
-    }, [values]);
+    // useOnlyUpdateEffect(() => {
+    //     const dateVal = dayjs(values?.startDate);
+    //     const now = dayjs();
+    //     const newYear = dateVal.isValid() ? dateVal.get('year') : now.get('year');
+    //     const newMonth = dateVal.isValid() ? dayjs(values?.startDate).get('month'): now.get('month');
+    //     handleChangePanel(newYear, newMonth);
+    // }, [values]);
 
 
 
@@ -75,7 +82,7 @@ const DatepickerAtom = ({
      * @param day
      */
     const handleSelectedDate = (year?: number, month?: number, day?: number) => {
-        let newDate = panelYearMonth;
+        let newDate = yearMonthPanel;
         if (year) {
             newDate = newDate.set('year', year);
         }
@@ -102,8 +109,8 @@ const DatepickerAtom = ({
      */
     const renderYearMonth = () => {
 
-        const activeYear = localeYear.find(row => String(row.value) === String(panelYearMonth.year()));
-        const activeMonth = localeMonth.find(row => row.value === panelYearMonth.month());
+        const activeYear = localeYear.find(row => String(row.value) === String(yearMonthPanel.year()));
+        const activeMonth = localeMonth.find(row => row.value === yearMonthPanel.month());
 
         // 產生年月標題
         return (
@@ -119,30 +126,12 @@ const DatepickerAtom = ({
                                 {activeYear?.text}
                             </span>
 
-                            <select
-                                className={elClassNames.dateYearSelect}
-                                onChange={e => handleChangePanel(panelYearMonth.set('year', Number(e.target.value)).year())}
-                                value={panelYearMonth.year()}
-                            >
-                                {localeYear.map(row => {
-                                    return <option key={row.value} value={row.value}>{row.text}</option>;
-                                })}
-                            </select>
                         </div>
                         <div className={elClassNames.dateMonthGroup}>
                             <span className={elClassNames.dateMonth}>
                                 {activeMonth?.text}
                             </span>
 
-                            <select
-                                className={elClassNames.dateMonthSelect}
-                                onChange={e => handleChangePanel(undefined, panelYearMonth.set('month', Number(e.target.value)).month())}
-                                value={panelYearMonth.month()}
-                            >
-                                {localeMonth.map(row => {
-                                    return <option key={row.value} value={row.value}>{row.text}</option>;
-                                })}
-                            </select>
                         </div>
 
                     </div>
@@ -163,61 +152,64 @@ const DatepickerAtom = ({
      * 產生當月日期表
      */
     const renderCurrentMonthDay = () => {
-        const current1Date =
-            [
-                values?.startDate,
-                values?.endDate,
-            ].filter(row => !isEmpty(row));
+        // const current1Date =
+        //     [
+        //         values?.startDate,
+        //         values?.endDate,
+        //     ].filter(row => !isEmpty(row));
 
         // 取 Panel年月 的最後一天
-        const currentMonthLastDay = panelYearMonth.endOf('month').get('date');
+        // const currentMonthLastDay = panelYearMonth.endOf('month').get('date');
+        //
+        // // 產生 Panel年月 當月日期表
+        // const currentDayList: ICurrentDayList[] = Array.from({length: currentMonthLastDay});
+        // for (let d = 0; d < currentMonthLastDay; d++) {
+        //     const dayNumber = d + 1;
+        //     const eachDate = panelYearMonth.set('date', dayNumber);
+        //     const isDisable: boolean =
+        //         !!((minDate && eachDate.isBefore(minDate, 'date')) ||
+        //             (maxDate && eachDate.isAfter(maxDate, 'date')));
+        //
+        //     currentDayList[d] = {
+        //         isStartActive: values?.startDate ? eachDate.isSame(values?.startDate, 'date'): false,
+        //         isEndActive: values?.endDate ? eachDate.isSame(values?.endDate, 'date') : false,
+        //         isInRange: (!isEmpty(values?.startDate) && !isEmpty(values?.endDate)) && eachDate.isAfter(values?.startDate) && (eachDate.isBefore(values?.endDate) || eachDate.isSame(values?.endDate, 'date')),
+        //         isToday: today.isSame(eachDate, 'date'),
+        //         isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
+        //         isDisable,
+        //         className: styles.dateDay,
+        //         date: eachDate,
+        //         dayNumber: dayNumber,
+        //         // onClick: () => !isDisable ? handleSelectedDate(panelYearMonth.year(), panelYearMonth.month(), dayNumber) : {}
+        //     };
+        // }
 
-        // 產生 Panel年月 當月日期表
-        const currentDayList: ICurrentDayList[] = Array.from({length: currentMonthLastDay});
-        for (let d = 0; d < currentMonthLastDay; d++) {
-            const dayNumber = d + 1;
-            const eachDate = panelYearMonth.set('date', dayNumber);
-            const isDisable: boolean =
-                !!((minDate && eachDate.isBefore(minDate, 'date')) ||
-                    (maxDate && eachDate.isAfter(maxDate, 'date')));
+        const preMonthDay = getPreMonthDays();
+        const currentMonthDay = getCurrentMonthDays();
+        const nextMonthDays = getNextMonthDays();
 
-            currentDayList[d] = {
-                isStartActive: values?.startDate ? eachDate.isSame(values?.startDate, 'date'): false,
-                isEndActive: values?.endDate ? eachDate.isSame(values?.endDate, 'date') : false,
-                isInRange: (!isEmpty(values?.startDate) && !isEmpty(values?.endDate)) && eachDate.isAfter(values?.startDate) && (eachDate.isBefore(values?.endDate) || eachDate.isSame(values?.endDate, 'date')),
-                isToday: today.isSame(eachDate, 'date'),
-                isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
-                isDisable,
-                className: styles.dateDay,
-                date: eachDate,
-                dayNumber: dayNumber,
-                onClick: () => !isDisable ? handleSelectedDate(panelYearMonth.year(), panelYearMonth.month(), dayNumber) : {}
-            };
-        }
+        const monthDateList = [...preMonthDay, ...currentMonthDay, ...nextMonthDays];
 
-
-        const monthDateList = [...currentDayList];
-
-        const actIndex = monthDateList.findIndex((row) => row.isStartActive || row.isEndActive);
-        const weekIndex = Math.floor(actIndex / 7);
+        // const actIndex = monthDateList.findIndex((row) => row.isStartActive || row.isEndActive);
+        // const weekIndex = Math.floor(actIndex / 7);
 
         return (
             <div className={elClassNames.dateDayRow}>
                 <div className={elClassNames.dateDayContent}>
-                    {weekIndex >= 0 && <div className={elClassNames.dateWeekMask} style={{top: weekIndex * 30}}/>}
 
                     {monthDateList.map(row => {
-                        return  <div
+                        return <div
                             key={`currentDay-${row.date}`}
-                            className={row.className}
-                            data-start-active={row.isStartActive ? '': undefined}
-                            data-end-active={row.isEndActive ? '': undefined}
-                            data-range={row.isInRange}
+                            className={styles.dateDay}
+                            // data-start-active={row.isStartActive ? '': undefined}
+                            // data-end-active={row.isEndActive ? '': undefined}
+                            // data-range={row.isInRange}
                             data-today={row.isToday}
                             data-tag={row.isTag}
                             data-disable={row.isDisable}
+                            data-type={row.type}
 
-                            onClick={row.onClick}
+                            // onClick={row.onClick}
                         >
                             <span>
                                 {row.dayNumber}
@@ -228,6 +220,8 @@ const DatepickerAtom = ({
             </div>
         );
     };
+
+
 
 
     return <div className={clsx(

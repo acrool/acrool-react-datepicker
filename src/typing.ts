@@ -1,4 +1,5 @@
 import CSS from 'csstype';
+import {Dayjs} from "dayjs";
 
 export type IRangeDateValue = {startDate?: string, endDate?: string}
 export type IRangeDateTimeValue = {date?: string, startTime?: string, endTime?: string}
@@ -36,4 +37,19 @@ export interface ITimeObj {
     hour: number,
     minute: number,
     second?: number,
+}
+
+
+
+
+export interface ICurrentDayList {
+    // isActive: boolean
+    isToday: boolean,
+    isTag: boolean,
+    isDisable: boolean,
+    // className: string,
+    date: Dayjs,
+    dayNumber: number,
+    // onClick: () => void
+    type: 'preDay'|'current'|'nextDay',
 }

@@ -1,17 +1,25 @@
+@import '../mixin.scss';
+
+
 .root{
-    box-sizing: border-box;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 10px;
   overflow-y: scroll;
   height: 437px;
+
+  @include theme(false);
+
+  &.dark-theme{
+    @include theme(true);
+  }
 }
 
 
 
 .date-week,
-.date-day,
-.date-pre-day{
+.date-day{
   flex: 0 0 30px;
   color: var(--day-color);
   width: 30px;
@@ -41,6 +49,12 @@
       >span{
           color: #fff;
       }
+  }
+
+  &[data-type="preDay"],
+  &[data-type="nextDay"]{
+    visibility: hidden;
+    pointer-events: none;
   }
 
 
@@ -73,3 +87,35 @@
   }
 
 }
+
+
+.scroll-lister{
+  height: 2px;
+  width: 100%;
+  background-color: #42a20d;
+}
+
+.date-week-row{
+  position: sticky;
+  top: 10px;
+  background-color: #fff;
+  z-index: 2;
+}
+
+
+
+
+.date-week{
+  font-size: 12px;
+  transform: scale(.9);
+}
+
+
+.date-week-row,
+.date-day-content{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+

@@ -86,7 +86,7 @@ const ScrollRangeDatepicker = ({
 
     const handleOnChange = (newValue: string) => {
         if(onChange){
-            if(value?.endDate){
+            if(value?.endDate || dayjs(value?.startDate).isAfter(newValue)){
                 onChange({
                     startDate: newValue,
                     endDate: undefined,
@@ -106,9 +106,9 @@ const ScrollRangeDatepicker = ({
      * 產生週標題
      */
     const renderWeek = useCallback(() => (
-        <div className={elClassNames.dateWeekRow}>
+        <div className={styles.dateWeekRow}>
             {/* eslint-disable-next-line react/no-array-index-key */}
-            {localeWeekDay.map((week, index) => <div className={elClassNames.dateWeek} key={`localeWeekDay-${index}-${week}`}>{week}</div>)}
+            {localeWeekDay.map((week, index) => <div className={styles.dateWeek} key={`localeWeekDay-${index}-${week}`}>{week}</div>)}
         </div>
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,7 +124,6 @@ const ScrollRangeDatepicker = ({
             return todayMonth.add(idx, 'month');
         });
         
-        console.log('value', value);
 
         return months.map(row => {
             return <DatepickerAtom
@@ -132,14 +131,15 @@ const ScrollRangeDatepicker = ({
                 {...commonProps}
                 values={value}
                 onChange={handleOnChange}
-                minDate={isEmpty(value?.endDate) ? value?.startDate: undefined}
-                panelYearMonth={row}
+                // minDate={isEmpty(value?.endDate) ? value?.startDate: undefined}
+                yearMonthPanel={row}
                 // minDate={minDate}
                 // maxDate={value?.endDate ? value?.endDate : maxDate}
             />;
         });
 
     };
+
 
 
     return (
@@ -151,12 +151,15 @@ const ScrollRangeDatepicker = ({
             )}
             style={style}
         >
-            {isVisibleFastPicker && renderRangeFastPicker()}
 
 
             {renderWeek()}
+
+            <div className={styles.scrollLister}/>
+
             {renderDateRange()}
 
+            <div className={styles.scrollLister}/>
             {/*<DatepickerAtom*/}
             {/*    {...commonProps}*/}
             {/*    value={value}*/}

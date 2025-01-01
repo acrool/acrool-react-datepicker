@@ -15,7 +15,8 @@ export interface ICurrentDayList {
     className: string,
     date: Dayjs,
     dayNumber: number,
-    onClick: () => void
+    // onClick: () => void
+    type: 'preDay'|'currentDay'|'nextDay',
 }
 
 
@@ -26,7 +27,7 @@ export interface IDatepickerProps extends ICommon{
     format?: string
     onChangeYearMonthPanel?: (yearMonth: { year: number, month: number }) => void;
     isVisibleSetToday?: boolean;
-    panelYearMonth: Dayjs,
+    yearMonthPanel: Dayjs,
 }
 
 

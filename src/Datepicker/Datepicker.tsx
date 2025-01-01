@@ -1,5 +1,5 @@
-import React, {useCallback} from 'react';
-import dayjs from 'dayjs';
+import React, {useState, useCallback, useMemo, createElement} from 'react';
+import dayjs,{Dayjs} from 'dayjs';
 import elClassNames from '../el-class-names';
 import {ArrowIcon} from '../Icon';
 import clsx from 'clsx';
@@ -7,7 +7,8 @@ import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
 import {ICurrentDayList, IDatepickerProps} from './types';
-import {useDatepicker, useLocaleWeekDay} from '../hooks';
+import {getValue} from './utils';
+import {config} from '../config';
 
 
 
@@ -34,26 +35,9 @@ const DatepickerAtom = ({
 }: IDatepickerProps) => {
     const today = useNowTime();
     const {i18n} = useLocale(locale);
-    const localeWeekDay = useLocaleWeekDay(locale);
+    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(getValue(today, value));
 
-
-    const {
-        localeMonth,
-        localeYear,
-        panelYearMonth,
-        handleChangePanel,
-        handleSelectedToday,
-    } = useDatepicker({
-        format,
-        locale,
-        minYear: minYear,
-        maxYear: maxYear || dayjs().year() + 1,
-        value: value,
-        today: dayjs(),
-        onChangeYearMonthPanel: onChangeYearMonthPanel,
-        onChange,
-    });
-
+    const initMaxYear = typeof maxYear !== 'undefined' ? maxYear : Number(today.add(1, 'year').year());
 
 
     useOnlyUpdateEffect(() => {
@@ -64,6 +48,61 @@ const DatepickerAtom = ({
         handleChangePanel(newYear, newMonth);
     }, [value]);
 
+    /**
+     * 產生週星期文字
+     */
+    const localeWeekDay = useMemo(() => {
+        return config.weekDay.map((weekDate: number) => {
+            return i18n(`com.datepicker.weekDay.${weekDate}`, {def: String(weekDate)});
+        });
+    }, [locale]);
+
+    /**
+     * 產生月文字
+     */
+    const localeMonth = useMemo(() => {
+        return config.month.map((month: number) => {
+            return {text: i18n(`com.datepicker.month.${month}`), value: month - 1};
+        });
+    }, [locale]);
+
+
+    /**
+     * 產生年文字
+     */
+    const localeYear = useMemo(() => {
+        const length = initMaxYear - minYear + 1;
+        const yearList: number[]  = Array.from({length})
+            .map(row => initMaxYear);
+        const yearText = i18n('com.datepicker.unit.year', {def: 'Year'});
+        return yearList.map((year, index) => {
+            const calcYear = year - (index);
+            return {text: `${calcYear}${yearText}`, value: calcYear};
+        });
+    }, [locale]);
+
+
+    /**
+     * 處理選擇日期
+     * @param year
+     * @param month
+     */
+    const handleChangePanel = useCallback((year?: number, month?: number) => {
+        let newPanelDate = panelYearMonth;
+        if (typeof year !== 'undefined') {
+            newPanelDate = newPanelDate.set('year', year);
+        }
+        if (typeof month !== 'undefined') {
+            newPanelDate = newPanelDate.set('month', month);
+        }
+
+        // 發出事件
+        if(onChangeYearMonthPanel){
+            onChangeYearMonthPanel({year: newPanelDate.year(), month: newPanelDate.month() + 1});
+        }
+
+        setPanelYearMonth(newPanelDate);
+    }, [panelYearMonth]);
 
 
     /**
@@ -92,7 +131,15 @@ const DatepickerAtom = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 
-   
+    /**
+     * 設定為今天日期
+     */
+    const handleSelectedToday = () => {
+        const formatDate = today.format(format);
+
+        setPanelYearMonth(today);
+        onChange(formatDate);
+    };
 
     /**
      * 產生年月
