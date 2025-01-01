@@ -99,83 +99,83 @@ export const useDatepicker = ({
     /**
      * 渲染這個月得資料
      */
-    const getCurrentMonthDays = () => {
-
-        // 取 Panel年月 的最後一天
-        const currentMonthLastDay = yearMonthPanel.endOf('month').get('date');
-
-        // 產生 Panel年月 當月日期表
-        const currentDayList: ICurrentDayList[] = Array.from({length: currentMonthLastDay});
-        for (let d = 0; d < currentMonthLastDay; d++) {
-            const dayNumber = d + 1;
-            const eachDate = yearMonthPanel.set('date', dayNumber);
-            const isDisable: boolean =
-                !!((minDate && eachDate.isBefore(minDate, 'date')) ||
-                    (maxDate && eachDate.isAfter(maxDate, 'date')));
-
-            currentDayList[d] = {
-                // isStartActive: values?.startDate ? eachDate.isSame(values?.startDate, 'date'): false,
-                // isEndActive: values?.endDate ? eachDate.isSame(values?.endDate, 'date') : false,
-                // isInRange: (!isEmpty(values?.startDate) && !isEmpty(values?.endDate)) && eachDate.isAfter(values?.startDate) && (eachDate.isBefore(values?.endDate) || eachDate.isSame(values?.endDate, 'date')),
-                isToday: today.isSame(eachDate, 'date'),
-                isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
-                isDisable,
-                // className: styles.dateDay,
-                date: eachDate,
-                dayNumber: dayNumber,
-                type: 'current'
-                // onClick: () => !isDisable ? handleSelectedDate(panelYearMonth.year(), panelYearMonth.month(), dayNumber) : {}
-            };
-        }
-        return currentDayList;
-    };
+    // const getCurrentMonthDays = () => {
+    //
+    //     // 取 Panel年月 的最後一天
+    //     const currentMonthLastDay = yearMonthPanel.endOf('month').get('date');
+    //
+    //     // 產生 Panel年月 當月日期表
+    //     const currentDayList: ICurrentDayList[] = Array.from({length: currentMonthLastDay});
+    //     for (let d = 0; d < currentMonthLastDay; d++) {
+    //         const dayNumber = d + 1;
+    //         const eachDate = yearMonthPanel.set('date', dayNumber);
+    //         const isDisable: boolean =
+    //             !!((minDate && eachDate.isBefore(minDate, 'date')) ||
+    //                 (maxDate && eachDate.isAfter(maxDate, 'date')));
+    //
+    //         currentDayList[d] = {
+    //             // isStartActive: values?.startDate ? eachDate.isSame(values?.startDate, 'date'): false,
+    //             // isEndActive: values?.endDate ? eachDate.isSame(values?.endDate, 'date') : false,
+    //             // isInRange: (!isEmpty(values?.startDate) && !isEmpty(values?.endDate)) && eachDate.isAfter(values?.startDate) && (eachDate.isBefore(values?.endDate) || eachDate.isSame(values?.endDate, 'date')),
+    //             isToday: today.isSame(eachDate, 'date'),
+    //             isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
+    //             isDisable,
+    //             // className: styles.dateDay,
+    //             date: eachDate,
+    //             dayNumber: dayNumber,
+    //             type: 'current'
+    //             // onClick: () => !isDisable ? handleSelectedDate(panelYearMonth.year(), panelYearMonth.month(), dayNumber) : {}
+    //         };
+    //     }
+    //     return currentDayList;
+    // };
 
 
     /**
      * 產生下個月的剩餘日期表
      * @returns {Array}
      */
-    const getNextMonthDays = useCallback(() => {
-        // const currentDate = dayjs(value);
-
-        // 取得指定年月的第一天是星期幾 (0, 1-6)
-        const currentMonFirstWeek = yearMonthPanel.set('date', 1).day();
-
-        // 取 Panel年月 上個月份的已放空間 (星期六 ex: 6-1=5格, 星期日則為7天)
-        const preMonthFirstContainer = currentMonFirstWeek === 0 ? 6 : currentMonFirstWeek - 1;
-
-        // 取 Panel年月 這個月的最後一天是幾號
-        const panelMonthLastDay = yearMonthPanel.endOf('month').get('date');
-
-        const nextMonth = yearMonthPanel.add(1, 'month');
-
-        // 取得指定年月下個月剩餘月份可放空間
-        const nextMonthEndContainer = (7 * 6) % (preMonthFirstContainer + panelMonthLastDay);
-
-        // 產生上個月的剩餘日期表
-        const nextMonEndDayList: ICurrentDayList[] = Array.from({length: nextMonthEndContainer});
-        for (let d = 0; d < nextMonthEndContainer; d++) {
-            const dayNumber = d + 1;
-            const eachDate = nextMonth.set('date', dayNumber);
-            const isDisable =
-                !!((minDate && eachDate.isBefore(minDate, 'date')) ||
-                    (maxDate && eachDate.isAfter(maxDate, 'date')));
-
-            nextMonEndDayList[d] = {
-                // isActive: currentDate.isSame(nextMonth.set('date', dayNumber), 'date'),
-                isToday: today.isSame(eachDate, 'date'),
-                isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
-                isDisable,
-                // className: elClassNames.datePreDay,
-                date: eachDate,
-                dayNumber: dayNumber,
-                // onClick: () => !isDisable ? handleSelectedDate(nextMonth.year(), nextMonth.month(), dayNumber): {}
-                type: 'nextDay',
-            };
-        }
-
-        return nextMonEndDayList;
-    }, [yearMonthPanel, value, minDate, maxDate, tagDates]);
+    // const getNextMonthDays = useCallback(() => {
+    //     // const currentDate = dayjs(value);
+    //
+    //     // 取得指定年月的第一天是星期幾 (0, 1-6)
+    //     const currentMonFirstWeek = yearMonthPanel.set('date', 1).day();
+    //
+    //     // 取 Panel年月 上個月份的已放空間 (星期六 ex: 6-1=5格, 星期日則為7天)
+    //     const preMonthFirstContainer = currentMonFirstWeek === 0 ? 6 : currentMonFirstWeek - 1;
+    //
+    //     // 取 Panel年月 這個月的最後一天是幾號
+    //     const panelMonthLastDay = yearMonthPanel.endOf('month').get('date');
+    //
+    //     const nextMonth = yearMonthPanel.add(1, 'month');
+    //
+    //     // 取得指定年月下個月剩餘月份可放空間
+    //     const nextMonthEndContainer = (7 * 6) % (preMonthFirstContainer + panelMonthLastDay);
+    //
+    //     // 產生上個月的剩餘日期表
+    //     const nextMonEndDayList: ICurrentDayList[] = Array.from({length: nextMonthEndContainer});
+    //     for (let d = 0; d < nextMonthEndContainer; d++) {
+    //         const dayNumber = d + 1;
+    //         const eachDate = nextMonth.set('date', dayNumber);
+    //         const isDisable =
+    //             !!((minDate && eachDate.isBefore(minDate, 'date')) ||
+    //                 (maxDate && eachDate.isAfter(maxDate, 'date')));
+    //
+    //         nextMonEndDayList[d] = {
+    //             // isActive: currentDate.isSame(nextMonth.set('date', dayNumber), 'date'),
+    //             isToday: today.isSame(eachDate, 'date'),
+    //             isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
+    //             isDisable,
+    //             // className: elClassNames.datePreDay,
+    //             date: eachDate,
+    //             dayNumber: dayNumber,
+    //             // onClick: () => !isDisable ? handleSelectedDate(nextMonth.year(), nextMonth.month(), dayNumber): {}
+    //             type: 'nextDay',
+    //         };
+    //     }
+    //
+    //     return nextMonEndDayList;
+    // }, [yearMonthPanel, value, minDate, maxDate, tagDates]);
 
 
 
@@ -184,48 +184,50 @@ export const useDatepicker = ({
      * 產生上個月的剩餘日期表
      * @returns {Array}
      */
-    const getPreMonthDays = useCallback(() => {
-        // const currentDate = dayjs(value);
+    // const getPreMonthDays = useCallback(() => {
+    //     // const currentDate = dayjs(value);
+    //
+    //     // 取得指定年月的第一天是星期幾 (0, 1-6)
+    //     const currentMonFirstWeek = yearMonthPanel.set('date', 1).day();
+    //
+    //     // 取 Panel年月 剩餘月份的可放空間 (星期六 ex: 6-1=5格, 星期日則為7天)
+    //     const preMonthFirstContainer = currentMonFirstWeek === 0 ? 6 : currentMonFirstWeek - 1;
+    //
+    //     // 取 Panel年月 上個月的最後一天是幾號
+    //     const preMonth = yearMonthPanel.subtract(1, 'month');
+    //     const preMonthLastDay = Number(preMonth.endOf('month').get('date'));
+    //
+    //     // 取 Panel年月 結束日從幾號開始
+    //     const preMonthFirstDay = preMonthLastDay - preMonthFirstContainer;
+    //
+    //     // 產生 Panel年月 上個月的剩餘日期表
+    //     const preMonFirstDayList: ICurrentDayList[] = Array.from({length: preMonthFirstContainer});
+    //     for (let d = 0; d < preMonthFirstContainer; d++) {
+    //         const dayNumber = preMonthFirstDay + d + 1;
+    //         const eachDate = preMonth.set('date', dayNumber);
+    //         const isDisable =
+    //             !!((minDate && eachDate.isBefore(minDate, 'date')) ||
+    //                 (maxDate && eachDate.isAfter(maxDate, 'date')));
+    //
+    //         preMonFirstDayList[d] = {
+    //             // isActive: currentDate.isSame(preMonth.set('date', dayNumber), 'date'),
+    //             isToday: today.isSame(eachDate, 'date'),
+    //             isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
+    //             isDisable,
+    //             // className: styles.datePreDay,
+    //             date: eachDate,
+    //             dayNumber: dayNumber,
+    //             // onClick: () => !isDisable ? handleSelectedDate(preMonth.year(), preMonth.month(), dayNumber) : {}
+    //             type: 'preDay',
+    //         };
+    //     }
+    //
+    //     return preMonFirstDayList;
+    //
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [yearMonthPanel, value, minDate, maxDate, tagDates]);
 
-        // 取得指定年月的第一天是星期幾 (0, 1-6)
-        const currentMonFirstWeek = yearMonthPanel.set('date', 1).day();
 
-        // 取 Panel年月 剩餘月份的可放空間 (星期六 ex: 6-1=5格, 星期日則為7天)
-        const preMonthFirstContainer = currentMonFirstWeek === 0 ? 6 : currentMonFirstWeek - 1;
-
-        // 取 Panel年月 上個月的最後一天是幾號
-        const preMonth = yearMonthPanel.subtract(1, 'month');
-        const preMonthLastDay = Number(preMonth.endOf('month').get('date'));
-
-        // 取 Panel年月 結束日從幾號開始
-        const preMonthFirstDay = preMonthLastDay - preMonthFirstContainer;
-
-        // 產生 Panel年月 上個月的剩餘日期表
-        const preMonFirstDayList: ICurrentDayList[] = Array.from({length: preMonthFirstContainer});
-        for (let d = 0; d < preMonthFirstContainer; d++) {
-            const dayNumber = preMonthFirstDay + d + 1;
-            const eachDate = preMonth.set('date', dayNumber);
-            const isDisable =
-                !!((minDate && eachDate.isBefore(minDate, 'date')) ||
-                    (maxDate && eachDate.isAfter(maxDate, 'date')));
-
-            preMonFirstDayList[d] = {
-                // isActive: currentDate.isSame(preMonth.set('date', dayNumber), 'date'),
-                isToday: today.isSame(eachDate, 'date'),
-                isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
-                isDisable,
-                // className: styles.datePreDay,
-                date: eachDate,
-                dayNumber: dayNumber,
-                // onClick: () => !isDisable ? handleSelectedDate(preMonth.year(), preMonth.month(), dayNumber) : {}
-                type: 'preDay',
-            };
-        }
-
-        return preMonFirstDayList;
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [yearMonthPanel, value, minDate, maxDate, tagDates]);
 
 
     /**
@@ -244,9 +246,9 @@ export const useDatepicker = ({
         localeYear,
         // handleChangePanel,
         // handleSelectedToday,
-        getPreMonthDays,
-        getCurrentMonthDays,
-        getNextMonthDays,
+        // getPreMonthDays,
+        // getCurrentMonthDays,
+        // getNextMonthDays,
     };
 };
 

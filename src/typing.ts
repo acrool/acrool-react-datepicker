@@ -44,12 +44,12 @@ export interface ITimeObj {
 
 export interface ICurrentDayList {
     // isActive: boolean
-    isToday: boolean,
-    isTag: boolean,
-    isDisable: boolean,
+    // isToday: boolean,
+    // isTag: boolean,
+    // isDisable: boolean,
     // className: string,
     date: Dayjs,
     dayNumber: number,
     // onClick: () => void
-    type: 'preDay'|'current'|'nextDay',
+    type: 'lastMonth'|'thisMonth'|'nextMonth',
 }

@@ -3,7 +3,7 @@ import elClassNames from '../el-class-names';
 
 import {DatepickerAtom} from './Datepicker';
 import {EDateRange} from '../typing';
-import {isEmpty, selectDateRange} from '../utils';
+import {getYearMonth, isEmpty, selectDateRange} from '../utils';
 import clsx from 'clsx';
 import useLocale from '../locales';
 import {IScrollRangeDatepickerProps} from './types';
@@ -86,6 +86,13 @@ const ScrollRangeDatepicker = ({
 
     const handleOnChange = (newValue: string) => {
         if(onChange){
+            if(dayjs(value?.startDate).isSame(newValue)){
+                onChange({
+                    startDate: undefined,
+                    endDate: undefined,
+                });
+                return;
+            }
             if(value?.endDate || dayjs(value?.startDate).isAfter(newValue)){
                 onChange({
                     startDate: newValue,
@@ -118,12 +125,8 @@ const ScrollRangeDatepicker = ({
 
     const renderDateRange = () => {
 
-        const todayMonth = dayjs().set('date', 1);
-        const monthLimit = Array.from({length: 6});
-        const months = monthLimit.map((_, idx) => {
-            return todayMonth.add(idx, 'month');
-        });
-        
+        const months = getYearMonth(6);
+
 
         return months.map(row => {
             return <DatepickerAtom
@@ -151,8 +154,6 @@ const ScrollRangeDatepicker = ({
             )}
             style={style}
         >
-
-
             {renderWeek()}
 
             <div className={styles.scrollLister}/>

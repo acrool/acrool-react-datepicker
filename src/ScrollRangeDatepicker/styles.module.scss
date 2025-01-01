@@ -5,9 +5,9 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   overflow-y: scroll;
   height: 437px;
+  background-color: var(--bg-color);
 
   @include theme(false);
 
@@ -16,6 +16,50 @@
   }
 }
 
+
+
+.date-week{
+  font-size: 12px;
+  transform: scale(.9);
+}
+
+
+.date-year-month-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  height: 30px;
+  padding-left: 14px;
+  color: var(--month-color);
+}
+
+
+.date-week-row,
+.date-day-content{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 4px;
+}
+
+
+.date-week-row{
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 2;
+  border-bottom: 1px solid var(--border-color);
+}
+
+
+
+.date-day-row{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0 12px;
+}
 
 
 .date-week,
@@ -40,43 +84,45 @@
     z-index: 0;
   }
 
-  &[data-start-active],
-  &[data-end-active]{
-      &:before{
-        background-color: #808080;
-      }
+  //&[data-start-active],
+  //&[data-end-active]{
+  //    &:before{
+  //      background-color: #808080;
+  //    }
+  //
+  //    >span{
+  //        color: #fff;
+  //    }
+  //}
 
-      >span{
-          color: #fff;
-      }
-  }
-
-  &[data-type="preDay"],
-  &[data-type="nextDay"]{
+  &[data-type="lastMonth"],
+  &[data-type="nextMonth"]{
     visibility: hidden;
     pointer-events: none;
   }
 
 
-  &[data-start-active],
-  &[data-start-active]:after{
-  &[data-end-active],
-  &[data-end-active]:after{
+  &[data-active="start"],
+  &[data-active="end"]{
     color: #fff;
 
-    &[data-today=true]:before{
+    &:before{
+      background-color: #808080;
+    }
+
+
+    &[data-today]:before{
       background-color: var(--primary-color, var(--default-primary-color));
     }
   }
-  }
 
-  &[data-range=true]{
-    background-color: red;
+  &[data-range-kind="range"]{
+    background-color: var(--bg-range-color);
 
-    &[data-start-active]{
+    &[data-active="start"]{
       border-radius: 99em 0 0 99em;
     }
-    &[data-end-active]{
+    &[data-active="end"]{
       border-radius: 0 99em 99em 0;
     }
 
@@ -95,27 +141,7 @@
   background-color: #42a20d;
 }
 
-.date-week-row{
-  position: sticky;
-  top: 10px;
-  background-color: #fff;
-  z-index: 2;
-}
 
 
 
-
-.date-week{
-  font-size: 12px;
-  transform: scale(.9);
-}
-
-
-.date-week-row,
-.date-day-content{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-}
 

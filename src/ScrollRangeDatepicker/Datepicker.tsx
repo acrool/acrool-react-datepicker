@@ -8,7 +8,14 @@ import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
 import {ICurrentDayList, IDatepickerProps} from './types';
 import {useDatepicker} from '../hooks';
-import {isEmpty} from '../utils';
+import {
+    getCheckDateStartEnd,
+    getCurrentMonthDays,
+    getCheckDateRangeKind,
+    getNextMonthDays,
+    getPreMonthDays,
+    isEmpty
+} from '../utils';
 import styles from './styles.module.scss';
 
 
@@ -42,9 +49,9 @@ const DatepickerAtom = ({
     const {
         localeMonth,
         localeYear,
-        getPreMonthDays,
-        getNextMonthDays,
-        getCurrentMonthDays,
+        // getPreMonthDays,
+        // getNextMonthDays,
+        // getCurrentMonthDays,
         // panelYearMonth,
         // handleChangePanel,
         // handleSelectedToday,
@@ -114,38 +121,13 @@ const DatepickerAtom = ({
 
         // 產生年月標題
         return (
-            <div className={elClassNames.dateYearMonthRow}>
-
-                <div className={elClassNames.dateChangeControl}>
-
-
-                    {/*年月的按鈕*/}
-                    <div className={elClassNames.dateYearMonth}>
-                        <div className={elClassNames.dateYearGroup}>
-                            <span className={elClassNames.dateYear}>
-                                {activeYear?.text}
-                            </span>
-
-                        </div>
-                        <div className={elClassNames.dateMonthGroup}>
-                            <span className={elClassNames.dateMonth}>
-                                {activeMonth?.text}
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-
-                </div>
-
+            <div className={styles.dateYearMonthRow}>
+                {activeMonth?.text} {activeYear?.text}
             </div>
         );
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     };
-
 
 
     /**
@@ -184,9 +166,9 @@ const DatepickerAtom = ({
         //     };
         // }
 
-        const preMonthDay = getPreMonthDays();
-        const currentMonthDay = getCurrentMonthDays();
-        const nextMonthDays = getNextMonthDays();
+        const preMonthDay = getPreMonthDays(yearMonthPanel);
+        const currentMonthDay = getCurrentMonthDays(yearMonthPanel);
+        const nextMonthDays = getNextMonthDays(yearMonthPanel);
 
         const monthDateList = [...preMonthDay, ...currentMonthDay, ...nextMonthDays];
 
@@ -194,22 +176,33 @@ const DatepickerAtom = ({
         // const weekIndex = Math.floor(actIndex / 7);
 
         return (
-            <div className={elClassNames.dateDayRow}>
-                <div className={elClassNames.dateDayContent}>
+            <div className={styles.dateDayRow}>
+                <div className={styles.dateDayContent}>
 
                     {monthDateList.map(row => {
+
+                        // isStartActive: values?.startDate ? eachDate.isSame(values?.startDate, 'date'): false,
+                        // isEndActive: values?.endDate ? eachDate.isSame(values?.endDate, 'date') : false,
+                        // isInRange: (!isEmpty(values?.startDate) && !isEmpty(values?.endDate)) && eachDate.isAfter(values?.startDate) && (eachDate.isBefore(values?.endDate) || eachDate.isSame(values?.endDate, 'date')),
+                        // isToday: today.isSame(eachDate, 'date'),
+                        // isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
+                        // isDisable,
+                        // className: styles.dateDay,
+
+
                         return <div
                             key={`currentDay-${row.date}`}
                             className={styles.dateDay}
+                            data-active={getCheckDateStartEnd(row.date, values)}
+                            data-range-kind={getCheckDateRangeKind(row.date, values)}
                             // data-start-active={row.isStartActive ? '': undefined}
                             // data-end-active={row.isEndActive ? '': undefined}
                             // data-range={row.isInRange}
-                            data-today={row.isToday}
-                            data-tag={row.isTag}
-                            data-disable={row.isDisable}
+                            data-today={today.isSame(row.date, 'date') ? '': undefined}
+                            // data-tag={row.isTag}
+                            // data-disable={row.isDisable}
                             data-type={row.type}
-
-                            // onClick={row.onClick}
+                            onClick={() => handleSelectedDate(row.date.year(), row.date.month(), row.dayNumber)}
                         >
                             <span>
                                 {row.dayNumber}
