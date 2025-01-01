@@ -5,10 +5,10 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
 
   height: 437px;
   background-color: var(--bg-color);
+  position: relative;
 
   @include m.theme(false);
 
@@ -24,6 +24,11 @@
 
 }
 
+.scroll-container{
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
 
 
 .date-week{
@@ -41,6 +46,10 @@
   color: var(--month-color);
 }
 
+.date-week-row-fill{
+  height: 30px;
+  flex: 0 0 auto;
+}
 
 .date-week-row,
 .date-day-content{
@@ -49,11 +58,13 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   row-gap: 4px;
+  padding: 0 12px;
+
 }
 
 
 .date-week-row{
-  position: sticky;
+  position: absolute;
   top: 0;
   background-color: #fff;
   z-index: 2;
@@ -61,13 +72,6 @@
 }
 
 
-.date-week-row,
-.date-day-row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 0 12px;
-}
 
 
 .date-week,

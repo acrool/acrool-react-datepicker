@@ -16,12 +16,6 @@ export function useInfiniteScroll({
     const [isLoadingTop, setIsLoadingTop] = useState(false);
     const [isLoadingBottom, setIsLoadingBottom] = useState(false);
 
-    useEffect(() => {
-        const container = containerRef.current;
-        if (container) {
-            container.scrollTop = 50; // 將滾動條設置到底部
-        }
-    }, []);
 
     const handleIntersect = useCallback(
         async (entries: IntersectionObserverEntry[]) => {
@@ -32,10 +26,15 @@ export function useInfiniteScroll({
                 if (entry.isIntersecting) {
                     if (entry.target === topRef.current && !isLoadingTop) {
                         // 記錄滾動位置和高度
-                        container.scrollTop = 40;
+                        const target = container.querySelector('[data-year-month]');
 
                         setIsLoadingTop(true);
                         await loadMoreTop();
+
+                        if(target){
+                            target.scrollIntoView({behavior: 'auto', block: 'start'});
+                        }
+
                         setIsLoadingTop(false);
 
                     } else if (

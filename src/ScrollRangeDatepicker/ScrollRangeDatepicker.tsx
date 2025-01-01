@@ -113,12 +113,17 @@ const ScrollRangeDatepicker = ({
     /**
      * 產生週標題
      */
-    const renderWeek = useCallback(() => (
-        <div className={styles.dateWeekRow}>
-            {localeWeekDay.map((week, index) => <div className={styles.dateWeek} key={`localeWeekDay-${index}-${week}`}>{week}</div>)}
-        </div>
+    const renderWeek = useCallback(() => {
+    
+        return <>
+            <div className={styles.dateWeekRowFill}/>
+            <div className={styles.dateWeekRow}>
+                {localeWeekDay.map((week, index) => <div className={styles.dateWeek}
+                    key={`localeWeekDay-${index}-${week}`}>{week}</div>)}
+            </div>
+        </>;
 
-    ), []);
+    }, []);
 
 
     /**
@@ -158,17 +163,18 @@ const ScrollRangeDatepicker = ({
         >
             {renderWeek()}
 
-            {(isLoadingTop) && <p>top loading...</p>}
 
-            {!isLoadingTop &&
-                <div ref={topRef} style={{height: '1px', width: '100%', flex: '0 0 auto', marginBottom: '50px', background: 'red'}} />
-            }
+            <div className={styles.scrollContainer}>
+                {!isLoadingTop &&
+                    <div ref={topRef} style={{height: '1px', width: '100%', flex: '0 0 auto', background: 'red'}} />
+                }
 
-            {renderDateRange()}
+                {renderDateRange()}
 
-            <div ref={bottomRef} style={{height: '1px', background: 'transparent'}} />
+                <div ref={bottomRef} style={{height: '1px', background: 'transparent'}} />
 
-            {(isLoadingBottom) && <p>bottom loading...</p>}
+                {(isLoadingBottom) && <p>bottom loading...</p>}
+            </div>
 
             {/*<DatepickerAtom*/}
             {/*    {...commonProps}*/}
