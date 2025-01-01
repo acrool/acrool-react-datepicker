@@ -15,6 +15,13 @@
   &.dark-theme{
     @include m.theme(true);
   }
+
+  * {
+    box-sizing: border-box;
+    line-height: normal;
+    user-select: none
+  }
+
 }
 
 
@@ -40,7 +47,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   row-gap: 4px;
 }
 
@@ -54,8 +61,8 @@
 }
 
 
-
-.date-day-row{
+.date-week-row,
+.date-day-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -99,7 +106,7 @@
   &[data-type="lastMonth"],
   &[data-type="nextMonth"]{
     visibility: hidden;
-    pointer-events: none;
+    color: #42a20d;
   }
 
 
@@ -144,5 +151,13 @@
 
 
 
+
+.date-root {
+  flex-direction: column;
+  width: 234px;
+
+  display: flex;
+  margin: 0;
+}
 
 

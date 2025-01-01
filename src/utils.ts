@@ -275,16 +275,17 @@ export const getNextMonthDays = (yearMonth: Dayjs) => {
 
     // 取 Panel年月 上個月份的已放空間 (星期六 ex: 6-1=5格, 星期日則為7天)
     const preMonthFirstContainer = currentMonFirstWeek === 0 ? 6 : currentMonFirstWeek - 1;
+    
 
     // 取 Panel年月 這個月的最後一天是幾號
     const panelMonthLastDay = yearMonth.endOf('month').get('date');
 
     const nextMonth = yearMonth.add(1, 'month');
 
-    // 取得指定年月下個月剩餘月份可放空間
+    // 取得指定年月下個月剩餘月份可放空間(最少6週)
     const nextMonthEndContainer = (7 * 6) % (preMonthFirstContainer + panelMonthLastDay);
 
-    // 產生上個月的剩餘日期表
+    // 產生下個月的剩餘日期表
     const nextMonEndDayList: ICurrentDayList[] = Array.from({length: nextMonthEndContainer});
     for (let d = 0; d < nextMonthEndContainer; d++) {
         const dayNumber = d + 1;
@@ -294,11 +295,7 @@ export const getNextMonthDays = (yearMonth: Dayjs) => {
         //         (maxDate && eachDate.isAfter(maxDate, 'date')));
 
         nextMonEndDayList[d] = {
-            // isActive: currentDate.isSame(nextMonth.set('date', dayNumber), 'date'),
-            // isToday: today.isSame(eachDate, 'date'),
-            // isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
-            // isDisable,
-            // className: elClassNames.datePreDay,
+       
             type: 'nextMonth',
             date: eachDate,
             dayNumber: dayNumber,

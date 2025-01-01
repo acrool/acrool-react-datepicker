@@ -1,6 +1,5 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import elClassNames from '../el-class-names';
 import clsx from 'clsx';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
@@ -10,7 +9,6 @@ import {
     getCheckDateStartEnd,
     getCurrentMonthDays,
     getCheckDateRangeKind,
-    getNextMonthDays,
     getPreMonthDays,
 } from '../utils';
 import styles from './scroll-range-datepicker.module.scss';
@@ -123,9 +121,8 @@ const DatepickerAtom = ({
     const renderCurrentMonthDay = () => {
         const preMonthDay = getPreMonthDays(yearMonthPanel);
         const currentMonthDay = getCurrentMonthDays(yearMonthPanel);
-        const nextMonthDays = getNextMonthDays(yearMonthPanel);
 
-        const monthDateList = [...preMonthDay, ...currentMonthDay, ...nextMonthDays];
+        const monthDateList = [...preMonthDay, ...currentMonthDay];
 
         return (
             <div className={styles.dateDayRow}>
@@ -156,9 +153,9 @@ const DatepickerAtom = ({
 
 
     return <div
-        data-year-Month={yearMonthPanel.format('YYYY-MM')}
+        data-year-month={yearMonthPanel.format('YYYY-MM')}
         className={clsx(
-            elClassNames.dateRoot,
+            styles.dateRoot,
             className, {'dark-theme': isDark})} style={style}
     >
         {renderYearMonth()}
@@ -171,7 +168,7 @@ const DatepickerAtom = ({
 const Datepicker = (props: IDatepickerProps) => {
     return <DatepickerAtom
         {...props}
-        className={clsx(props.className, elClassNames.root)}
+        className={props.className}
     />;
 };
 
