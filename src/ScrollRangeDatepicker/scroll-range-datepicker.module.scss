@@ -28,6 +28,7 @@
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
 
@@ -66,6 +67,8 @@
 .date-week-row{
   position: absolute;
   top: 0;
+  left: 0;
+  width: 100%;
   background-color: #fff;
   z-index: 2;
   border-bottom: 1px solid var(--border-color);

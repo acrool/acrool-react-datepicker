@@ -171,34 +171,10 @@ const ScrollRangeDatepicker = ({
 
                 {renderDateRange()}
 
-                <div ref={bottomRef} style={{height: '1px', background: 'transparent'}} />
-
-                {(isLoadingBottom) && <p>bottom loading...</p>}
+                {!isLoadingBottom &&
+                    <div ref={bottomRef} style={{height: '1px', background: 'transparent'}} />
+                }
             </div>
-
-            {/*<DatepickerAtom*/}
-            {/*    {...commonProps}*/}
-            {/*    value={value}*/}
-            {/*    onChange={handleOnChange}*/}
-            {/*    // minDate={minDate}*/}
-            {/*    // maxDate={value?.endDate ? value?.endDate : maxDate}*/}
-            {/*/>*/}
-
-            {/*<DatepickerAtom*/}
-            {/*    {...commonProps}*/}
-            {/*    value={value.endDate}*/}
-            {/*    onChange={(newValue) => {*/}
-            {/*        if(onChange){*/}
-            {/*            onChange({*/}
-            {/*                startDate: value?.startDate ? value.startDate : today,*/}
-            {/*                endDate: newValue*/}
-            {/*            });*/}
-            {/*        }*/}
-            {/*    }}*/}
-            {/*    minDate={value?.startDate ? value?.startDate: minDate}*/}
-            {/*    maxDate={maxDate}*/}
-            {/*/>*/}
-
 
         </div>
     );
