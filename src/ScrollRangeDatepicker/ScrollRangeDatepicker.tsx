@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {DatepickerAtom} from './Datepicker';
 import {EDateRange} from '../typing';
@@ -63,6 +63,7 @@ const ScrollRangeDatepicker = ({
 }: IScrollRangeDatepickerProps) => {
     const {i18n} = useLocale(locale);
     const today = getToday();
+    const listRef = useRef<List>(null);
 
 
     // const [beforeData, setBeforeData] = useState<number>(3);
@@ -82,15 +83,26 @@ const ScrollRangeDatepicker = ({
     //     loadMoreTop,
     //     loadMoreBottom,
     // });
-    
-    
+
+
+    useEffect(() => {
+        console.log('listRef.current', listRef.current);
+        setTimeout(() => {
+            if(listRef.current){
+                console.log('xxx');
+                listRef.current?.scrollToItem(500);
+            }
+        }, 0);
+        // listRef.current;
+
+    }, [listRef.current]);
     
     
     const localeWeekDay = useLocaleWeekDay(locale);
 
     const commonProps = {isDark, format, minYear, maxYear, locale};
 
-    
+
 
     const setRangeDate = (rangeType: EDateRange) => {
         const newVal = selectDateRange(rangeType, format);
@@ -98,6 +110,11 @@ const ScrollRangeDatepicker = ({
             onChange(newVal);
         }
     };
+    const rowHeights = new Array(1000)
+        .fill(true)
+        .map(() => 25 + Math.round(Math.random() * 50));
+
+    const getItemSize = (index: number) => rowHeights[index];
 
 
     /**
@@ -208,16 +225,22 @@ const ScrollRangeDatepicker = ({
             )}
             style={style}
         >
+
+            <button onClick={() => listRef.current?.scrollToItem(200)}>
+                DDDD
+            </button>
             {renderWeek()}
 
             <AutoSizer>
                 {({height, width}: IAutoSize) => {
                     console.log('height', height);
                     return <List
+                        ref={listRef}
                         className="List"
                         itemCount={1000}
                         itemSize={200}
                         height={height}
+                        // height={getItemSize}
                         width={width}
                     >
                         {renderDateRange}
