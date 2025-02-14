@@ -11,6 +11,21 @@ import styles from './scroll-range-datepicker.module.scss';
 import dayjs from 'dayjs';
 import {useLocaleWeekDay} from '../hooks';
 import {useInfiniteScroll} from './useInfiniteScroll';
+import {FixedSizeList as List, ListChildComponentProps} from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import CSS from 'csstype';
+
+
+interface IRowProps {
+    index: number
+    style?: CSS.Properties,
+}
+
+const Row = ({index, style}:IRowProps) => (
+    <div className={index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={style}>
+        Row {index}
+    </div>
+);
 
 
 
@@ -129,22 +144,27 @@ const ScrollRangeDatepicker = ({
     /**
      * 產生日曆表
      */
-    const renderDateRange = () => {
+    const renderDateRange = (listProps: ListChildComponentProps) => {
+        
 
         const months = getYearMonthRange(beforeData, afterData);
 
-        return months.map(row => {
-            return <DatepickerAtom
-                key={row.format('YYYY-MM')}
-                {...commonProps}
-                values={value}
-                onChange={handleOnChange}
-                // minDate={isEmpty(value?.endDate) ? value?.startDate: undefined}
-                yearMonthPanel={row}
-                // minDate={minDate}
-                // maxDate={value?.endDate ? value?.endDate : maxDate}
-            />;
-        });
+        console.log('months', months);
+        
+        return <>
+            {months.map(row => {
+                return <DatepickerAtom
+                    key={row.format('YYYY-MM')}
+                    {...commonProps}
+                    values={value}
+                    onChange={handleOnChange}
+                    // minDate={isEmpty(value?.endDate) ? value?.startDate: undefined}
+                    yearMonthPanel={row}
+                    // minDate={minDate}
+                    // maxDate={value?.endDate ? value?.endDate : maxDate}
+                />;
+            })}
+        </>;
 
     };
 
@@ -163,18 +183,15 @@ const ScrollRangeDatepicker = ({
         >
             {renderWeek()}
 
-
-            <div className={styles.scrollContainer}>
-                {!isLoadingTop &&
-                    <div ref={topRef} style={{height: '1px', width: '100%', flex: '0 0 auto', background: 'red'}} />
-                }
-
-                {renderDateRange()}
-
-                {!isLoadingBottom &&
-                    <div ref={bottomRef} style={{height: '1px', background: 'transparent'}} />
-                }
-            </div>
+            <List
+                className="List"
+                itemCount={1000}
+                itemSize={35}
+                height={500}
+                width="100%"
+            >
+                {renderDateRange}
+            </List>
 
         </div>
     );
