@@ -13,9 +13,6 @@ import {useLocaleWeekDay} from '../hooks';
 import {FixedSizeList as List, ListChildComponentProps} from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import CSS from 'csstype';
-import isoWeek from 'dayjs/plugin/isoWeek';
-
-dayjs.extend(isoWeek);
 
 
 interface IAutoSize {
@@ -24,15 +21,6 @@ interface IAutoSize {
 }
 
 
-
-const Row = (listProps: ListChildComponentProps) => {
-    return <div className={listProps.index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={{
-        ...listProps.style,
-        height: '100px',
-    }}>
-        Row {listProps.index}
-    </div>;
-};
 
 
 const MONTH_COUNT = 10 * 12;
@@ -43,16 +31,6 @@ const MONTH_PADDING = 10;
 
 const MONTH_HEIGHT = (DAY_HEIGHT + ((DAY_HEIGHT + DAY_GAP) * 6)) + (MONTH_PADDING * 2);
 
-
-function getWeeksInMonth(year: number, month: number) {
-    const firstDay = dayjs(`${year}-${month}-01`);
-    const lastDay = firstDay.endOf('month');
-
-    const firstWeek = firstDay.isoWeek();
-    const lastWeek = lastDay.isoWeek();
-
-    return lastWeek - firstWeek + 1;
-}
 
 
 
@@ -83,6 +61,7 @@ const ScrollRangeDatepicker = ({
     minDate,
     maxDate,
     isDark,
+    monthContainerHeight,
 }: IScrollRangeDatepickerProps) => {
     const {i18n} = useLocale(locale);
     const today = getToday();
@@ -123,22 +102,6 @@ const ScrollRangeDatepicker = ({
 
     const commonProps = {isDark, format, minYear, maxYear, locale};
 
-
-    const getItemSize = (index: number) => {
-
-        const row = dayjs()
-            .set('date', 1)
-            .subtract(CENTER_ITEM, 'month')
-            .add(index, 'month');
-
-        const week = getWeeksInMonth(row.year(), row.month() + 1);
-
-        console.log('week', row.year(), row.month() + 1, week);
-
-
-        return (week + 1) * (DAY_HEIGHT + DAY_GAP);
-
-    };
 
 
     /**
@@ -208,7 +171,7 @@ const ScrollRangeDatepicker = ({
             // minDate={minDate}
             // maxDate={value?.endDate ? value?.endDate : maxDate}
         />;
-    }, []);
+    }, [value]);
 
 
 
@@ -231,12 +194,12 @@ const ScrollRangeDatepicker = ({
 
                 <AutoSizer>
                     {({height, width}: IAutoSize) => {
-                        console.log('height', height);
+                        // console.log('height', height);
                         return <List
                             ref={listRef}
                             className="List"
                             itemCount={MONTH_COUNT}
-                            itemSize={MONTH_HEIGHT}
+                            itemSize={monthContainerHeight}
                             // itemSize={getItemSize}
                             height={height}
                             // height={getItemSize}

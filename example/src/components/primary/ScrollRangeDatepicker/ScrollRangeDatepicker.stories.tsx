@@ -31,6 +31,7 @@ const meta = {
     argTypes: {},
     args: {
         onChange: fn(),
+        monthContainerHeight: 220,
         value: {
             startDate: dayjs().format('YYYY-MM-DD'),
             endDate: dayjs().add(2, 'day').format('YYYY-MM-DD'),
