@@ -5,7 +5,10 @@ import './styles.css';
 
 
 const Row = (listProps: ListChildComponentProps) => {
-    return <div className={listProps.index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={listProps.style}>
+    return <div className={listProps.index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={{
+        ...listProps.style,
+        height: '100px',
+    }}>
         Row {listProps.index}
     </div>;
 };

@@ -16,17 +16,21 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import CSS from 'csstype';
 
 
-interface IRowProps {
-    index: number
-    style?: CSS.Properties,
+interface IAutoSize {
+    width: number;
+    height: number
 }
 
-const Row = ({index, style}:IRowProps) => (
-    <div className={index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={style}>
-        Row {index}
-    </div>
-);
 
+
+const Row = (listProps: ListChildComponentProps) => {
+    return <div className={listProps.index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={{
+        ...listProps.style,
+        height: '100px',
+    }}>
+        Row {listProps.index}
+    </div>;
+};
 
 
 /**
@@ -61,23 +65,23 @@ const ScrollRangeDatepicker = ({
     const today = getToday();
 
 
-    const [beforeData, setBeforeData] = useState<number>(3);
-    const [afterData, setAfterData] = useState<number>(3);
+    // const [beforeData, setBeforeData] = useState<number>(3);
+    // const [afterData, setAfterData] = useState<number>(3);
+    //
+    // const loadMoreTop = async () => {
+    //     setBeforeData(curr => curr + 3);
+    //     setAfterData(curr => curr - 3);
+    // };
+    //
+    // const loadMoreBottom = async () => {
+    //     setBeforeData(curr => curr - 3);
+    //     setAfterData(curr => curr + 3);
+    // };
 
-    const loadMoreTop = async () => {
-        setBeforeData(curr => curr + 3);
-        setAfterData(curr => curr - 3);
-    };
-
-    const loadMoreBottom = async () => {
-        setBeforeData(curr => curr - 3);
-        setAfterData(curr => curr + 3);
-    };
-
-    const {containerRef, topRef, bottomRef, isLoadingTop, isLoadingBottom} = useInfiniteScroll({
-        loadMoreTop,
-        loadMoreBottom,
-    });
+    // const {containerRef, topRef, bottomRef, isLoadingTop, isLoadingBottom} = useInfiniteScroll({
+    //     loadMoreTop,
+    //     loadMoreBottom,
+    // });
     
     
     
@@ -144,35 +148,58 @@ const ScrollRangeDatepicker = ({
     /**
      * 產生日曆表
      */
-    const renderDateRange = (listProps: ListChildComponentProps) => {
+    const renderDateRange = useCallback((listProps: ListChildComponentProps) => {
         
 
-        const months = getYearMonthRange(beforeData, afterData);
+        // const months = getYearMonthRange(beforeData, afterData);
 
-        console.log('months', months);
-        
-        return <>
-            {months.map(row => {
-                return <DatepickerAtom
-                    key={row.format('YYYY-MM')}
-                    {...commonProps}
-                    values={value}
-                    onChange={handleOnChange}
-                    // minDate={isEmpty(value?.endDate) ? value?.startDate: undefined}
-                    yearMonthPanel={row}
-                    // minDate={minDate}
-                    // maxDate={value?.endDate ? value?.endDate : maxDate}
-                />;
-            })}
-        </>;
+        const todayMonth = dayjs().set('date', 1);
+        // const monthLimit = Array.from({length: listProps.index});
+        // const months = monthLimit.map((_, idx) => {
+        //     console.log('idx', idx);
+        //     return todayMonth.add(idx, 'month');
+        // });
 
-    };
+        const row = dayjs()
+            .set('date', 1)
+            .add(listProps.index, 'month');
+
+        // console.log('months', months);
+        console.log('row', row.format('YYYY-MM-DD'));
+
+        return <DatepickerAtom
+            style={{...listProps.style} as CSS.Properties}
+            key={row.format('YYYY-MM')}
+            {...commonProps}
+            values={value}
+            onChange={handleOnChange}
+            // minDate={isEmpty(value?.endDate) ? value?.startDate: undefined}
+            yearMonthPanel={row}
+            // minDate={minDate}
+            // maxDate={value?.endDate ? value?.endDate : maxDate}
+        />;
+        // return <>
+        //     {months.map(row => {
+        //         return <DatepickerAtom
+        //             key={row.format('YYYY-MM')}
+        //             {...commonProps}
+        //             values={value}
+        //             onChange={handleOnChange}
+        //             // minDate={isEmpty(value?.endDate) ? value?.startDate: undefined}
+        //             yearMonthPanel={row}
+        //             // minDate={minDate}
+        //             // maxDate={value?.endDate ? value?.endDate : maxDate}
+        //         />;
+        //     })}
+        // </>;
+
+    }, []);
 
 
 
     return (
         <div
-            ref={containerRef}
+            // ref={containerRef}
             data-fast={isVisibleFastPicker ? '': undefined}
             className={clsx(
                 styles.root,
@@ -183,15 +210,20 @@ const ScrollRangeDatepicker = ({
         >
             {renderWeek()}
 
-            <List
-                className="List"
-                itemCount={1000}
-                itemSize={35}
-                height={500}
-                width="100%"
-            >
-                {renderDateRange}
-            </List>
+            <AutoSizer>
+                {({height, width}: IAutoSize) => {
+                    console.log('height', height);
+                    return <List
+                        className="List"
+                        itemCount={1000}
+                        itemSize={200}
+                        height={height}
+                        width={width}
+                    >
+                        {renderDateRange}
+                    </List>;
+                }}
+            </AutoSizer>
 
         </div>
     );

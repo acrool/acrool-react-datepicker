@@ -8,6 +8,7 @@
 
   height: 437px;
   background-color: var(--bg-color);
+  background-color: #ccc;
   position: relative;
 
   @include m.theme(false);
@@ -68,9 +69,9 @@
 
 
 .date-week-row{
-  position: absolute;
-  top: 0;
-  left: 0;
+  //position: absolute;
+  //top: 0;
+  //left: 0;
   width: 100%;
   background-color: #fff;
   z-index: 2;
