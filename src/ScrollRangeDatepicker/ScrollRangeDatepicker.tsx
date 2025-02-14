@@ -10,10 +10,12 @@ import {getToday} from './utils';
 import styles from './scroll-range-datepicker.module.scss';
 import dayjs from 'dayjs';
 import {useLocaleWeekDay} from '../hooks';
-import {useInfiniteScroll} from './useInfiniteScroll';
 import {FixedSizeList as List, ListChildComponentProps} from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import CSS from 'csstype';
+import isoWeek from 'dayjs/plugin/isoWeek';
+
+dayjs.extend(isoWeek);
 
 
 interface IAutoSize {
@@ -31,6 +33,27 @@ const Row = (listProps: ListChildComponentProps) => {
         Row {listProps.index}
     </div>;
 };
+
+
+const MONTH_COUNT = 10 * 12;
+const CENTER_ITEM = MONTH_COUNT / 2;
+const DAY_HEIGHT = 30;
+const DAY_GAP = 2;
+const MONTH_PADDING = 10;
+
+const MONTH_HEIGHT = (DAY_HEIGHT + ((DAY_HEIGHT + DAY_GAP) * 6)) + (MONTH_PADDING * 2);
+
+
+function getWeeksInMonth(year: number, month: number) {
+    const firstDay = dayjs(`${year}-${month}-01`);
+    const lastDay = firstDay.endOf('month');
+
+    const firstWeek = firstDay.isoWeek();
+    const lastWeek = lastDay.isoWeek();
+
+    return lastWeek - firstWeek + 1;
+}
+
 
 
 /**
@@ -86,14 +109,12 @@ const ScrollRangeDatepicker = ({
 
 
     useEffect(() => {
-        console.log('listRef.current', listRef.current);
+        // 預設移動位置
         setTimeout(() => {
             if(listRef.current){
-                console.log('xxx');
-                listRef.current?.scrollToItem(500);
+                listRef.current.scrollToItem(CENTER_ITEM);
             }
         }, 0);
-        // listRef.current;
 
     }, [listRef.current]);
     
@@ -103,18 +124,21 @@ const ScrollRangeDatepicker = ({
     const commonProps = {isDark, format, minYear, maxYear, locale};
 
 
+    const getItemSize = (index: number) => {
 
-    const setRangeDate = (rangeType: EDateRange) => {
-        const newVal = selectDateRange(rangeType, format);
-        if(newVal && onChange){
-            onChange(newVal);
-        }
+        const row = dayjs()
+            .set('date', 1)
+            .subtract(CENTER_ITEM, 'month')
+            .add(index, 'month');
+
+        const week = getWeeksInMonth(row.year(), row.month() + 1);
+
+        console.log('week', row.year(), row.month() + 1, week);
+
+
+        return (week + 1) * (DAY_HEIGHT + DAY_GAP);
+
     };
-    const rowHeights = new Array(1000)
-        .fill(true)
-        .map(() => 25 + Math.round(Math.random() * 50));
-
-    const getItemSize = (index: number) => rowHeights[index];
 
 
     /**
@@ -152,7 +176,7 @@ const ScrollRangeDatepicker = ({
     const renderWeek = useCallback(() => {
     
         return <>
-            <div className={styles.dateWeekRowFill}/>
+            {/*<div className={styles.dateWeekRowFill}/>*/}
             <div className={styles.dateWeekRow}>
                 {localeWeekDay.map((week, index) => <div className={styles.dateWeek}
                     key={`localeWeekDay-${index}-${week}`}>{week}</div>)}
@@ -166,23 +190,12 @@ const ScrollRangeDatepicker = ({
      * 產生日曆表
      */
     const renderDateRange = useCallback((listProps: ListChildComponentProps) => {
-        
 
-        // const months = getYearMonthRange(beforeData, afterData);
-
-        const todayMonth = dayjs().set('date', 1);
-        // const monthLimit = Array.from({length: listProps.index});
-        // const months = monthLimit.map((_, idx) => {
-        //     console.log('idx', idx);
-        //     return todayMonth.add(idx, 'month');
-        // });
 
         const row = dayjs()
             .set('date', 1)
+            .subtract(CENTER_ITEM, 'month')
             .add(listProps.index, 'month');
-
-        // console.log('months', months);
-        console.log('row', row.format('YYYY-MM-DD'));
 
         return <DatepickerAtom
             style={{...listProps.style} as CSS.Properties}
@@ -195,22 +208,9 @@ const ScrollRangeDatepicker = ({
             // minDate={minDate}
             // maxDate={value?.endDate ? value?.endDate : maxDate}
         />;
-        // return <>
-        //     {months.map(row => {
-        //         return <DatepickerAtom
-        //             key={row.format('YYYY-MM')}
-        //             {...commonProps}
-        //             values={value}
-        //             onChange={handleOnChange}
-        //             // minDate={isEmpty(value?.endDate) ? value?.startDate: undefined}
-        //             yearMonthPanel={row}
-        //             // minDate={minDate}
-        //             // maxDate={value?.endDate ? value?.endDate : maxDate}
-        //         />;
-        //     })}
-        // </>;
-
     }, []);
+
+
 
 
 
@@ -225,28 +225,28 @@ const ScrollRangeDatepicker = ({
             )}
             style={style}
         >
-
-            <button onClick={() => listRef.current?.scrollToItem(200)}>
-                DDDD
-            </button>
             {renderWeek()}
 
-            <AutoSizer>
-                {({height, width}: IAutoSize) => {
-                    console.log('height', height);
-                    return <List
-                        ref={listRef}
-                        className="List"
-                        itemCount={1000}
-                        itemSize={200}
-                        height={height}
-                        // height={getItemSize}
-                        width={width}
-                    >
-                        {renderDateRange}
-                    </List>;
-                }}
-            </AutoSizer>
+            <div style={{flex: '1 1 auto'}}>
+
+                <AutoSizer>
+                    {({height, width}: IAutoSize) => {
+                        console.log('height', height);
+                        return <List
+                            ref={listRef}
+                            className="List"
+                            itemCount={MONTH_COUNT}
+                            itemSize={MONTH_HEIGHT}
+                            // itemSize={getItemSize}
+                            height={height}
+                            // height={getItemSize}
+                            width={width}
+                        >
+                            {renderDateRange}
+                        </List>;
+                    }}
+                </AutoSizer>
+            </div>
 
         </div>
     );
