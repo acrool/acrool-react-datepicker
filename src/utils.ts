@@ -378,9 +378,29 @@ export const getCheckDateStartEnd= (eachDate: Dayjs, values?: IRangeDateValue) =
 };
 
 export const getCheckDateRangeKind = (eachDate: Dayjs, values?: IRangeDateValue) => {
+    if(!values) return undefined;
+    if(isEmpty(values)) return undefined;
+    if(isEmpty(values.startDate)) return undefined;
+    if(isEmpty(values.endDate)) return undefined;
 
-    return (!isEmpty(values?.startDate) && !isEmpty(values?.endDate)) &&
-    eachDate.isAfter(values?.startDate) &&
-        (eachDate.isBefore(values?.endDate) || eachDate.isSame(values?.endDate, 'date')) ? 'range': undefined;
+    if(eachDate.isSame(values.startDate) && eachDate.isSame(values.endDate)){
+        return undefined;
+    }
+    if(eachDate.isAfter(values.startDate) &&
+        eachDate.isBefore(values.endDate)
+    ){
+        if(eachDate.isBefore(values.endDate)){
+            return 'range';
+        }
+    }
+
+    if(eachDate.isSame(values.startDate, 'date')){
+        return 'range';
+    }
+    if(eachDate.isSame(values.endDate, 'date')){
+        return 'range';
+    }
+
+    return undefined;
 
 };

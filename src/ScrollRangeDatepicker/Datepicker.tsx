@@ -156,7 +156,9 @@ const DatepickerAtom = ({
         data-year-month={yearMonthPanel.format('YYYY-MM')}
         className={clsx(
             styles.dateRoot,
-            className, {'dark-theme': isDark})} style={style}
+            className, {'dark-theme': isDark})
+        }
+        style={style}
     >
         {renderYearMonth()}
         {renderCurrentMonthDay()}

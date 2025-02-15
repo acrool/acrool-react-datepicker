@@ -31,6 +31,7 @@ const meta = {
     argTypes: {},
     args: {
         onChange: fn(),
+        // monthContainerHeight: 400,
         value: {
             startDate: dayjs().format('YYYY-MM-DD'),
             endDate: dayjs().add(2, 'day').format('YYYY-MM-DD'),
@@ -44,6 +45,7 @@ const meta = {
             {...args}
             value={value}
             locale="zh-TW"
+            defaultFocusDate={args.value?.startDate}
             onChange={fn(onChange)}
         />;
     },
@@ -55,6 +57,22 @@ type Story = StoryObj<typeof meta>;
 
 
 export const Primary: Story = {};
+export const WithDate: Story = {
+    args: {
+        value: {
+            startDate: '2024-04-04',
+            endDate: '2024-04-15',
+        }
+    }
+};
+export const WithSameDate: Story = {
+    args: {
+        value: {
+            startDate: '2024-04-04',
+            endDate: '2024-04-04',
+        }
+    }
+};
 // export const WithTags: Story = {
 //     args: {
 //         tagDate,

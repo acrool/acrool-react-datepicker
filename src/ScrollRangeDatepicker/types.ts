@@ -36,8 +36,10 @@ export interface IDatepickerProps extends ICommon{
 
 export interface IScrollRangeDatepickerProps extends ICommon{
     value?: IRangeDateValue
+    defaultFocusDate?: string
     format?: string
     // onChange?: (updater: (current: IRangeDateValue | undefined) => any) => void,
     onChange?: (newValue: IRangeDateValue | undefined) => void,
     isVisibleFastPicker?: boolean
+    monthContainerHeight: number
 }
