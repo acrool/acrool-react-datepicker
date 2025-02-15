@@ -1,5 +1,6 @@
-import dayjs from 'dayjs';
-import {EDateRange, ITimeObj, EDateTimeRange} from './typing';
+import dayjs, {Dayjs} from 'dayjs';
+import {EDateRange, ITimeObj, EDateTimeRange, ICurrentDayList, IRangeDateValue} from './typing';
+import {useCallback} from 'react';
 
 export const defaultFormat = {
     date: 'YYYY-MM-DD',
@@ -206,6 +207,200 @@ export const selectDateTimeRange = (rangeType: EDateTimeRange, format: string, i
             endTime: getTimeString(fourHourHourObj, isVisibleSecond),
         };
     }
+    return undefined;
+
+};
+
+
+/**
+ * 取得年月範圍
+ * @param start
+ * @param end
+ */
+export const getYearMonthRange = (start: number, end: number) => {
+    const todayMonth = dayjs().subtract(start, 'month').set('date', 1);
+    const monthLimit = Array.from({length: start + end});
+    return monthLimit.map((_, idx) => {
+        return todayMonth.add(idx, 'month');
+    });
+
+};
+
+
+/**
+ * 渲染這個月得資料
+ */
+export const getCurrentMonthDays = (yearMonth: Dayjs) => {
+
+    // 取 Panel年月 的最後一天
+    const currentMonthLastDay = yearMonth.endOf('month').get('date');
+
+    // 產生 Panel年月 當月日期表
+    const currentDayList: ICurrentDayList[] = Array.from({length: currentMonthLastDay});
+    for (let d = 0; d < currentMonthLastDay; d++) {
+        const dayNumber = d + 1;
+        const eachDate = yearMonth.set('date', dayNumber);
+        // const isDisable: boolean =
+        //     !!((minDate && eachDate.isBefore(minDate, 'date')) ||
+        //         (maxDate && eachDate.isAfter(maxDate, 'date')));
+
+        currentDayList[d] = {
+            // isStartActive: values?.startDate ? eachDate.isSame(values?.startDate, 'date'): false,
+            // isEndActive: values?.endDate ? eachDate.isSame(values?.endDate, 'date') : false,
+            // isInRange: (!isEmpty(values?.startDate) && !isEmpty(values?.endDate)) && eachDate.isAfter(values?.startDate) && (eachDate.isBefore(values?.endDate) || eachDate.isSame(values?.endDate, 'date')),
+            // isToday: today.isSame(eachDate, 'date'),
+            // isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
+            // isDisable,
+            // className: styles.dateDay,
+            type: 'thisMonth',
+            date: eachDate,
+            dayNumber: dayNumber,
+            // onClick: () => !isDisable ? handleSelectedDate(panelYearMonth.year(), panelYearMonth.month(), dayNumber) : {}
+        };
+    }
+    return currentDayList;
+};
+
+
+
+/**
+ * 產生下個月的剩餘日期表
+ * @returns {Array}
+ */
+export const getNextMonthDays = (yearMonth: Dayjs) => {
+    // const currentDate = dayjs(value);
+
+    // 取得指定年月的第一天是星期幾 (0, 1-6)
+    const currentMonFirstWeek = yearMonth.set('date', 1).day();
+
+    // 取 Panel年月 上個月份的已放空間 (星期六 ex: 6-1=5格, 星期日則為7天)
+    const preMonthFirstContainer = currentMonFirstWeek === 0 ? 6 : currentMonFirstWeek - 1;
+    
+
+    // 取 Panel年月 這個月的最後一天是幾號
+    const panelMonthLastDay = yearMonth.endOf('month').get('date');
+
+    const nextMonth = yearMonth.add(1, 'month');
+
+    // 取得指定年月下個月剩餘月份可放空間(最少6週)
+    const nextMonthEndContainer = (7 * 6) % (preMonthFirstContainer + panelMonthLastDay);
+
+    // 產生下個月的剩餘日期表
+    const nextMonEndDayList: ICurrentDayList[] = Array.from({length: nextMonthEndContainer});
+    for (let d = 0; d < nextMonthEndContainer; d++) {
+        const dayNumber = d + 1;
+        const eachDate = nextMonth.set('date', dayNumber);
+        // const isDisable =
+        //     !!((minDate && eachDate.isBefore(minDate, 'date')) ||
+        //         (maxDate && eachDate.isAfter(maxDate, 'date')));
+
+        nextMonEndDayList[d] = {
+       
+            type: 'nextMonth',
+            date: eachDate,
+            dayNumber: dayNumber,
+            // onClick: () => !isDisable ? handleSelectedDate(nextMonth.year(), nextMonth.month(), dayNumber): {}
+        };
+    }
+
+    return nextMonEndDayList;
+};
+
+
+
+/**
+ * 產生上個月的剩餘日期表
+ * @returns {Array}
+ */
+export const getPreMonthDays = (yearMonth: Dayjs) => {
+    // const currentDate = dayjs(value);
+
+    // 取得指定年月的第一天是星期幾 (0, 1-6)
+    const currentMonFirstWeek = yearMonth.set('date', 1).day();
+
+    // 取 Panel年月 剩餘月份的可放空間 (星期六 ex: 6-1=5格, 星期日則為7天)
+    const preMonthFirstContainer = currentMonFirstWeek === 0 ? 6 : currentMonFirstWeek - 1;
+
+    // 取 Panel年月 上個月的最後一天是幾號
+    const preMonth = yearMonth.subtract(1, 'month');
+    const preMonthLastDay = Number(preMonth.endOf('month').get('date'));
+
+    // 取 Panel年月 結束日從幾號開始
+    const preMonthFirstDay = preMonthLastDay - preMonthFirstContainer;
+
+    // 產生 Panel年月 上個月的剩餘日期表
+    const preMonFirstDayList: ICurrentDayList[] = Array.from({length: preMonthFirstContainer});
+    for (let d = 0; d < preMonthFirstContainer; d++) {
+        const dayNumber = preMonthFirstDay + d + 1;
+        const eachDate = preMonth.set('date', dayNumber);
+        // const isDisable =
+        //     !!((minDate && eachDate.isBefore(minDate, 'date')) ||
+        //         (maxDate && eachDate.isAfter(maxDate, 'date')));
+
+        preMonFirstDayList[d] = {
+            // isActive: currentDate.isSame(preMonth.set('date', dayNumber), 'date'),
+            // isToday: today.isSame(eachDate, 'date'),
+            // isTag: tagDates?.includes(eachDate.format('YYYY-MM-DD')),
+            // isDisable,
+            // className: styles.datePreDay,
+            type: 'lastMonth',
+            date: eachDate,
+            dayNumber: dayNumber,
+            // onClick: () => !isDisable ? handleSelectedDate(preMonth.year(), preMonth.month(), dayNumber) : {}
+        };
+    }
+
+    return preMonFirstDayList;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+};
+
+
+export const getSameDay = (eachDate: Dayjs, currentDate?: string) => {
+    if(!currentDate){
+        return false;
+    }
+    return eachDate.isSame(currentDate, 'date');
+};
+
+
+
+export const getCheckDateStartEnd= (eachDate: Dayjs, values?: IRangeDateValue) => {
+    const isStartActive = values?.startDate ? eachDate.isSame(values?.startDate, 'date'): false;
+    if(isStartActive){
+        return 'start';
+    }
+    const isEndActive = values?.endDate ? eachDate.isSame(values?.endDate, 'date') : false;
+    if(isEndActive){
+        return 'end';
+    }
+    return undefined;
+};
+
+export const getCheckDateRangeKind = (eachDate: Dayjs, values?: IRangeDateValue) => {
+    if(!values) return undefined;
+    if(isEmpty(values)) return undefined;
+    if(isEmpty(values.startDate)) return undefined;
+    if(isEmpty(values.endDate)) return undefined;
+
+    if(eachDate.isSame(values.startDate) && eachDate.isSame(values.endDate)){
+        return undefined;
+    }
+    if(eachDate.isAfter(values.startDate) &&
+        eachDate.isBefore(values.endDate)
+    ){
+        if(eachDate.isBefore(values.endDate)){
+            return 'range';
+        }
+    }
+
+    if(eachDate.isSame(values.startDate, 'date')){
+        return 'range';
+    }
+    if(eachDate.isSame(values.endDate, 'date')){
+        return 'range';
+    }
+
     return undefined;
 
 };
