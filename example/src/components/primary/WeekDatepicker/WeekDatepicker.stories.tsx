@@ -51,7 +51,11 @@ type Story = StoryObj<typeof meta>;
 
 
 
-export const Primary: Story = {};
+export const Primary: Story = {
+    args: {
+        startWeekDate: '2024-05-12'
+    }
+};
 export const WithTags: Story = {
     args: {
         tagDates,

@@ -37,7 +37,7 @@ const WeekDatepicker = ({
 }: IWeekDatepickerProps) => {
     const today = useNowTime();
     const {i18n} = useLocale(locale);
-    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(getValueInWeekStartDate(today, startWeekDate, value));
+    const [panelYearMonth, setPanelYearMonth] = useState<Dayjs>(dayjs(startWeekDate));
 
     const initMaxYear = typeof maxYear !== 'undefined' ? maxYear : Number(today.add(1, 'year').year());
 
@@ -132,15 +132,6 @@ const WeekDatepicker = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 
-    /**
-     * 設定為今天日期
-     */
-    const handleSelectedToday = () => {
-        const formatDate = today.format(format);
-
-        setPanelYearMonth(today);
-        onChange(formatDate);
-    };
 
     /**
      * 產生年月

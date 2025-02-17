@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {ScrollRangeDatepicker, IScrollDatepickerProps} from '@acrool/react-datepicker';
+import {ScrollRangeDatepicker, IScrollRangeDatepickerProps} from '@acrool/react-datepicker';
 import React from 'react';
 import {useArgs} from '@storybook/preview-api';
 import {fn} from '@storybook/test';
@@ -38,8 +38,8 @@ const meta = {
         },
     },
     render: function Render(args) {
-        const [{value}, updateArgs] = useArgs<{value: IScrollDatepickerProps['value']}>();
-        const onChange = (value: IScrollDatepickerProps['value']) => updateArgs({value});
+        const [{value}, updateArgs] = useArgs<{value: IScrollRangeDatepickerProps['value']}>();
+        const onChange = (value: IScrollRangeDatepickerProps['value']) => updateArgs({value});
 
         return <ScrollRangeDatepicker
             {...args}

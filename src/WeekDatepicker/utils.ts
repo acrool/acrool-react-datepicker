@@ -27,5 +27,6 @@ export const getWeekRange = (startDate: Dayjs, currentDate: Dayjs) => {
     // 該週的結束日（開始日加6天）
     const weekEndDate = weekStartDate.add(6, 'day');
 
+    console.log('weekStartDate', startDate.format('YYYY-MM-DD'), weekStartDate.format('YYYY-MM-DD'));
     return weekStartDate;
 };
