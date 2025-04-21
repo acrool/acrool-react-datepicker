@@ -1,8 +1,7 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {ReactNode, useCallback, useEffect, useRef, useState} from 'react';
 
 import {DatepickerAtom} from './Datepicker';
-import {EDateRange} from '../typing';
-import {getYearMonthRange, isEmpty, selectDateRange} from '../utils';
+import {isEmpty} from '../utils';
 import clsx from 'clsx';
 import useLocale from '../locales';
 import {IScrollRangeDatepickerProps} from './types';
@@ -204,7 +203,8 @@ const ScrollRangeDatepicker = ({
 
                 <AutoSizer>
                     {({height, width}: IAutoSize) => {
-                        return <List
+                        const ListComponent = List as unknown as React.ComponentType<any>;
+                        return <ListComponent
                             ref={listRef}
                             className="List"
                             itemCount={MONTH_COUNT}
@@ -213,7 +213,7 @@ const ScrollRangeDatepicker = ({
                             width={width}
                         >
                             {renderDateRange}
-                        </List>;
+                        </ListComponent>;
                     }}
                 </AutoSizer>
             </div>
