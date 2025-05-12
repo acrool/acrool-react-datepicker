@@ -1,5 +1,6 @@
-import {getWeekRange} from './utils';
 import dayjs from 'dayjs';
+
+import {getWeekRange} from './utils';
 
 describe('getWeekRange', () => {
     it('should return the start of the week for the current date based on the start date', () => {

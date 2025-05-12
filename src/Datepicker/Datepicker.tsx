@@ -1,14 +1,15 @@
-import React, {useState, useCallback, useMemo, createElement} from 'react';
-import dayjs,{Dayjs} from 'dayjs';
-import elClassNames from '../el-class-names';
-import {ArrowIcon} from '../Icon';
 import clsx from 'clsx';
-import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
+import dayjs,{Dayjs} from 'dayjs';
+import React, {createElement,useCallback, useMemo, useState} from 'react';
+
+import {config} from '../config';
+import elClassNames from '../el-class-names';
 import useNowTime from '../hooks/useNow';
+import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
+import {ArrowIcon} from '../Icon';
 import useLocale from '../locales';
 import {ICurrentDayList, IDatepickerProps} from './types';
 import {getValue} from './utils';
-import {config} from '../config';
 
 
 
@@ -128,7 +129,6 @@ const DatepickerAtom = ({
         const formatDate = newDate.format(format);
         onChange(formatDate);
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 
     /**
@@ -221,7 +221,6 @@ const DatepickerAtom = ({
             </div>
         );
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 
     /**
@@ -229,11 +228,9 @@ const DatepickerAtom = ({
      */
     const renderWeek = useCallback(() => (
         <div className={elClassNames.dateWeekRow}>
-            {/* eslint-disable-next-line react/no-array-index-key */}
+            { }
             {localeWeekDay.map((week, index) => <div className={elClassNames.dateWeek} key={`localeWeekDay-${index}-${week}`}>{week}</div>)}
         </div>
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     ), []);
 
     /**
@@ -279,7 +276,6 @@ const DatepickerAtom = ({
 
         return preMonFirstDayList;
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [panelYearMonth, value, minDate, maxDate, tagDates]);
 
     /**

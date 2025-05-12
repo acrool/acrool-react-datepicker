@@ -1,15 +1,15 @@
-import React, {useState, useCallback, createElement} from 'react';
-import elClassNames from '../el-class-names';
-import {getTimeFormat, getTimeString} from '../utils';
 import clsx from 'clsx';
-import {ITimeObj} from '../typing';
-import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
-import useNowTime from '../hooks/useNow';
-import useLocale from '../locales';
+import React, {createElement,useCallback, useState} from 'react';
 
+import elClassNames from '../el-class-names';
+import useNowTime from '../hooks/useNow';
+import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
+import useLocale from '../locales';
+import {ITimepickerProps} from '../Timepicker';
+import {ITimeObj} from '../typing';
+import {getTimeFormat, getTimeString} from '../utils';
 import styles from './timepicker2.module.scss';
 import {ITimepicker2Props} from './types';
-import {ITimepickerProps} from '../Timepicker';
 
 
 /**
@@ -102,7 +102,6 @@ const Timepicker2Atom = ({
         // 設定 時、分、秒
         handleOnChange(data, true);
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     /**
@@ -136,7 +135,7 @@ const Timepicker2Atom = ({
                     onChange={event => {
                         handleOnChange({hour: parseInt(event.target.value)}, true);
                     }}
-                />    
+                />
             </div>
 
             {/* 分 */}

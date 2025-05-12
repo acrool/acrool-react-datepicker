@@ -1,10 +1,11 @@
-import {useMemo, useCallback, useState} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
-import useLocale from './locales';
+import {useCallback, useMemo, useState} from 'react';
+
 import {config} from './config';
+import useLocale from './locales';
+import styles from './ScrollRangeDatepicker/styles.module.scss';
 import {ICurrentDayList} from './typing';
 import {isEmpty} from './utils';
-import styles from './ScrollRangeDatepicker/styles.module.scss';
 
 
 interface IDatepickerProps {
@@ -18,8 +19,8 @@ interface IDatepickerProps {
     tagDates?: string[]
     today: Dayjs
     onChange: (newDate: string) => void
-    yearMonthPanel: Dayjs,
-    onChangeYearMonthPanel?: (params: { year: number; month: number }) => void
+    yearMonthPanel: Dayjs
+    onChangeYearMonthPanel?: (params: { year: number, month: number }) => void
 }
 
 export const useDatepicker = ({

@@ -1,13 +1,13 @@
-import React from 'react';
-import dayjs,{Dayjs} from 'dayjs';
-import {defaultFormat, getDatetime} from '../utils';
-import elClassNames from '../el-class-names';
-import {DatepickerAtom} from '../Datepicker';
-import {TimepickerAtom} from '../Timepicker';
-
 import clsx from 'clsx';
+import dayjs,{Dayjs} from 'dayjs';
+import React from 'react';
+
+import {DatepickerAtom} from '../Datepicker';
+import elClassNames from '../el-class-names';
 import useNowTime from '../hooks/useNow';
 import useLocale from '../locales';
+import {TimepickerAtom} from '../Timepicker';
+import {defaultFormat, getDatetime} from '../utils';
 import styles from './date-timepicker.module.scss';
 import {EDateType, IDateTimepickerProps} from './types';
 

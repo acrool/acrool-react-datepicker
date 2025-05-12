@@ -1,6 +1,7 @@
 import dayjs, {Dayjs} from 'dayjs';
-import {EDateRange, ITimeObj, EDateTimeRange, ICurrentDayList, IRangeDateValue} from './typing';
 import {useCallback} from 'react';
+
+import {EDateRange, EDateTimeRange, ICurrentDayList, IRangeDateValue,ITimeObj} from './typing';
 
 export const defaultFormat = {
     date: 'YYYY-MM-DD',
@@ -118,7 +119,7 @@ export const getDatetime = (newValue?: string) => {
  * @param format
  */
 export const selectDateRange = (rangeType: EDateRange, format: string) => {
-    
+
     const today = dayjs();
     switch (rangeType){
     case EDateRange.today:
@@ -275,7 +276,7 @@ export const getNextMonthDays = (yearMonth: Dayjs) => {
 
     // 取 Panel年月 上個月份的已放空間 (星期六 ex: 6-1=5格, 星期日則為7天)
     const preMonthFirstContainer = currentMonFirstWeek === 0 ? 6 : currentMonFirstWeek - 1;
-    
+
 
     // 取 Panel年月 這個月的最後一天是幾號
     const panelMonthLastDay = yearMonth.endOf('month').get('date');
@@ -295,7 +296,7 @@ export const getNextMonthDays = (yearMonth: Dayjs) => {
         //         (maxDate && eachDate.isAfter(maxDate, 'date')));
 
         nextMonEndDayList[d] = {
-       
+
             type: 'nextMonth',
             date: eachDate,
             dayNumber: dayNumber,
@@ -352,7 +353,6 @@ export const getPreMonthDays = (yearMonth: Dayjs) => {
 
     return preMonFirstDayList;
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
 };
 
 

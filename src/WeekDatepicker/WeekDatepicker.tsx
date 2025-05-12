@@ -1,14 +1,15 @@
-import React, {useState, useCallback, useMemo, createElement, useRef, useEffect} from 'react';
-import dayjs,{Dayjs} from 'dayjs';
-import elClassNames from '../el-class-names';
-import {ArrowIcon} from '../Icon';
 import clsx from 'clsx';
-import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
+import dayjs,{Dayjs} from 'dayjs';
+import React, {createElement, useCallback, useEffect,useMemo, useRef, useState} from 'react';
+
+import elClassNames from '../el-class-names';
 import useNowTime from '../hooks/useNow';
+import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
+import {ArrowIcon} from '../Icon';
 import useLocale from '../locales';
+import {config} from './config';
 import {ICurrentDayList, IWeekDatepickerProps} from './types';
 import {getValueInWeekStartDate} from './utils';
-import {config} from './config';
 import styles from './week-datepicker.module.scss';
 
 
@@ -129,7 +130,6 @@ const WeekDatepicker = ({
         const formatDate = newDate.format(format);
         onChange(formatDate);
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 
 
@@ -140,7 +140,7 @@ const WeekDatepicker = ({
     const renderYearMonth = () => {
         const panelPreYearMonth = panelYearMonth.subtract(7, 'day');
         const panelNextYearMonth = panelYearMonth.add(7, 'day');
-        
+
 
         const activeYear = localeYear.find(row => String(row.value) === String(panelYearMonth.year()));
         const activeMonth = localeMonth.find(row => row.value === panelYearMonth.month());

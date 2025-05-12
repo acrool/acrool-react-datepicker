@@ -1,8 +1,8 @@
-import {useEffect, useRef, useState, useCallback} from 'react';
+import {useCallback,useEffect, useRef, useState} from 'react';
 
 type UseInfiniteScrollOptions = {
-    loadMoreTop: () => Promise<void>; // 載入頂部更多數據
-    loadMoreBottom: () => Promise<void>; // 載入底部更多數據\
+    loadMoreTop: () => Promise<void>, // 載入頂部更多數據
+    loadMoreBottom: () => Promise<void>, // 載入底部更多數據\
 };
 
 export function useInfiniteScroll({

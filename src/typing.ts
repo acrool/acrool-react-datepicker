@@ -22,21 +22,21 @@ export enum EDateTimeRange {
 
 
 export interface ICommon {
-    className?: string;
-    style?: CSS.Properties;
-    locale?: string;
-    minYear?: number;
-    maxYear?: number;
-    isDark?: boolean;
-    minDate?: string,
-    maxDate?: string,
-    tagDates?: string[],
+    className?: string
+    style?: CSS.Properties
+    locale?: string
+    minYear?: number
+    maxYear?: number
+    isDark?: boolean
+    minDate?: string
+    maxDate?: string
+    tagDates?: string[]
 }
 
 export interface ITimeObj {
-    hour: number,
-    minute: number,
-    second?: number,
+    hour: number
+    minute: number
+    second?: number
 }
 
 
@@ -48,8 +48,8 @@ export interface ICurrentDayList {
     // isTag: boolean,
     // isDisable: boolean,
     // className: string,
-    date: Dayjs,
-    dayNumber: number,
+    date: Dayjs
+    dayNumber: number
     // onClick: () => void
-    type: 'lastMonth'|'thisMonth'|'nextMonth',
+    type: 'lastMonth'|'thisMonth'|'nextMonth'
 }

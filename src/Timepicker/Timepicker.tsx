@@ -1,14 +1,15 @@
-import React, {useState, useRef, useCallback, useEffect, createElement} from 'react';
-import elClassNames from '../el-class-names';
-import {getTimeFormat, paddingLeft, getTimeString} from '../utils';
 import clsx from 'clsx';
-import {ITimeObj} from '../typing';
-import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
+import React, {createElement,useCallback, useEffect, useRef, useState} from 'react';
+
+import elClassNames from '../el-class-names';
 import useNowTime from '../hooks/useNow';
+import useOnlyUpdateEffect from '../hooks/useUpdateEffect';
 import useLocale from '../locales';
+import {ITimeObj} from '../typing';
+import {getTimeFormat, getTimeString,paddingLeft} from '../utils';
+import {hourList, minuteList, secondList, unitHeight} from './config';
 import styles from './timepicker.module.scss';
 import {ITimepickerProps} from './types';
-import {hourList, minuteList, secondList, unitHeight} from './config';
 
 
 
@@ -105,7 +106,6 @@ const TimepickerAtom = ({
         // 設定 時、分、秒
         handleOnChange(data, true);
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     /**

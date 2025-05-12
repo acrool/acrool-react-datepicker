@@ -1,5 +1,6 @@
-import {ICommon, IRangeDateValue} from '../typing';
 import {Dayjs} from 'dayjs';
+
+import {ICommon, IRangeDateValue} from '../typing';
 
 
 
@@ -9,25 +10,25 @@ export interface ICurrentDayList {
     isStartActive: boolean
     isEndActive: boolean
     isInRange: boolean
-    isToday: boolean,
-    isTag: boolean,
-    isDisable: boolean,
-    className: string,
-    date: Dayjs,
-    dayNumber: number,
+    isToday: boolean
+    isTag: boolean
+    isDisable: boolean
+    className: string
+    date: Dayjs
+    dayNumber: number
     // onClick: () => void
-    type: 'preDay'|'currentDay'|'nextDay',
+    type: 'preDay'|'currentDay'|'nextDay'
 }
 
 
 
 export interface IDatepickerProps extends ICommon{
-    values?: IRangeDateValue;
-    onChange: (newDate: string) => void;
+    values?: IRangeDateValue
+    onChange: (newDate: string) => void
     format?: string
-    onChangeYearMonthPanel?: (yearMonth: { year: number, month: number }) => void;
-    isVisibleSetToday?: boolean;
-    yearMonthPanel: Dayjs,
+    onChangeYearMonthPanel?: (yearMonth: { year: number, month: number }) => void
+    isVisibleSetToday?: boolean
+    yearMonthPanel: Dayjs
 }
 
 
@@ -39,7 +40,7 @@ export interface IScrollRangeDatepickerProps extends ICommon{
     defaultFocusDate?: string
     format?: string
     // onChange?: (updater: (current: IRangeDateValue | undefined) => any) => void,
-    onChange?: (newValue: IRangeDateValue | undefined) => void,
+    onChange?: (newValue: IRangeDateValue | undefined) => void
     isVisibleFastPicker?: boolean
     monthContainerHeight: number
 }
