@@ -42,5 +42,6 @@ export interface IScrollRangeDatepickerProps extends ICommon{
     // onChange?: (updater: (current: IRangeDateValue | undefined) => any) => void,
     onChange?: (newValue: IRangeDateValue | undefined) => void
     isVisibleFastPicker?: boolean
-    monthContainerHeight: number
+    /** @deprecated 月份高度已改為依實際週數動態計算，此參數不再生效 */
+    monthContainerHeight?: number
 }

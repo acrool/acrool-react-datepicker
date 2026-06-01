@@ -356,6 +356,28 @@ export const getPreMonthDays = (yearMonth: Dayjs) => {
 };
 
 
+/**
+ * 取得指定年月在月曆上佔用的週數 (列數)
+ *
+ * 與 getPreMonthDays + getCurrentMonthDays 的日期產生邏輯一致
+ * (上個月補滿首週空格 + 當月天數，不補下個月)，用於虛擬列表動態高度計算
+ *
+ * @param yearMonth
+ */
+export const getWeeksInMonth = (yearMonth: Dayjs): number => {
+    // 取得當月第一天是星期幾 (0=日, 1-6)
+    const currentMonFirstWeek = yearMonth.set('date', 1).day();
+
+    // 首週需由上個月補滿的格數 (週一為起始日)
+    const preMonthFirstContainer = currentMonFirstWeek === 0 ? 6 : currentMonFirstWeek - 1;
+
+    // 當月總天數
+    const daysInMonth = yearMonth.endOf('month').get('date');
+
+    return Math.ceil((preMonthFirstContainer + daysInMonth) / 7);
+};
+
+
 export const getSameDay = (eachDate: Dayjs, currentDate?: string) => {
     if(!currentDate){
         return false;

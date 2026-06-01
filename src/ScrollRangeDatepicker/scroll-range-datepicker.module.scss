@@ -35,6 +35,30 @@
 }
 
 
+.scroll-wrapper{
+  position: relative;
+  flex: 1 1 auto;
+}
+
+
+.sticky-year-month{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding-left: 14px;
+
+  color: var(--month-color);
+  background-color: var(--bg-color);
+  pointer-events: none;
+}
+
+
 .date-week{
   font-size: 12px;
   transform: scale(.9);

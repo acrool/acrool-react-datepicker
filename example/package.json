@@ -14,8 +14,8 @@
     },
     "dependencies": {
         "@acrool/js-utils": "^3.2.20",
-        "@acrool/react-grid": "^6.0.5",
         "@acrool/react-datepicker": "link:..",
+        "@acrool/react-grid": "^6.0.5",
         "@chromatic-com/storybook": "^1.5.0",
         "@emotion/is-prop-valid": "^1.2.2",
         "@storybook/addon-essentials": "^8.1.10",
